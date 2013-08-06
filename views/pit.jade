@@ -1,0 +1,12 @@
+extends page
+
+block body
+	h1 Pit Data Entry
+	form(id="pit", method="post")
+		label(for="team") Team:
+		input(name="team", type="number", autofocus="autofocus")
+		- for (var i = 0; i < pit.length; ++i){
+		label(for=pit[i]['field'])=pit[i]['name']+":"
+		textarea(name=pit[i]['field'])
+		-}
+		input(name="submit", type="submit", value="Submit")

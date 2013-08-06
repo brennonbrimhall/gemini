@@ -1,0 +1,8 @@
+extends page
+
+block body
+	ul(data-role='listview', data-inset='true', data-filter="true")
+		- for(var i = 0; i < matches.length; ++i) {
+		li
+			a(href="../match/"+matches[i]['match'])=matches[i]['match']
+		- }

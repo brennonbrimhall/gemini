@@ -1,0 +1,29 @@
+extends page
+
+block body
+	ul(data-role='listview', data-inset='true')
+		li(data-role="list-divider") General
+		li
+			a(href='/schedule') Match Schedule
+		li
+			a(href='/rankings') Rankings
+			
+		li(data-role="list-divider") Scouting
+		li
+			a(href='/pit') Pit Scouting Entry
+		li
+			a(href='/match-entry') Match Scouting Entry
+		
+		li(data-role="list-divider") Strategy
+		li
+			a(href='/table') Averages Table
+		li
+			a(href='/match') Match Lookup
+		li
+			a(href='/team') Team Lookup
+		li
+			a(href='/predict') Predictinator
+		
+		li(data-role="list-divider") Administration
+		li
+			a(href='/manage') Manage System

@@ -1,0 +1,8 @@
+extends page
+
+block body
+	ul(data-role='listview', data-inset='true', data-filter="true")
+		- for(var i = 0; i < teams.length; ++i) {
+		li
+			a(href="../team/"+teams[i]['team'])=teams[i]['team']
+		- }
