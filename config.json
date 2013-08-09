@@ -6,7 +6,8 @@
 		"password" : "",
 		"database" : "sik",
 		"directory" : "C:\\xampp\\mysql",
-		"pull" : false
+		"allowOthersToPullData" : true,
+		"allowSelfToPullData" : true
 	},
 
 	"rankings" : [
@@ -41,8 +42,8 @@
 		}
 	],
 
-	"image" : [
-		{
+	"image" : 
+[		{
 			"name" : "Main",
 			"suffix" : ""
 		},
