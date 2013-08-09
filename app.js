@@ -54,7 +54,9 @@ app.get('/team', team.lookup);
 app.get('/match/:number', match.match);
 app.get('/match', match.lookup);
 app.get('/manage', administration.manage);
-app.get('/pull', pull.pull);
+app.get('/data', pull.data);
+app.get('/pull', pull.request);
+app.post('/pull', pull.request);
 
 
 http.createServer(app).listen(app.get('port'), function(){

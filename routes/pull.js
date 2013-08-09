@@ -3,14 +3,14 @@
  * GET data from this server.
  */
 
-exports.pull = function(req, res){
+exports.data = function(req, res){
 	var config = require('../config');
 	var sys = require('sys')
 	var exec = require('child_process').exec;
 	var child;
 
 	//Checking to see if we have allowed ourselves to pull
-	if(config.mysql.pull) {
+	if(config.mysql.allowOthersToPullData) {
 		res.set('Content-Type', 'text/plain');
 
 		child = exec(config.mysql.directory+"/bin/mysqldump -u "+config.mysql.username+" --databases "+config.mysql.database,
@@ -27,3 +27,21 @@ exports.pull = function(req, res){
 	}
 	
 };
+
+exports.request = function(req, res){
+	var http = require('http');
+	var config = require('../config');
+	if(config.mysql.allowSelfToPullData){
+		if(req.body.server){
+
+		}else{
+			res.render('pull');
+		}	
+	}else{
+		res.render('error', 
+			{err: new Error('You are not configured to pull data from another server.')
+			}
+		);
+	}
+	
+}
