@@ -1,0 +1,8 @@
+extends page
+
+block body
+	h1 Data Pull
+	form(id="match", method="post", data-validate="parsley")
+		label(for="server") Server location/url:
+		input(name="server", type="text", data-trigger="keyup", data-required="true", autofocus="autofocus", data-type="url")
+		input(name="submit", type="submit", value="Submit")
