@@ -36,7 +36,7 @@ exports.match = function(req, res){
 	}
 
 	//Grabbing schedule info for this match
-	connection.query("SELECT * FROM `schedule` WHERE `match` = "+req.param('number')+";", 
+	connection.query("SELECT * FROM `schedule` WHERE `match` = "+connection.escape(req.param('number'))+";", 
 		function(err, results) {
 			if(err) {
 				res.render('error', {
