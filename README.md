@@ -5,14 +5,17 @@ A web application to facilitate scouting for FRC.
 
 ##Installation instructions
 1. Install [node.js](http://nodejs.org/) onto your machine.
+2. Install [xampp](http://www.apachefriends.org/en/xampp.html) onto your machine.
 2. Clone the sik.js repository:
     1. Create a directory to hold the sik.js code/dependencies. (`mkdir C:\Path\To\sik.js` or `mkdir /c/Path/To/sik.js`)
     2. Change your directory to match the directory you just made. (`cd C:\Path\To\sik.js` or `cd /c/Path/To/sik.js`)
     3. Run `git clone git@github.com:brennonbrimhall/sik.js.git` to clone the repository.
 3. If you don't have a command prompt/terminal open to the location of sik.js, open a command prompt/terminal, and `cd C:\Path\To\sik.js` or `cd /c/Path/To/sik.js`.
 4. Run `npm install` to install dependencies for sik.js, as per the dependencies listed in package.json.
+5. Boot up xampp, and make sure to turn on MySQL and Apache.
 5. Run `node app` to boot up your local version of sik.js on port 3000.
 6. Navigate to [http://localhost:3000](http://localhost:3000) to see sik.js in action.
+7. Load any database stuff to [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
 
 ##Development instructions
 1. Always make sure you have the latest version of committed code.  To do this, always perform `git pull`.
