@@ -24,3 +24,18 @@ A web application to facilitate scouting for FRC.
   * The dev (short for development) branch should be mostly working without issues.  When it is stable and working as we want it, we merge it into master.
   * The feature/someFeatureName branch is the branch where work goes on for a specific feature.  When done, this should be merged into the dev branch.
   * The bug/someBugName branch should ideally be treated as if it were a feature branch, but if it's a major bug that needs fixing now, you may consider merging it directly into master and dev.
+3. If a branch exists for the feature/topic that you are working on, perform a checkout of that branch. (`git checkout feature/myBranch`)  If not, create the branch for the feature: `git branch feature/myNewBranch` and `git checkout feature/myNewBranch`.
+
+##Feature list
+###For River Rage
+1. Form Validation
+2. Big Table of Averages for teams in event
+3. Pull data from a master server
+4. Pull data from *FIRST* - rankings, schedule, etc.
+5. Database backup with every edit
+6. Database setup per config file
+
+###Cool Ideas
+1. Ranking/Match prediction
+2. Data consistency check
+3. Make responsive for mobile devices
