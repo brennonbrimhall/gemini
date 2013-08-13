@@ -45,12 +45,11 @@ A web application to facilitate scouting for FRC.
 
 ##Feature list
 ###For River Rage
-1. Form Validation
-2. Big Table of Averages for teams in event
-3. Pull data from a master server
-4. Pull data from *FIRST* - rankings, schedule, etc.
-5. Database backup with every edit
-6. Database setup per config file
+1. Big Table of Averages for teams in event
+2. Pull data from a master server
+3. Pull data from *FIRST* - rankings, schedule, etc.
+4. Database backup with every edit
+5. Database setup per config file
 
 ###Cool Ideas
 1. Ranking/Match prediction
