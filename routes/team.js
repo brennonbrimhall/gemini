@@ -7,7 +7,6 @@ exports.team = function(req, res){
 	var mysql = require('mysql');
 	var config = require('../config');
 	var async = require('async');
-	var Stats = require('fast-stats').Stats;
 
 	console.log("database: "+config.database);
 	var connection = mysql.createConnection({
