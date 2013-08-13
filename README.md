@@ -3,7 +3,21 @@ sik.js
 
 A web application to facilitate scouting for FRC.
 
-##Installation instructions
+##Installation instructions - GitHub for Windows (reccomended)
+1. Install [GitHub for Windows](http://windows.github.com/), via the green download button in the top right corner.
+2. Install [node.js](http://nodejs.org/) onto your machine.
+3. Install [xampp](http://www.apachefriends.org/en/xampp.html) onto your machine.
+4. Click on the clone button on this page.  If your browser opens a popup, hit OK.  GitHub for Windows should open and start to clone sik.js.
+5. Open the program "Node.js command prompt".
+6. Type the following command into the command prompt: `cd C:\Users\YourUsername\Documents\GitHub\sik.js`.  Hit enter after you're done typing to run it.
+7. Run `npm install` in the command prompt to install dependencies for sik.js.
+8. Boot up xampp, and make sure to turn on MySQL and Apache.
+9. Navigate to [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/).  At the top menu, press the "Import" button.
+10. Click "Choose File" and select the connecticut_data.sql file.  Hit Go to load the Conencticut data into the database.
+11. Run `node app` in the command prompt to boot up your local version of sik.js on port 3000.
+12. Navigate to [http://localhost:3000](http://localhost:3000) to see sik.js in action.
+
+##Installation instructions from Command line
 1. Install [node.js](http://nodejs.org/) onto your machine.
 2. Install [xampp](http://www.apachefriends.org/en/xampp.html) onto your machine.
 2. Clone the sik.js repository:
