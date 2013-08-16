@@ -1,7 +1,7 @@
 extends page
 
 block body
-	form(id="match", method="post", data-validate="parsley")
+	form(id="match", method="post")
 		- for (var i = 0; i < match.length; ++i){
 		label(for=match[i]['field'])=match[i]['name']+":"
 		- if (match[i]['values']){
@@ -14,15 +14,15 @@ block body
 				-}
 			-}
 			- if(i == 0){
-			input(name=match[i]['field'], type="text", data-trigger="keyup", data-required="true", data-regexp=regexp, autofocus="autofocus")
+			input(name=match[i]['field'], type="text", required="required", pattern=regexp, autofocus="autofocus")
 			- }else{
-			input(name=match[i]['field'], type="text", data-trigger="keyup", data-required="true", data-regexp=regexp)
+			input(name=match[i]['field'], type="text", required="required", pattern=regexp)
 			- }
 		- }else{
 			- if(i == 0){
-			input(name=match[i]['field'], type="text", data-trigger="keyup", data-required="true", data-min=match[i]['min'], data-max=match[i]['max'], autofocus="autofocus")
+			input(name=match[i]['field'], type="number", step="1", required="required", min=match[i]['min'], max=match[i]['max'], autofocus="autofocus")
 			-} else {
-			input(name=match[i]['field'], type="text", data-trigger="keyup", data-required="true", data-min=match[i]['min'], data-max=match[i]['max'])
+			input(name=match[i]['field'], type="number", step="1", required="required", min=match[i]['min'], max=match[i]['max'])
 			- }
 		-}
 		-}
