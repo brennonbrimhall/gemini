@@ -16,6 +16,7 @@ var user = require('./routes/user')
 	, rankings = require('./routes/rankings')
 	, pit = require('./routes/pit')
 	, team = require('./routes/team')
+	, table = require('./routes/table')
 	, match_entry = require('./routes/match-entry')
 	, match = require('./routes/match')
 	, pull = require('./routes/pull')
@@ -55,6 +56,7 @@ app.get('/match/:number', match.match);
 app.get('/match', match.lookup);
 app.get('/manage', administration.manage);
 app.get('/pull', pull.pull);
+app.get('/table', table.table);
 
 
 http.createServer(app).listen(app.get('port'), function(){
