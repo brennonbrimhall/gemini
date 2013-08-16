@@ -5,21 +5,21 @@ block body
 		thead
 			tr
 				- for ( var i = 0; i < rankings_config.length; ++i){
-					- if (rankings_config[i]['name'].indexOf("Team") == -1){
-					th(data-priority=(i+1))=rankings_config[i]['name']
-					- }else{
-					th=rankings_config[i]['name']
-					- }
+				- if (rankings_config[i]['name'].indexOf("Team") == -1){
+				th(data-priority=(i+1))=rankings_config[i]['name']
+				- }else{
+				th=rankings_config[i]['name']
+				- }
 				- }
 		tbody
 			- for (var i = 0; i<rankings.length; ++i){
 			tr
 				- for (var j = 0; j < rankings_config.length; ++j) {
-					- if(rankings_config[j]['field'].indexOf('team') != -1) {
-					td
-						a(href="../team/"+rankings[i].team)=rankings[i].team
-					- } else {
-					td=rankings[i][rankings_config[j]['field']]
-					- }
+				- if(rankings_config[j]['field'].indexOf('team') != -1) {
+				td
+					a(href="../team/"+rankings[i].team)=rankings[i].team
+				- } else {
+				td=rankings[i][rankings_config[j]['field']]
+				- }
 				- }
 			-}

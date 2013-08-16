@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-	res.render('index', { title: 'SiK: Scouting Instant Knowledge' });
+	res.render('index', { title: 'Gemini Scouting System' });
 };
