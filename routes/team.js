@@ -7,7 +7,6 @@ exports.team = function(req, res){
 	var mysql = require('mysql');
 	var config = require('../config');
 	var async = require('async');
-	var Stats = require('fast-stats').Stats;
 
 	console.log("database: "+config.database);
 	var connection = mysql.createConnection({
@@ -34,17 +33,9 @@ exports.team = function(req, res){
 
 	connection.connect();
 
-	connection.query("USE `"+config.mysql.database+"`;", 
-		function(err, rows, fields) {
-			if (err) {
-				res.render('error', {
-					err: err
-				});
-			}
-		}
-	);
+	connection.query("USE `"+config.mysql.database+"`;"); 
 
-	connection.query("SELECT * FROM `pit` WHERE `team` = "+req.param('number')+";", 
+	connection.query("SELECT * FROM `pit` WHERE `team` = "+connection.escape(req.param('number'))+";", 
 		function(err, results) {
 			console.log("Got pit data")
 			if (err) {
@@ -58,7 +49,7 @@ exports.team = function(req, res){
 		}
 	);
 	
-	connection.query("SELECT * FROM `match` WHERE `team` ="+req.param('number')+" ORDER BY `match`;", 
+	connection.query("SELECT * FROM `match` WHERE `team` ="+connection.escape(req.param('number'))+" ORDER BY `match`;", 
 		function(err, results){
 			if(err) {
 				res.render('error', {
@@ -121,12 +112,12 @@ exports.team = function(req, res){
 		}
 	);
 
-	connection.query("SELECT * FROM `schedule` WHERE `red1` = "+req.param('number')+
-		" OR `red2` = "+req.param('number')+
-		" OR `red3` = "+req.param('number')+
-		" OR `blue1` = "+req.param('number')+
-		" OR `blue2` = "+req.param('number')+
-		" OR `blue3` = "+req.param('number')+";", 
+	connection.query("SELECT * FROM `schedule` WHERE `red1` = "+connection.escape(req.param('number'))+
+		" OR `red2` = "+connection.escape(req.param('number'))+
+		" OR `red3` = "+connection.escape(req.param('number'))+
+		" OR `blue1` = "+connection.escape(req.param('number'))+
+		" OR `blue2` = "+connection.escape(req.param('number'))+
+		" OR `blue3` = "+connection.escape(req.param('number'))+";", 
 		function(err, results) {
 			console.log("Got schedule data")
 			if(err) {

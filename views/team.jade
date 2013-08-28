@@ -3,11 +3,10 @@ extends page
 block head
 
 block body
-	h1="Team "+number
 
 	div(id="split-content")
 		div(id="left-panel")
-			div(data-role="collapsible", data-collapsed="false")
+			div(data-role="collapsible", data-collapsed="false", data-content-theme="d")
 				h2 Schedule
 				table(id="schedule", data-role="table", data-mode="columntoggle", class="ui-responsive table-stroke")
 					thead
@@ -156,7 +155,7 @@ block body
 							-}
 						- }
 							td=Math.round((points_average+(-.44*points_stddev))*100)/100
-		div(data-role="collapsible")
+		div(data-role="collapsible", data-content-theme="d")
 			h3 Individual Matches
 			table(id="match", data-role="table", data-mode="columntoggle", class="ui-responsive table-stroke")
 				thead
