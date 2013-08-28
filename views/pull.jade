@@ -2,7 +2,12 @@ extends page
 
 block body
 	h1 Data Pull
-	form(id="match", method="post", data-validate="parsley")
+	- if(success) {
+	h3 Database pull successful.
+	- }else{
+	h3 Please do not enter data until the pull is complete.  Failure to do so may corrupt your database.
+	- }
+	form(id="match", method="post")
 		label(for="server") Server location/url:
-		input(name="server", type="text", data-trigger="keyup", data-required="true", autofocus="autofocus", data-type="url")
+		input(name="server", type="url", required="required", autofocus="autofocus", placeholder="http://192.168.0.1")
 		input(name="submit", type="submit", value="Submit")

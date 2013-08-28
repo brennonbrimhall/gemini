@@ -1,5 +1,5 @@
 {
-  "name": "scouting-instant-knowledge",
+  "name": "gemini",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,6 +9,11 @@
     "express": "3.3.4",
     "jade": "*",
     "mysql": "2.0.0-alpha8",
-    "async":  "0.2.9"
+    "async":  "0.2.9",
+    "request": "2.27.0"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "http://github.com/brennonbrimhall/sik.js"
   }
 }

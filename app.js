@@ -57,6 +57,7 @@ app.get('/manage', administration.manage);
 app.get('/data', pull.data);
 app.get('/pull', pull.request);
 app.post('/pull', pull.request);
+app.get('/config', pull.config);
 
 
 http.createServer(app).listen(app.get('port'), function(){
