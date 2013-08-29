@@ -72,7 +72,13 @@ exports.request = function(req, res){
 								if(error){
 									res.render('error', {err: new Error('The server could not contact '+req.body.server+'/config to pull configuration data.')})
 								}else{
-									var newConfig = JSON.parse(body);
+									try{
+										var newConfig = JSON.parse(body);
+									}catch(e){
+										res.render('error', {err: new Error('Unable to interpret response from '+req.body.server+'/config.  Please verify that the server is configured to allow data pulling, and that the entered server is correct.  You may refresh this page to try again.')});
+										return;
+									}
+									
 									async.series([
 										backupDatabase(),
 										backupConfig(),
@@ -90,7 +96,7 @@ exports.request = function(req, res){
 		}	
 	}else{
 		res.render('error', 
-			{err: new Error('You are not configured to pull data from another server.')
+			{err: new Error('You are not configured to pull data from another server.  Change "allowSelfToPullData" in your configuration file to true.')
 			}
 		);
 	}
