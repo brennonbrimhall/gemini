@@ -1,0 +1,27 @@
+extends page
+
+block body
+	h1 Averages Table
+
+	table(id="average", data-role="table", data-mode="columntoggle", class="ui-responsive table-stroke")
+		thead
+			tr
+				- for(var i = 0; i < match.length; i++){
+				th(data-priority=i+1)=match[i]['name']
+				- }
+				th(data-priority=i+2) Points Contributed
+		tbody
+			- for(var i = 0; i < averages.length; ++i){
+			tr
+			- for(var j = 0; j < match.length; ++j) {
+				- if(match[j]['field'].toUpperCase() == 'TEAM'){
+				td
+					a(href='/team/'+averages[i][match[j]['field']])=averages[i][match[j]['field']]
+				-}else if(match[j]['average']){
+				td=Math.round(averages[i][match[j]['field']]*100)/100
+				-}else{
+				td
+				-}
+			- }
+			td=Math.round(averages[i]['points contributed']*100)/100
+			- }
