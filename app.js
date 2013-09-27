@@ -11,8 +11,7 @@ var express = require('express')
 	, path = require('path');
 
 //Routing variables
-var user = require('./routes/user')
-	, schedule = require('./routes/schedule')
+var schedule = require('./routes/schedule')
 	, rankings = require('./routes/rankings')
 	, pit = require('./routes/pit')
 	, team = require('./routes/team')

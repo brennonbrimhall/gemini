@@ -5,19 +5,15 @@
 
 exports.data = function(req, res){
 	var config = require('../config');
-	var sys = require('sys')
-	var exec = require('child_process').exec;
-	var child;
+	var fs = require("fs");
 
 	//Checking to see if we have allowed others to pull
 	if(config.mysql.allowOthersToPullData) {
-		res.set('Content-Type', 'text/plain');
-
-		child = exec(config.mysql.directory+"/bin/mysqldump -u "+config.mysql.username+" --databases "+config.mysql.database,
-			function(error, stdout, stederr){
-				res.send(stdout);
-			}
-		);
+		fs.readFile('database.db', function (err, data) {
+			if (err) throw err;
+			res.set('Content-Type', 'text/plain');
+			res.send(data);
+		});
 
 	//If we're not willing to send our database over (since this is potentially compromising), we state a 404 error.
 	//If we were to send a 403 error instead, we would be alerting to others that we have an important page here.

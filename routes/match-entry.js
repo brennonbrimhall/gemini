@@ -4,7 +4,6 @@
  */
 
 exports.get = function(req, res){
-	var mysql = require('mysql');
 	var config = require('../config');
 
 	res.render('match-entry', { 
@@ -16,8 +15,9 @@ exports.get = function(req, res){
 
 exports.post = function(req, res){
 	var mysql = require('mysql');
+	var sqlite3 = require('sqlite3').verbose();
+    var db = new sqlite3.Database('database.db');
 	var config = require('../config');
-	var async = require('async');
 	var connection = mysql.createConnection({
 		host: config.mysql.host,
 		user: config.mysql.username,
@@ -25,60 +25,55 @@ exports.post = function(req, res){
 		database: config.mysql.database,
 	});
 
-	//Setting up response in case of error with no callback
-	connection.on('error', function(err) {
-		console.log(err);
-		res.render('error', { 
+	db.on('error', function(err) {
+        console.log(err);
+        res.render('error', { 
 			title: 'Match Data Entry', 
 			data_inputed: true, 
 			err: err
 		});
-	});
+	})
 
 	//Building query string...
 	var query = "INSERT INTO `match` (";
 	for (var i = 0; i < config.match.length; ++i){
-		if(i == 0){
+		if(i === 0){
 			query = query + "`"+config.match[i]['field']+"`";
 		}else{
 			query = query + ", `"+config.match[i]['field']+"`";
 		}
 		
 	}
+
 	query = query + ") VALUES (";
 	for (var i = 0; i < config.match.length; ++i){
-		if(i == 0){
+		if(i === 0){
 			query = query + connection.escape(req.body[config.match[i]['field']])+"";
 		}else{
 			query = query + ", " + connection.escape(req.body[config.match[i]['field']])+"";	
 		}
 		
 	}
+
 	query = query + ");";
 
-	//Connecting to database
-	connection.connect();
-
-	connection.query("USE `"+config.mysql.database+"`;");
-
-	connection.query(query, function(err) {
-		if (err) {
-			console.log(err);
-			res.render('error', { 
-				title: 'Match Data Entry', 
-				data_inputed: true, 
-				err: err
-			});
-		}else{
-			console.log("No errors, rendering.");
-			res.render('match-entry', { 
-				title: 'Match Data Entry', 
-				data_recieved: true, 
-				error: false,
-				match: config.match
-			});				
-		}
+	db.serialize(function(){
+	   db.all(query, function(err){
+            if(err){
+                console.log(err);
+                res.render('error', {
+                    err: err
+                });
+            }else{
+                res.render('match-entry', { 
+                    title: 'Match Data Entry', 
+                    data_recieved: true, 
+                    error: false,
+                    match: config.match
+                });				  
+            }
+        }); 
 	});
 
-	connection.end();
+	db.close();
 };

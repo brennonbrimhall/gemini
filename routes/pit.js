@@ -15,18 +15,11 @@ exports.get = function(req, res){
 };
 
 exports.post = function(req, res){
-	var mysql = require('mysql');
+	var sqlite3 = require("sqlite3").verbose();
+	var db = new sqlite3.Database('database.db');
 	var config = require('../config');
-	var async = require('async');
-	var connection = mysql.createConnection({
-		host: config.mysql.host,
-		user: config.mysql.username,
-		password: config.mysql.password,
-		database: config.mysql.database,
-	});
 
-	//Setting up response in case of error with no callback
-	connection.on('error', function(err) {
+	db.on('error', function(err) {
 		console.log(err);
 		res.render('error', { 
 			title: 'Pit Data Entry', 
@@ -40,18 +33,15 @@ exports.post = function(req, res){
 	for (var i = 0; i < config.pit.length; ++i){
 		query = query + ", `"+config.pit[i]['field']+"`";
 	}
-	query = query + ") VALUES ("+connection.escape(req.body.team)+"";
+	query = query + ") VALUES ("+req.body.team+"";
 	for (var i = 0; i < config.pit.length; ++i){
-		query = query + ", "+connection.escape(req.body[config.pit[i]['field']])+"";
+		query = query + ", '"+req.body[config.pit[i]['field']]+"'";
 	}
 	query = query + ");";
+	
+	console.log(query);
 
-	//Connecting to database
-	connection.connect();
-
-	connection.query("USE `"+config.mysql.database+"`;");
-
-	connection.query(query, function(err) {
+	db.all(query, function(err) {
 		if (err) {
 			console.log(err);
 			res.render('error', { 
@@ -69,6 +59,6 @@ exports.post = function(req, res){
 			});				
 		}
 	});
-
-	connection.end();
+	
+	db.close();
 };

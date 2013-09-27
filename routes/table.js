@@ -4,31 +4,20 @@
  */
 
 exports.table = function(req, res){
-	var mysql = require('mysql');
 	var config = require('../config');
-	var async = require('async');
+	var sqlite3 = require("sqlite3").verbose();
+	var db = new sqlite3.Database('database.db');
 
 	var distinct_teams = null;
 	var team_averages = [];
 
-	var connection = mysql.createConnection({
-		host: config.mysql.host,
-		user: config.mysql.username,
-		password: config.mysql.password,
-		database: config.mysql.database,
-	});
-
-	connection.on('error', function(err){
+	db.on('error', function(err){
 		res.render('error', {
 			err: err
 		});
 	});
 
-	connection.connect();
-
-	connection.query("USE `"+config.mysql.database+"`;"); 
-
-	connection.query("SELECT DISTINCT(`team`) FROM `match` ORDER BY `team`;", 
+	db.all("SELECT DISTINCT(`team`) FROM `match` ORDER BY `team`;", 
 		function(err, results) {
 
 			if (err) {
@@ -53,41 +42,32 @@ exports.table = function(req, res){
 				});
 				res.render('table', {averages: team_averages, match: config.match});
 
-				connection.end();
+				db.close();
 			}, 2000);
 		}
 	);
 };
 
 function getAveragesForTeam(team, team_averages, res){
-	var mysql = require('mysql');
 	var config = require('../config');
+	var sqlite3 = require("sqlite3").verbose();
+	var db = new sqlite3.Database('database.db');
 	var averages = new Object();
 
-	var connection = mysql.createConnection({
-		host: config.mysql.host,
-		user: config.mysql.username,
-		password: config.mysql.password,
-		database: config.mysql.database,
-	});
-
-	connection.on('error', function(err){
+	db.on('error', function(err){
 		res.render('error', {
 			err: err
 		});
 	});
 
-	connection.connect();
-
-	connection.query("USE `"+config.mysql.database+"`;"); 
-	connection.query("SELECT * FROM `match` WHERE `team` ="+connection.escape(team)+" ORDER BY `match`;", 
+	db.all("SELECT * FROM `match` WHERE `team` = ? ORDER BY `match`;", team, 
 	function(err, results){
 		if(err) {
 			res.render('error', {
 				err: err
 			});
 		}
-		match_data = results;
+		var match_data = results;
 		//team_averages[String(team)] = new Array();
 		
 		//Calculating averages
@@ -122,17 +102,17 @@ function getAveragesForTeam(team, team_averages, res){
 			sum+=values[i];
 		}
 
-		points_average = sum / values.length;
+		var points_average = sum / values.length;
 		averages['points contributed'] = points_average;
 
 		var deviation = 0;
 		for (var j = 0; j < values.length; j++) {
 			deviation += Math.pow((values[j] - points_average), 2);
 		}
-		points_stddev = Math.pow((deviation / values.length), .5);
+		var points_stddev = Math.pow((deviation / values.length), .5);
 		
 		team_averages.push(averages);
-		connection.end();
+		db.close();
 	}
 	);
 }
