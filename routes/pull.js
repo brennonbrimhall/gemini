@@ -1,6 +1,6 @@
 
 /*
- * GET data from this server.
+ * GET database from this server.
  */
 
 exports.data = function(req, res){
@@ -24,6 +24,29 @@ exports.data = function(req, res){
 	
 };
 
+/*
+ * GET JSON document of available pictures.
+ */
+
+exports.pictures = function(req, res){
+	var fs = require("fs");
+	
+	fs.readdir('./public/pictures/', function(err, files){
+		if(err){
+			res.status(500);
+			res.send();
+			console.log(err);
+		}else{
+			res.set('Content-Type', 'text/plain');
+			res.send(JSON.stringify(files));
+		}
+	});
+};
+
+/*
+ * GET configuration from this server.
+ */
+
 exports.config = function(req, res){
 	var config = require('../config');
 
@@ -31,7 +54,7 @@ exports.config = function(req, res){
 	if(config.mysql.allowOthersToPullData) {
 		res.set('Content-Type', 'text/plain');
 
-		var sendConfig = new Object();
+		var sendConfig = {};
 		sendConfig.rankings = config.rankings;
 		sendConfig.image = config.image;
 		sendConfig.pit = config.pit;
@@ -47,26 +70,30 @@ exports.config = function(req, res){
 	
 };
 
+/*
+ * GET pull from another server.
+ */
+
 exports.request = function(req, res){
-	var http = require('http');
 	var config = require('../config');
 	var request = require('request');
 	var async = require('async');
 
+	//Checking to see if we have allowed ourselves to pull data
 	if(config.mysql.allowSelfToPullData){
 		if(req.body.server){
-			request(req.body.server+'/data', 
+			request(req.body.server+'/data',
 				function(error, response, body){
 					if(error){
 						res.render('error', {
 							err: new Error('The server could not contact '+req.body.server+'/data to pull data.' )
 						});
 					}else{
-						var dump = body;
+						var data = body;
 						request(req.body.server+'/config', 
 							function(error, response, body){
 								if(error){
-									res.render('error', {err: new Error('The server could not contact '+req.body.server+'/config to pull configuration data.')})
+									res.render('error', {err: new Error('The server could not contact '+req.body.server+'/config to pull configuration data.')});
 								}else{
 									try{
 										var newConfig = JSON.parse(body);
@@ -75,12 +102,21 @@ exports.request = function(req, res){
 										return;
 									}
 									
-									async.series([
-										backupDatabase(),
-										backupConfig(),
-										loadConfig(newConfig),
-										loadDatabase(dump, res)
-									]);
+									request(req.body.server+'/pictures', function(error, response, body){
+										if(error){
+											res.render('error', {err: new Error('The server could not contact '+req.body.server+'/config to pull picture data.')});
+										}else{
+											var pictures = body; 
+											
+											async.series([
+												backupDatabase(),
+												backupConfig(),
+												loadConfig(newConfig),
+												loadDatabase(data, res),
+												loadPictures(req, pictures)
+											]);
+										}
+									});
 								}
 							}
 						);
@@ -97,84 +133,41 @@ exports.request = function(req, res){
 		);
 	}
 	
-}
+};
 
 function backupDatabase() {
-	console.log("Backing up database");
-	var config = require('../config');
-	var sys = require('sys')
-	var exec = require('child_process').exec;
+	console.log("[PULL] Backing up database");
 	var fs = require('fs');
-
-	child = exec(config.mysql.directory+"/bin/mysqldump -u "+config.mysql.username+" --databases "+config.mysql.database,
-		function(error, stdout, stederr){
-			var millis = new Date().getTime();
-			
-			fs.writeFile(millis+'.sql', stdout);
-		}
-	);
-};
+	
+	fs.renameSync("database.db", new Date().getTime()+".db");
+}
 
 function backupConfig() {
-	console.log("Backing up config");
-	var config = require('../config');
-	var fs = require('fs');
-	var millis = new Date().getTime();		
-	fs.writeFile(millis+'.json', JSON.stringify(config));
+	console.log("[PULL] Backing up config");
+	var fs = require('fs');	
+	fs.renameSync('config.json', new Date().getTime()+".json");
 
-};
+}
 
 function loadDatabase(dump, res) {
-	var config = require('../config');
-	var sys = require('sys')
-	var exec = require('child_process').exec;
+	console.log('[PULL] Loading new database');
 	var fs = require('fs');
-	var mysql = require('mysql');
-
-	var connection = mysql.createConnection({
-		host: config.mysql.host,
-		user: config.mysql.username,
-		password: config.mysql.password,
-		database: config.mysql.database,
-		multipleStatements: true
-	});
-
-	connection.on('error', function(err){
-		console.log("ERROR WHILE LOADING NEW DATABASE: "+err);
-		res.render('error', {
-			err: new Error('Unable to load pulled data to databse.  Check the console for a more detailed error message.')
-		});
-	});
-
-	connection.connect();
-	console.log("Loading new database");
-	connection.query(dump, 
-		function(err, results){
-			if (err) {
-				res.render('error', {
-					err: err
-				});
-			}else{
-				res.render('pull', {success: true});
-			}
-		}
-	); 
-	console.log("Backing up new database");
-	child = exec(config.mysql.directory+"/bin/mysqldump -u "+config.mysql.username+" --databases "+config.mysql.database,
-		function(error, stdout, stederr){
-			var millis = new Date().getTime();
-			
-			fs.writeFile(millis+'.sql', stdout);
-		}
-	);
+	fs.writeFileSync('database.db', dump);
 }
 
 function loadConfig(newConfig) {
-	console.log('Loading new config')
-	var config = require('../config');
+	console.log('[PULL] Loading new config');
 	var fs = require('fs');
 
-	newConfig.mysql = config.mysql;
+	fs.writeFileSync('config.json', newConfig);
+}
 
-	fs.writeFile('config.json', newConfig);
+function loadPictures(req, pictures) {
+	var fs = require("fs");
+	var request = require("request");
+
+	for(var i = 0; i < pictures.length; ++i){
+		console.log('[PULL] Loading picture '+pictures[i]);
+		request(req.body.server+'/pictures/'+pictures[i]).pipe(fs.createWriteStream('./pictures/'+pictures[i]));
+	}
 }

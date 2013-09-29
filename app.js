@@ -56,6 +56,7 @@ app.get('/match', match.lookup);
 app.get('/manage', administration.manage);
 app.get('/data', pull.data);
 app.get('/pull', pull.request);
+app.get('/pictures', pull.pictures);
 app.post('/pull', pull.request);
 app.get('/config', pull.config);
 app.get('/table', table.table);
