@@ -42,34 +42,63 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+//Index
 app.get('/', routes.index);
+
+//Schedule
 app.get('/schedule', schedule.schedule);
+
+//Edit
 app.get('/edit', edit.edit);
-app.get('/edit/schedule/:id', edit.getEditSchedule);
-app.post('/edit/schedule/:id', edit.postEditSchedule);
+
+//Edit schedule
 app.get('/edit/schedule/delete/:id', edit.getDeleteSchedule);
 app.get('/edit/schedule/add', edit.getAddSchedule);
 app.post('/edit/schedule/add', edit.postAddSchedule);
+app.get('/edit/schedule/:id', edit.getEditSchedule);
+app.post('/edit/schedule/:id', edit.postEditSchedule);
+
+//Edit match entries
 app.get('/edit/match-entry/:id', edit.getEditMatchEntry);
 app.post('/edit/match-entry/:id', edit.postEditMatchEntry);
 app.get('/edit/match-entry/delete/:id', edit.getDeleteMatchEntry);
+
+//Edit pit
 app.get('/edit/pit/:id', edit.getEditPit);
 app.post('/edit/pit/:id', edit.postEditPit);
 app.get('/edit/pit/delete/:id', edit.getDeletePit);
+
+//Pit
 app.get('/pit', pit.get);
 app.post('/pit', pit.post);
+
+//Match Entry
 app.get('/match-entry', match_entry.get);
 app.post('/match-entry', match_entry.post);
+
+//Team
 app.get('/team/:number', team.team);
+
+//Team Lookup
 app.get('/team', team.lookup);
+
+//Match
 app.get('/match/:number', match.match);
+
+//Match Lookup
 app.get('/match', match.lookup);
+
+//Manage
 app.get('/manage', administration.manage);
+
+//Pull
 app.get('/data', pull.data);
 app.get('/pull', pull.request);
 app.get('/pictures', pull.pictures);
 app.post('/pull', pull.request);
 app.get('/config', pull.config);
+
+//Averages Table
 app.get('/table', table.table);
 
 
