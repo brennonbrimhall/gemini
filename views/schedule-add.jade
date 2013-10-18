@@ -1,0 +1,48 @@
+extends page
+
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li 
+		a(href="/schedule") Schedule
+		span(class="divider") /
+	li(class="active") Add
+
+block content
+	form(id="schedule", method="post")
+		-var teamsRegex = "";
+		-for (var i = 0; i < teams.length; ++i){
+			- teamsRegex = teamsRegex+teams[i]+"|";
+		-}
+		
+		label(for="match") Match:
+		input(name="match", type="number", step="1", required="required", min=1, max=maxMatchNumber, autofocus="autofocus")
+		
+		label(for="red1") Red 1:
+		input(name="red1", type="text", required="required", pattern=teamsRegex)
+		
+		label(for="red2") Red 2:
+		input(name="red2", type="text", required="required", pattern=teamsRegex)
+		
+		label(for="red3") Red 3:
+		input(name="red3", type="text", required="required", pattern=teamsRegex)
+		
+		label(for="blue1") Blue 1:
+		input(name="blue1", type="text", required="required", pattern=teamsRegex)
+		
+		label(for="blue2") Blue 2:
+		input(name="blue2", type="text", required="required", pattern=teamsRegex)
+		
+		label(for="blue1") Blue 3:
+		input(name="blue3", type="text", required="required", pattern=teamsRegex)
+		
+		label(for="redScore") Red Score:
+		input(name="redScore", type="number", step="1", required="required", min=1, max=300)
+		
+		label(for="blueScore") Blue Score:
+		input(name="blueScore", type="number", step="1", required="required", min=1, max=300)
+		
+		
+		//Submit
+		input(class="btn btn-primary", name="submit", type="submit", value="Submit")

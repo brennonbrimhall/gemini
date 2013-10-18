@@ -4,61 +4,49 @@
  */
 
 exports.get = function(req, res){
-	var mysql = require('mysql');
-	var config = require('../config');
+	var eventHelper = require('./eventHelper');
+	var config = eventHelper.getEventConfig();
 
 	res.render('pit', { 
 		title: 'Pit Data Entry', 
 		data_recieved: false, 
 		pit: config.pit,
+		teams: config.teams,
+		req: req
 	});
 };
 
 exports.post = function(req, res){
-	var sqlite3 = require("sqlite3").verbose();
-	var db = new sqlite3.Database('database.db');
-	var config = require('../config');
-
-	db.on('error', function(err) {
-		console.log(err);
-		res.render('error', { 
-			title: 'Pit Data Entry', 
-			data_inputed: true, 
-			err: err
-		});
-	});
-
-	//Building query string...
-	var query = "INSERT INTO `pit` (`team`";
-	for (var i = 0; i < config.pit.length; ++i){
-		query = query + ", `"+config.pit[i]['field']+"`";
-	}
-	query = query + ") VALUES ("+req.body.team+"";
-	for (var i = 0; i < config.pit.length; ++i){
-		query = query + ", '"+req.body[config.pit[i]['field']]+"'";
-	}
-	query = query + ");";
+	var eventHelper = require('./eventHelper');
+	var db = eventHelper.getPitDatabase();
+	var config = eventHelper.getEventConfig();
 	
-	console.log(query);
-
-	db.all(query, function(err) {
-		if (err) {
-			console.log(err);
-			res.render('error', { 
-				title: 'Pit Data Entry', 
-				data_inputed: true, 
-				err: err
-			});
-		}else{
-			console.log("No errors, rendering.");
-			res.render('pit', { 
-				title: 'Pit Data Entry', 
-				data_recieved: true, 
-				error: false,
-				pit: config.pit
-			});				
+	try{
+		//Building query string...
+		var object = {};
+		object.team = req.body.team;
+		for(var i = 0; i < config.pit.length; i++){
+			object[config.pit[i]['field']] = req.body[config.pit[i].field];
 		}
-	});
-	
-	db.close();
+		
+		var results = db.select('team', req.body.team);
+		
+		if(results[0]){
+			db.update(object, results[0].id);
+		}else{
+			db.insert(object);
+		}
+		
+		db.save();
+		
+		res.render('pit', { 
+			title: 'Pit Data Entry', 
+			data_recieved: false, 
+			pit: config.pit,
+			teams: config.teams,
+			req: req
+		});
+	}catch(err){
+		res.render('error', {err: err, req: req});
+	}
 };

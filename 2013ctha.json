@@ -1,0 +1,252 @@
+{
+	"teams" : [
+		20,
+		95,
+		173,
+		175,
+		177,
+		178,
+		181,
+		195,
+		228,
+		230,
+		236,
+		237,
+		263,
+		395,
+		558,
+		571,
+		694,
+		839,
+		999,
+		1027,
+		1071,
+		1124,
+		1218,
+		1289,
+		1665,
+		1699,
+		1740,
+		1784,
+		1991,
+		2064,
+		2067,
+		2168,
+		2170,
+		2205,
+		2785,
+		2836,
+		3059,
+		3104,
+		3146,
+		3182,
+		3204,
+		3461,
+		3464,
+		3525,
+		3555,
+		3634,
+		3718,
+		3719,
+		4055,
+		4097,
+		4134,
+		4254,
+		4572,
+		4609,
+		4628,
+		4812
+	],
+	
+	"maxMatchNumber": 84,
+	
+	"image" : 
+	[
+		{
+			"name" : "Overview",
+			"suffix" : ""
+		}
+	],
+
+
+	"pit" : [
+		{
+			"name" : "Role",
+			"field" : "role"
+		},
+		
+		{
+			"name" : "Drivetrain",
+			"field" : "drivetrain"
+		},
+		
+		{
+			"name" : "Blocker",
+			"field" : "blocker"
+		}
+	],
+
+
+
+	"match" : {
+		"auto" : [
+			{
+				"name": "Auto High",
+				"field" : "Auto High",
+				"points": 6,
+				"min" : 0,
+				"max" : 9,
+				"average" : true,
+				"stddev" : true
+			},
+	
+			{
+				"name": "Auto Middle",
+				"field" : "Auto Middle",
+				"points": 4,
+				"min" : 0,
+				"max" : 9,
+				"average" : true,
+				"stddev" : true
+			},
+	
+			{
+				"name": "Auto Low",
+				"field" : "Auto Low",
+				"points": 2,
+				"min" : 0,
+				"max" : 9,
+				"average" : true,
+				"stddev" : true
+			},
+	
+			{
+				"name": "Auto Miss",
+				"field" : "Auto Miss",
+				"points": 0,
+				"min" : 0,
+				"max" : 9,
+				"average" : true,
+				"stddev" : true
+			}
+		],
+		
+		"teleop" : [
+			{
+				"name": "Teleop High",
+				"field" : "Teleop High",
+				"points": 3,
+				"min" : 0,
+				"max" : 35,
+				"average" : true,
+				"stddev" : true
+			},
+	
+			{
+				"name": "Teleop Middle",
+				"field" : "Teleop Middle",
+				"points": 2,
+				"min" : 0,
+				"max" : 35,
+				"average" : true,
+				"stddev" : true
+			},
+	
+			{
+				"name": "Teleop Low",
+				"field" : "Teleop Low",
+				"points": 1,
+				"min" : 0,
+				"max" : 35,
+				"average" : true,
+				"stddev" : true
+			},
+	
+			{
+				"name": "Teleop Pyramid",
+				"field" : "Teleop Pyramid",
+				"points": 5,
+				"min" : 0,
+				"max" : 5,
+				"average" : true,
+				"stddev" : true
+	
+			},
+	
+			{
+				"name": "Teleop Miss",
+				"field" : "Teleop Miss",
+				"points": 0,
+				"min" : 0,
+				"max" : 35,
+				"average" : true,
+				"stddev" : true
+	
+			},
+	
+			{
+				"name": "Discs over Auto Line",
+				"field" : "Discs over Auto Line",
+				"points": 0,
+				"min" : 0,
+				"max" : 35,
+				"average" : true,
+				"stddev" : true
+			},
+	
+			{
+				"name": "Block Shots",
+				"field" : "Block Shots",
+				"points": 0,
+				"min" : 0,
+				"max" : 1,
+				"average" : true,
+				"stddev" : true
+			},
+	
+			{
+				"name": "Speed",
+				"field" : "Speed",
+				"points": 0,
+				"min" : 0,
+				"max" : 5,
+				"average" : true,
+				"stddev" : true
+			}
+		],
+		
+		"endgame": [
+			{
+				"name": "Climb Attempt",
+				"field" : "Climb Attempt",
+				"points": 0,
+				"min" : 0,
+				"max" : 1,
+				"average" : true,
+				"stddev" : true
+			},
+	
+			{
+				"name": "Climb Level",
+				"field" : "Climb Level",
+				"points": 10,
+				"min" : 0,
+				"max" : 3,
+				"average" : true,
+				"stddev" : true
+			}
+		],
+		
+		"other" : [
+			{
+				"name": "Illegal Actions",
+				"field" : "Illegal Actions",
+				"points": 0,
+				"min" : 0,
+				"max" : 1,
+				"average" : true,
+				"stddev" : false
+			}
+		]
+	}
+}

@@ -12,13 +12,13 @@ var express = require('express')
 
 //Routing variables
 var schedule = require('./routes/schedule')
-	, rankings = require('./routes/rankings')
 	, pit = require('./routes/pit')
 	, team = require('./routes/team')
 	, table = require('./routes/table')
 	, match_entry = require('./routes/match-entry')
 	, match = require('./routes/match')
 	, pull = require('./routes/pull')
+	, edit = require("./routes/edit")
 	, administration = require('./routes/administration');
 
 //Configuration variable
@@ -44,7 +44,18 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/schedule', schedule.schedule);
-app.get('/rankings', rankings.rankings);
+app.get('/edit', edit.edit);
+app.get('/edit/schedule/:id', edit.getEditSchedule);
+app.post('/edit/schedule/:id', edit.postEditSchedule);
+app.get('/edit/schedule/delete/:id', edit.getDeleteSchedule);
+app.get('/edit/schedule/add', edit.getAddSchedule);
+app.post('/edit/schedule/add', edit.postAddSchedule);
+app.get('/edit/match-entry/:id', edit.getEditMatchEntry);
+app.post('/edit/match-entry/:id', edit.postEditMatchEntry);
+app.get('/edit/match-entry/delete/:id', edit.getDeleteMatchEntry);
+app.get('/edit/pit/:id', edit.getEditPit);
+app.post('/edit/pit/:id', edit.postEditPit);
+app.get('/edit/pit/delete/:id', edit.getDeletePit);
 app.get('/pit', pit.get);
 app.post('/pit', pit.post);
 app.get('/match-entry', match_entry.get);

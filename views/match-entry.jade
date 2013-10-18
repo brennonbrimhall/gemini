@@ -1,29 +1,96 @@
 extends page
 
-block body
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li(class="active") Match Entry
+
+block content
 	form(id="match", method="post")
-		- for (var i = 0; i < match.length; ++i){
-		label(for=match[i]['field'])=match[i]['name']+":"
-		- if (match[i]['values']){
+		-var teamsRegex = "";
+		-for (var i = 0; i < teams.length; ++i){
+			- teamsRegex = teamsRegex+teams[i]+"|";
+		-}
+		
+		//Preamble
+		label(for="team") Team:
+		input(name="team", type="text", required="required", pattern=teamsRegex, autofocus="autofocus")
+		
+		label(for="match") Match:
+		input(name="match", type="number", step="1", required="required", min=1, max=maxMatchNumber)
+		
+		//Autonomous
+		- for (var i = 0; i < auto.length; ++i){
+		label(for=auto[i]['field'])=auto[i]['name']+":"
+		- if (auto[i].values){
 			- var regexp = "";
-			- for (var j = 0; j < match[i]['values'].length; ++j){
+			- for (var j = 0; j < auto[i].values.length; ++j){
 				- if(j == 0){
-					- regexp = regexp + match[i]['values'][j];
+					- regexp = regexp + match[i].values[j];
 				-}else{
-					- regexp = regexp + "|" + match[i]['values'][j];
+					- regexp = regexp + "|" + match[i].values[j];
 				-}
 			-}
-			- if(i == 0){
-			input(name=match[i]['field'], type="text", required="required", pattern=regexp, autofocus="autofocus")
-			- }else{
-			input(name=match[i]['field'], type="text", required="required", pattern=regexp)
-			- }
+			input(name=auto[i]['field'], type="text", required="required", pattern=regexp)
 		- }else{
-			- if(i == 0){
-			input(name=match[i]['field'], type="number", step="1", required="required", min=match[i]['min'], max=match[i]['max'], autofocus="autofocus")
-			-} else {
-			input(name=match[i]['field'], type="number", step="1", required="required", min=match[i]['min'], max=match[i]['max'])
-			- }
+			input(name=auto[i]['field'], type="number", step="1", required="required", min=auto[i]['min'], max=auto[i]['max'])
 		-}
 		-}
-		input(name="submit", type="submit", value="Submit")
+		
+		//Teleop
+		- for (var i = 0; i < teleop.length; ++i){
+		label(for=teleop[i]['field'])=teleop[i]['name']+":"
+		- if (teleop[i].values){
+			- var regexp = "";
+			- for (var j = 0; j < teleop[i].values.length; ++j){
+				- if(j == 0){
+					- regexp = regexp + match[i].values[j];
+				-}else{
+					- regexp = regexp + "|" + match[i].values[j];
+				-}
+			-}
+			input(name=teleop[i]['field'], type="text", required="required", pattern=regexp)
+		- }else{
+			input(name=teleop[i]['field'], type="number", step="1", required="required", min=teleop[i]['min'], max=teleop[i]['max'])
+		-}
+		-}
+		
+		//Endgame
+		- for (var i = 0; i < endgame.length; ++i){
+		label(for=endgame[i]['field'])=endgame[i]['name']+":"
+		- if (endgame[i].values){
+			- var regexp = "";
+			- for (var j = 0; j < endgame[i].values.length; ++j){
+				- if(j == 0){
+					- regexp = regexp + match[i].values[j];
+				-}else{
+					- regexp = regexp + "|" + match[i].values[j];
+				-}
+			-}
+			input(name=endgame[i]['field'], type="text", required="required", pattern=regexp)
+		- }else{
+			input(name=endgame[i]['field'], type="number", step="1", required="required", min=endgame[i]['min'], max=endgame[i]['max'])
+		-}
+		-}
+		
+		//Other
+		- for (var i = 0; i < other.length; ++i){
+		label(for=other[i]['field'])=other[i]['name']+":"
+		- if (other[i].values){
+			- var regexp = "";
+			- for (var j = 0; j < other[i].values.length; ++j){
+				- if(j == 0){
+					- regexp = regexp + match[i].values[j];
+				-}else{
+					- regexp = regexp + "|" + match[i].values[j];
+				-}
+			-}
+			input(name=other[i]['field'], type="text", required="required", pattern=regexp)
+		- }else{
+			input(name=other[i]['field'], type="number", step="1", required="required", min=other[i]['min'], max=other[i]['max'])
+		-}
+		-}
+		
+		//Submit
+		input(class="btn btn-primary", name="submit", type="submit", value="Submit")

@@ -4,76 +4,220 @@
  */
 
 exports.get = function(req, res){
-	var config = require('../config');
+	var eventHelper = require('./eventHelper');
+	var config = eventHelper.getEventConfig();
 
 	res.render('match-entry', { 
 		title: 'Match Data Entry', 
 		data_recieved: false, 
-		match: config.match,
+		auto: config.match.auto,
+		teleop: config.match.teleop,
+		endgame: config.match.endgame,
+		other: config.match.other,
+		teams: config.teams,
+		maxMatchNumber: config.maxMatchNumber,
+		req: req
 	});
 };
 
 exports.post = function(req, res){
-	var mysql = require('mysql');
-	var sqlite3 = require('sqlite3').verbose();
-    var db = new sqlite3.Database('database.db');
-	var config = require('../config');
-	var connection = mysql.createConnection({
-		host: config.mysql.host,
-		user: config.mysql.username,
-		password: config.mysql.password,
-		database: config.mysql.database,
-	});
+	var Stats = require('brennonbrimhall-stats');
+	var eventHelper = require('./eventHelper');
+    var db = eventHelper.getMatchDatabase();
+	var config = eventHelper.getEventConfig();
+	var async = require('async');
+	
+	async.series([
+		validate(),
+		insert(),
+		calculateSummary(),
+		render()
+	]);
 
-	db.on('error', function(err) {
-        console.log(err);
-        res.render('error', { 
+	function validate(){
+		try{
+			//Validating teams only; everything else should be done client-side.
+			//Special case for teams; discrete set of possibilities
+			var teams = "";
+			for (var i = 0; i < config.teams.length; ++i){
+				if(i === 0){
+					teams = teams+config.teams[i];	
+				}else{
+					teams = teams+"|"+config.teams[i];
+				}
+			}
+			var teamsRegex = new RegExp(teams);
+		
+			if(!teamsRegex.test(String(req.body.team))){
+				res.render('error', { 
+					title: 'Error',
+					err: new Error("Team number is invalid."),
+					data_inputed: true,
+					req: req
+				});
+				return;
+			}
+			
+			//Also checking match number.
+			if(!(Number(req.body.match) > 0) && !(Number(req.body.match) <= config.maxMatchNumber)){
+				res.render('error', { 
+					title: 'Error',
+					err: new Error("Match number is invalid."),
+					data_inputed: true,
+					req: req
+				});
+				return;
+			}
+		}catch(err){
+			res.render('error', {err: err, req: req});
+		}
+	};
+	
+	function insert(){
+		try{
+			//Building object to save
+			var object = {};
+			
+			object.team = req.body.team;
+			object.match = req.body.match;
+			
+			for (var i = 0; i < config.match.auto.length; ++i){
+				object[config.match.auto[i].field] = req.body[config.match.auto[i].field];
+			}
+			
+			for (var i = 0; i < config.match.teleop.length; ++i){
+				object[config.match.teleop[i].field] = req.body[config.match.teleop[i].field];
+			}
+			
+			for (var i = 0; i < config.match.endgame.length; ++i){
+				object[config.match.endgame[i].field] = req.body[config.match.endgame[i].field];
+			}
+			
+			for (var i = 0; i < config.match.other.length; ++i){
+				object[config.match.other[i].field] = req.body[config.match.other[i].field];
+			}
+			
+			try{
+				db.insert(object);
+				db.save();
+			}catch(err){
+				console.log(err.stack);
+				res.render('error', {
+					req: req,
+					title: 'Error',
+					err: err,
+					data_inputed: true
+				});
+			}
+		}catch(err){
+			res.render('error', {err: err, req: req});
+		}
+	}
+	
+	function calculateSummary(){
+		try{
+			var match_data = db.select('team', req.body.team);
+			console.log('[Match Data] '+match_data);
+			var match_averages = {};
+			var match_stddevs = {};
+	
+			//Calculating averages
+			//Auto
+			for (var i = 0; i < config.match.auto.length; i++) {
+				var data = [];
+				for (var j = 0; j < match_data.length; j++) {
+					data.push(Number(match_data[j][config.match.auto[i].field]));
+				}
+				var stats = new Stats(data);
+				var average = stats.mean();
+				var stddev = stats.standardDeviation();
+				match_averages[config.match.auto[i].field] = average;
+				match_stddevs[config.match.auto[i].field] = stddev;
+			}
+			
+			//Teleop
+			for (var i = 0; i < config.match.teleop.length; i++) {
+				var data = [];
+				for (var j = 0; j < match_data.length; j++) {
+					data.push(Number(match_data[j][config.match.teleop[i].field]));
+				}
+				var stats = new Stats(data);
+				var average = stats.mean();
+				var stddev = stats.standardDeviation();
+				match_averages[config.match.teleop[i].field] = average;
+				match_stddevs[config.match.teleop[i].field] = stddev;
+			}
+			
+			//Endgame
+			for (var i = 0; i < config.match.endgame.length; i++) {
+				var data = [];
+				for (var j = 0; j < match_data.length; j++) {
+					data.push(Number(match_data[j][config.match.endgame[i].field]));
+				}
+				var stats = new Stats(data);
+				var average = stats.mean();
+				var stddev = stats.standardDeviation();
+				match_averages[config.match.endgame[i].field] = average;
+				match_stddevs[config.match.endgame[i].field] = stddev;
+			}
+			
+			//Other
+			for (var i = 0; i < config.match.other.length; i++) {
+				var data = [];
+				for (var j = 0; j < match_data.length; j++) {
+					data.push(Number(match_data[j][config.match.other[i].field]));
+				}
+				var stats = new Stats(data);
+				var average = stats.mean();
+				var stddev = stats.standardDeviation();
+				match_averages[config.match.other[i].field] = average;
+				match_stddevs[config.match.other[i].field] = stddev;
+			}
+			
+			match_averages.team = req.body.team;
+			match_stddevs.team = req.body.team;
+			
+			//updating averages entry
+			var averagesdb = eventHelper.getAveragesDatabase();
+			var id = averagesdb.selectOne('team', req.body.team);
+			if(id){
+				averagesdb.update(match_averages, id[0].id)
+			}else{
+				averagesdb.insert(match_averages);	
+			}
+			averagesdb.save();
+			
+			//Updating stddev entry
+			var stddevsdb = eventHelper.getStdDevDatabase();
+			var id = stddevsdb.selectOne('team', req.body.team);
+			if(id){
+				stddevsdb.update(match_stddevs, id[0].id);
+			}else{
+				stddevsdb.insert(match_stddevs);	
+			}
+			stddevsdb.save();
+			
+		}catch(err){
+			console.log(err.stack);
+			res.render('error', {
+				req: req,
+				title: 'Error',
+				err: err
+			});
+		}
+	}
+	
+	function render(){
+		res.render('match-entry', { 
 			title: 'Match Data Entry', 
-			data_inputed: true, 
-			err: err
+			data_recieved: true, 
+			auto: config.match.auto,
+			teleop: config.match.teleop,
+			endgame: config.match.endgame,
+			other: config.match.other,
+			teams: config.teams,
+			maxMatchNumber: config.maxMatchNumber,
+			req: req
 		});
-	})
-
-	//Building query string...
-	var query = "INSERT INTO `match` (";
-	for (var i = 0; i < config.match.length; ++i){
-		if(i === 0){
-			query = query + "`"+config.match[i]['field']+"`";
-		}else{
-			query = query + ", `"+config.match[i]['field']+"`";
-		}
-		
 	}
-
-	query = query + ") VALUES (";
-	for (var i = 0; i < config.match.length; ++i){
-		if(i === 0){
-			query = query + connection.escape(req.body[config.match[i]['field']])+"";
-		}else{
-			query = query + ", " + connection.escape(req.body[config.match[i]['field']])+"";	
-		}
-		
-	}
-
-	query = query + ");";
-
-	db.serialize(function(){
-	   db.all(query, function(err){
-            if(err){
-                console.log(err);
-                res.render('error', {
-                    err: err
-                });
-            }else{
-                res.render('match-entry', { 
-                    title: 'Match Data Entry', 
-                    data_recieved: true, 
-                    error: false,
-                    match: config.match
-                });				  
-            }
-        }); 
-	});
-
-	db.close();
 };

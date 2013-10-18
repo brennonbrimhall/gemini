@@ -3,28 +3,48 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+input, textarea {
+	width: 100%;
+	max-width: 100%;
+}
+
+.match-team-image {
+	width: 100%;
+}
+
+.stats {
+	margin-top: 10px;
+}
+
+#edit-schedule{
+	float:right;
+}
+
+#username {
+	float:right;
+}
+
 a, .ui-link {
 	color: rgb(51,51,51);
 }
 
 #schedule-winner {
-	background-color: #ddd;
-}
-
-#left-panel {
-	width: 56%;
-	float: left;
-	padding: 2%;
-}
-
-#right-panel {
-	width: 35%;
-	float: right;
-	padding: 2%;
+	background-color: #eee;
 }
 
 #robot-picture {
 	max-width: 100%;
+	width: 100%;
+}
+
+#robot-pictures-carousel {
+	width: 50%;
+}
+
+#sidebar-nav {
+	width: 13%;
+	background-color: #fff;
+	z-index: 20;
 }
 
 #red-alliance {
@@ -50,6 +70,12 @@ a, .ui-link {
 	font: 10px;
 }
 
-.ui-table-reflow.ui-responsive {
-    display: table !important;
+h2 {
+	padding-top: 5%;
+	padding-bottom: 1%;
+}
+
+h3 {
+	padding-top: 1%;
+	padding-bottom: 1%;
 }

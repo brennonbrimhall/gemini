@@ -4,211 +4,48 @@
  */
 
 exports.match = function(req, res){
-	var sqlite3 = require('sqlite3').verbose();
-    var db = new sqlite3.Database('database.db');
-	var config = require('../config');
+	var eventHelper = require('./eventHelper');
+	var config = eventHelper.getEventConfig();
+	var scheduledb = eventHelper.getScheduleDatabase();
+	var averagesdb = eventHelper.getAveragesDatabase();
+	var pitdb = eventHelper.getPitDatabase();
 
-	db.on('error', function(err){
+	try{
+		var schedule_data = scheduledb.select('match', req.param('number'));
+		
+		//Checking for null
+		if(schedule_data){
+			schedule_data = schedule_data[0];
+			var red1 = {number: schedule_data.red1, pit: pitdb.select('team', schedule_data.red1), averages: averagesdb.select('team', schedule_data.red1)[0]};
+			var red2 = {number: schedule_data.red2, pit: pitdb.select('team', schedule_data.red2), averages: averagesdb.select('team', schedule_data.red2)[0]};
+			var red3 = {number: schedule_data.red3, pit: pitdb.select('team', schedule_data.red3), averages: averagesdb.select('team', schedule_data.red3)[0]};
+			var blue1 = {number: schedule_data.blue1, pit: pitdb.select('team', schedule_data.blue1), averages: averagesdb.select('team', schedule_data.blue1)[0]};
+			var blue2 = {number: schedule_data.blue2, pit: pitdb.select('team', schedule_data.blue2), averages: averagesdb.select('team', schedule_data.blue2)[0]};
+			var blue3 = {number: schedule_data.blue3, pit: pitdb.select('team', schedule_data.blue3), averages: averagesdb.select('team', schedule_data.blue3)[0]};
+			
+			res.render('match', {title: 'Match '+req.param('number'), number: req.param('number'), red1: red1, red2: red2, red3: red3, blue1: blue1, blue2: blue2, blue3: blue3, pit: config.pit, image: config.image, match: config.match, req:req})
+			
+		}else{
+			throw new Error("The match requested does not exist in the schedule.");
+		}
+		
+	}catch(err){
 		res.render('error', {
-			err: err
-		});
-	});
-
-	var pit_data = new Array();
-	var schedule_data = new Array();
-	var match_data = new Array();
-
-	//Grabbing schedule info for this match
-	db.serialize(function(){
-        db.all("SELECT * FROM `schedule` WHERE `match` = ?;", req.param('number'), function(err, rows){
-            if(err){
-                console.log(err);
-                res.render('error', {
-                    err: err
-                });
-            }else{
-                schedule_data = rows;
-                
-                db.serialize(function(){
-                    db.all("SELECT * FROM `match` WHERE `team` ="+schedule_data[0]['red1']+" ORDER BY `match`;", function(err, rows){
-                        if(err) {
-                            res.render('error', {
-                                err: err
-                            });
-                        }else{
-                        	match_data['red1'] = rows;	
-                        }
-                    });
-                    
-					db.all("SELECT * FROM `match` WHERE `team` ="+schedule_data[0]['red2']+" ORDER BY `match`;", function(err, rows){
-						if(err) {
-							res.render('error', {
-								err: err
-							});
-						}else{
-							match_data['red2'] = rows;
-						}
-					});
-					
-					db.all("SELECT * FROM `match` WHERE `team` ="+schedule_data[0]['red3']+" ORDER BY `match`;", 
-						function(err, results){
-							if(err) {
-								res.render('error', {
-									err: err
-								});
-							}
-							match_data['red3'] = results;
-						}
-					);
-					
-					db.all("SELECT * FROM `match` WHERE `team` ="+schedule_data[0]['blue1']+" ORDER BY `match`;", 
-						function(err, results){
-							if(err) {
-								res.render('error', {
-									err: err
-								});
-							}
-							match_data['blue1'] = results;
-						}
-					);
-					
-					db.all("SELECT * FROM `match` WHERE `team` ="+schedule_data[0]['blue2']+" ORDER BY `match`;", 
-						function(err, results){
-							if(err) {
-								res.render('error', {
-									err: err
-								});
-							}
-							match_data['blue2'] = results;
-						}
-					);
-					
-					db.all("SELECT * FROM `match` WHERE `team` ="+schedule_data[0]['blue3']+" ORDER BY `match`;", 
-						function(err, results){
-							if(err) {
-								res.render('error', {
-									err: err
-								});
-							}
-							match_data['blue3'] = results;
-						}
-					);
-					
-					db.all("SELECT * FROM `pit` WHERE `team` = "+schedule_data[0]['red1']+";", 
-						function(err, results) {
-							console.log("Got pit data")
-							if (err) {
-								res.render('error', {
-									err: err
-								});
-							}
-							pit_data['red1'] = results[0];
-						}
-					);
-					
-					db.all("SELECT * FROM `pit` WHERE `team` = "+schedule_data[0]['red2']+";", 
-						function(err, results) {
-							console.log("Got pit data")
-							if (err) {
-								res.render('error', {
-									err: err
-								});
-							}
-							pit_data['red2'] = results[0];
-						}
-					);
-					
-					db.all("SELECT * FROM `pit` WHERE `team` = "+schedule_data[0]['red3']+";", 
-						function(err, results) {
-							console.log("Got pit data")
-							if (err) {
-								res.render('error', {
-									err: err
-								});
-							}
-							pit_data['red3'] = results[0];
-						}
-					);
-					
-					db.all("SELECT * FROM `pit` WHERE `team` = "+schedule_data[0]['blue1']+";", 
-						function(err, results) {
-							console.log("Got pit data")
-							if (err) {
-								res.render('error', {
-									err: err
-								});
-							}
-							pit_data['blue1'] = results[0];
-						}
-					);
-					
-					db.all("SELECT * FROM `pit` WHERE `team` = "+schedule_data[0]['blue2']+";", 
-						function(err, results) {
-							console.log("Got pit data")
-							if (err) {
-								res.render('error', {
-									err: err
-								});
-							}
-							pit_data['blue2'] = results[0];
-						}
-					);
-					
-					db.all("SELECT * FROM `pit` WHERE `team` = "+schedule_data[0]['blue3']+";", 
-						function(err, results) {
-							console.log("Got pit data")
-							if (err) {
-								res.render('error', {
-									err: err
-								});
-							}
-							pit_data['blue3'] = results[0];
-							
-							res.render('match', {
-									title: 'Match '+req.param('number'), 
-									number: req.param('number'), 
-									image: config.image,
-									pit: config.pit,
-									pit_data: pit_data,
-									match_data: match_data,
-									match: config.match,
-									schedule: schedule_data 
-								}
-							);
-						}
-					);
-                });
-            }
+			req: req,
+            err: err,
+            title: 'Error'
         });
-	});
+	}
+	
 };
 
 exports.lookup = function(req, res){
-	var sqlite3 = require('sqlite3').verbose();
-    var db = new sqlite3.Database('database.db');
-	var config = require('../config');
-	console.log("database: "+config.mysql.database);
+	var eventHelper = require('./eventHelper');
+	var eventConfig = eventHelper.getEventConfig();
 	
-	db.on('error', function(err){
-		res.render('error', {
-			err: err
-		});
-	});
-	
-	db.all("SELECT DISTINCT(`match`) FROM `schedule`;", function(err, results) {
-		if (err) {
-			console.log(err);
-			res.render('error', { 
-				title: 'Match Lookup', 
-				data_inputed: false, 
-				err: err
-			});
-		}else{
-			console.log(JSON.stringify(results));
-			res.render('match-lookup', {
-				title: 'Match Lookup', 
-				matches: results
-			});
-		}
+	res.render('match-lookup', {
+		req: req,
+		title: 'Match Lookup', 
+		maxMatchNumber: eventConfig.maxMatchNumber
 	});
 };

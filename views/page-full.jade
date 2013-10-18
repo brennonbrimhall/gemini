@@ -5,6 +5,7 @@ html
 		script(src='/jquery/jquery-2.0.3.min.js')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
 		link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+		script(src='/bootstrap/js/bootstrap.min.js')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 		script(src='/javascripts/datatables.js')
 		script(src='/javascripts/link-sort-datatables.js')
@@ -17,7 +18,7 @@ html
 			li(id='ip', class="pull-right")=req.ip
 			-}else{}
 		div(class='row-fluid')
-			div(class='span1')
+			div(class='span2')
+				block sidebar
 			div(class='span10')
 				block content
-			div(class='span1')

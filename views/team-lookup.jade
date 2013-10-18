@@ -1,8 +1,22 @@
 extends page
 
-block body
-	ul(data-role='listview', data-inset='true', data-filter="true")
-		- for(var i = 0; i < teams.length; ++i) {
-		li
-			a(href="../team/"+teams[i]['team'])=teams[i]['team']
-		- }
+block scripts
+		script(src='/javascripts/team-lookup-table.js')
+
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li(class="active") Team Lookup
+
+block content
+	table(id="team-lookup", class="table table-striped table-bordered dataTable")
+		thead
+			tr
+				th Team Number
+		tbody
+			- for(var i = 0; i < teams.length; ++i) {
+			tr
+				td
+					a(href="../team/"+teams[i])=teams[i]
+			- }

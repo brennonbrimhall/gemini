@@ -1,18 +1,27 @@
 extends page
 
-block body
-	table(id="schedule", data-role="table", data-mode="columntoggle", class="ui-responsive table-stroke")
+block scripts
+		script(src='/javascripts/schedule-table.js')
+
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li(class="active") Schedule
+
+block content
+	table(id="schedule", class="table table-striped table-bordered dataTable")
 		thead
 			tr
 				th Match Number
-				th(data-priority="1") Red 1
-				th(data-priority="2") Red 2
-				th(data-priority="3") Red 3
-				th(data-priority="4") Blue 1
-				th(data-priority="5") Blue 2
-				th(data-priority="6") Blue 3
-				th(data-priority="5") Red Score
-				th(data-priority="6") Blue Score
+				th Red 1
+				th Red 2
+				th Red 3
+				th Blue 1
+				th Blue 2
+				th Blue 3
+				th Red Score
+				th Blue Score
 		tbody
 			- for (var i = 0; i < schedule.length; ++i){
 				tr
@@ -68,5 +77,5 @@ block body
 						td=schedule[i].redScore
 						td=schedule[i].blueScore
 					-}
-
 			-}
+	a(href='/edit#Schedule', class="btn btn-green", id="edit-schedule") Edit Schedule

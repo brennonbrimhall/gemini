@@ -1,191 +1,290 @@
-extends page
+extends page-full
 
-block head
+block scripts
+	//script(src='/javascripts/schedule-table.js')
+	//script(src='/javascripts/image-carousel.js')
+	script(src='/javascripts/team.js')
 
-block body
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li 
+		a(href="/team") Team
+		span(class="divider") /
+	li(class="active")=number
 
-	div(id="split-content")
-		div(id="left-panel")
-			div(data-role="collapsible", data-collapsed="false", data-content-theme="d")
-				h2 Schedule
-				table(id="schedule", data-role="table", data-mode="columntoggle", class="ui-responsive table-stroke")
-					thead
-						tr
-							th Match Number
-							th(data-priority="1") Red 1
-							th(data-priority="2") Red 2
-							th(data-priority="3") Red 3
-							th(data-priority="4") Blue 1
-							th(data-priority="5") Blue 2
-							th(data-priority="6") Blue 3
-							th(data-priority="5") Red Score
-							th(data-priority="6") Blue Score
-					tbody
-						- for (var i = 0; i < schedule.length; ++i){
-							tr
-								- if (schedule[i].redScore > schedule[i].blueScore){
-									td
-										a(href="../match/"+schedule[i].match)=schedule[i].match
-									td(id="schedule-winner")
-										a(href="../team/"+schedule[i].red1)=schedule[i].red1
-									td(id="schedule-winner")
-										a(href="../team/"+schedule[i].red2)=schedule[i].red2
-									td(id="schedule-winner")
-										a(href="../team/"+schedule[i].red3)=schedule[i].red3
-									td
-										a(href="../team/"+schedule[i].blue1)=schedule[i].blue1
-									td
-										a(href="../team/"+schedule[i].blue2)=schedule[i].blue2
-									td
-										a(href="../team/"+schedule[i].blue3)=schedule[i].blue3
-									td(id="schedule-winner")=schedule[i].redScore
-									td=schedule[i].blueScore			
-								-} else if (schedule[i].redScore < schedule[i].blueScore){
-									td
-										a(href="../match/"+schedule[i].match)=schedule[i].match
-									td
-										a(href="../team/"+schedule[i].red1)=schedule[i].red1
-									td
-										a(href="../team/"+schedule[i].red2)=schedule[i].red2
-									td
-										a(href="../team/"+schedule[i].red3)=schedule[i].red3
-									td(id="schedule-winner")
-										a(href="../team/"+schedule[i].blue1)(id="schedule-winner")=schedule[i].blue1
-									td(id="schedule-winner")
-										a(href="../team/"+schedule[i].blue2)=schedule[i].blue2
-									td(id="schedule-winner")
-										a(href="../team/"+schedule[i].blue3)=schedule[i].blue3
-									td=schedule[i].redScore
-									td(id="schedule-winner")=schedule[i].blueScore  
-								-} else {
-									td
-										a(href="../match/"+schedule[i].match)=schedule[i].match
-									td
-										a(href="../team/"+schedule[i].red1)=schedule[i].red1
-									td
-										a(href="../team/"+schedule[i].red2)=schedule[i].red2
-									td
-										a(href="../team/"+schedule[i].red3)=schedule[i].red3
-									td
-										a(href="../team/"+schedule[i].blue1)=schedule[i].blue1
-									td
-										a(href="../team/"+schedule[i].blue2)=schedule[i].blue2
-									td
-										a(href="../team/"+schedule[i].blue3)=schedule[i].blue3
-									td=schedule[i].redScore
-									td=schedule[i].blueScore
-								-}
+block sidebar
+	ul(id="sidebar-nav", class='nav nav-tabs nav-stacked affix')
+		li
+			a(href='#images') Images
+		li
+			a(href='#schedule') Schedule
+		li
+			a(href='#match-scouting') Match Scouting Data
+		li
+			a(href='#pit-scouting') Pit Scouting Data
 
-						-}
-		div(id="right-panel")
-			div(data-role="collapsible-set", data-theme="c", data-content-theme="d")
-				- for(var i = 0; i < image.length; ++i) {
-				- if(i == 0) {
-				div(data-role="collapsible", data-collapsed="false")
-					h3=image[i]['name']
-					img(id="robot-picture", src="http://www.sik.team20.com/images/2013/"+number+image[i]['suffix']+".JPG")
-				- } else {
-				div(data-role="collapsible")
-					h3=image[i]['name']
-					img(id="robot-picture", src="http://www.sik.team20.com/images/2013/"+number+image[i]['suffix']+".JPG")
-				- }
-				- }
+block content
+	h1=number
+
+	h2(id='images') Images
+	div(id="robot-pictures-carousel",class="carousel slide")
+		//Carousel items
+		div(class="carousel-inner")
+			div(class="active item")
+				img(id="robot-picture", src="/pictures/"+number+".JPG")
+				div(class="carousel-caption")
+					p Overview
+			- for(var i = 0; i < image.length; ++i) {
+			div(class="item")
+				img(id="robot-picture", src="http://www.sik.team20.com/images/2013/thumbnails/tn_"+number+image[i]['suffix']+".JPG")
+				div(class="carousel-caption")
+					p=image[i]['name']
+			-}
+		//Carousel nav
+		a(class="carousel-control left",href="#robot-pictures-carousel",data-slide="prev", onclick="pause()")&lsaquo;
+		a(class="carousel-control right",href="#robot-pictures-carousel",data-slide="next", onclick="pause()")&rsaquo;
 	
-	div(data-role="collapsible", data-collapsed="false", style="clear:both")
-		h2 Match Scouting Data
-		- if(match_data == null) {
-		p No match data is available yet for this team.
-		- } else {
-		div(data-role="collapsible", data-collapsed="false")
-			h3 Summary Statistics
-			div(data-role="collapsible", data-content-theme="d", data-collapsed="false")
-				h3 Averages 
-				table(id="average", data-role="table", data-mode="columntoggle", class="ui-responsive table-stroke")
-					thead
-						tr
-							- for(var i = 0; i < match.length; i++){
-							th(data-priority=i+1)=match[i]['name']
-							- }
-							th(data-priority=i+2) Points Contributed
-					tbody
-						tr
-						- for(var j = 0; j < match.length; ++j) {
-							-if(match[j]['average']){
-							td=Math.round(match_averages[match[j]['field']]*100)/100
-							-}else{
-							td 
-							-}
-						- }
-							td=Math.round(points_average*100)/100
-			div(data-role="collapsible", data-collapsed="true", data-content-theme="d")
-				h3 Standard Deviation
-				table(id="average", data-role="table", data-mode="columntoggle", class="ui-responsive table-stroke")
-					thead
-						tr
-							- for(var i = 0; i < match.length; i++){
-							th(data-priority=i+1)=match[i]['name']
-							- }
-							th(data-priority=i+2) Points Contributed
-					tbody
-						tr
-						- for(var j = 0; j < match.length; ++j) {
-							-if(match[j]['stddev']){
-							td=Math.round(match_stddevs[match[j]['field']]*100)/100
-							-}else{
-							td 
-							-}
-						- }
-							td=Math.round(points_stddev*100)/100
-			div(data-role="collapsible", data-collapsed="true", data-content-theme="d")
-				h3 Consistency/Expected Elimination Performance
-				table(id="average", data-role="table", data-mode="columntoggle", class="ui-responsive table-stroke")
-					thead
-						tr
-							- for(var i = 0; i < match.length; i++){
-							th(data-priority=i+1)=match[i]['name']
-							- }
-							th(data-priority=i+2) Points Contributed
-					tbody
-						tr
-						- for(var j = 0; j < match.length; ++j) {
-							-if(match[j]['stddev'] && match[j]['average']){
-							td=Math.round((match_averages[match[j]['field']]+(-.44*match_stddevs[match[j]['field']]))*100)/100
-							-}else{
-							td 
-							-}
-						- }
-							td=Math.round((points_average+(-.44*points_stddev))*100)/100
-		div(data-role="collapsible", data-content-theme="d")
-			h3 Individual Matches
-			table(id="match", data-role="table", data-mode="columntoggle", class="ui-responsive table-stroke")
-				thead
-					tr
-						- for(var i = 0; i < match.length; i++){
-						th(data-priority=i+1)=match[i]['name']
-						- }
-						th(data-priority=i+2) Points Contributed
-				tbody
-				- for(var i = 0; i < match_data.length; ++i){
-					- var points = 0;
-					tr
-						- for(var j = 0; j < match.length; ++j) {
-						td=match_data[i][match[j]['field']]
-							- points = points + match_data[i][match[j]['field']]*match[j]['points'];
-						- }
-						td=points
+	h2(id="schedule") Schedule
+	table(id="schedule-table", class="table table-striped table-bordered dataTable")
+		thead
+			tr
+				th Match Number
+				th(data-priority="1") Red 1
+				th(data-priority="2") Red 2
+				th(data-priority="3") Red 3
+				th(data-priority="4") Blue 1
+				th(data-priority="5") Blue 2
+				th(data-priority="6") Blue 3
+				th(data-priority="5") Red Score
+				th(data-priority="6") Blue Score
+		tbody
+			- for (var i = 0; i < schedule.length; ++i){
+			tr
+				-if (schedule[i].redScore > schedule[i].blueScore){
+				td
+					a(href="../match/"+schedule[i].match)=schedule[i].match
+				td(id="schedule-winner")
+					a(href="../team/"+schedule[i].red1)=schedule[i].red1
+				td(id="schedule-winner")
+					a(href="../team/"+schedule[i].red2)=schedule[i].red2
+				td(id="schedule-winner")
+					a(href="../team/"+schedule[i].red3)=schedule[i].red3
+				td
+					a(href="../team/"+schedule[i].blue1)=schedule[i].blue1
+				td
+					a(href="../team/"+schedule[i].blue2)=schedule[i].blue2
+				td
+					a(href="../team/"+schedule[i].blue3)=schedule[i].blue3
+				td(id="schedule-winner")=schedule[i].redScore
+				td=schedule[i].blueScore			
+				-} else if (schedule[i].redScore < schedule[i].blueScore){
+				td
+					a(href="../match/"+schedule[i].match)=schedule[i].match
+				td
+					a(href="../team/"+schedule[i].red1)=schedule[i].red1
+				td
+					a(href="../team/"+schedule[i].red2)=schedule[i].red2
+				td
+					a(href="../team/"+schedule[i].red3)=schedule[i].red3
+				td(id="schedule-winner")
+					a(href="../team/"+schedule[i].blue1)(id="schedule-winner")=schedule[i].blue1
+				td(id="schedule-winner")
+					a(href="../team/"+schedule[i].blue2)=schedule[i].blue2
+				td(id="schedule-winner")
+					a(href="../team/"+schedule[i].blue3)=schedule[i].blue3
+				td=schedule[i].redScore
+				td(id="schedule-winner")=schedule[i].blueScore  
+				-} else {
+				td
+					a(href="../match/"+schedule[i].match)=schedule[i].match
+				td
+						a(href="../team/"+schedule[i].red1)=schedule[i].red1
+				td
+					a(href="../team/"+schedule[i].red2)=schedule[i].red2
+				td
+					a(href="../team/"+schedule[i].red3)=schedule[i].red3
+				td
+					a(href="../team/"+schedule[i].blue1)=schedule[i].blue1
+				td
+					a(href="../team/"+schedule[i].blue2)=schedule[i].blue2
+				td
+					a(href="../team/"+schedule[i].blue3)=schedule[i].blue3
+				td=schedule[i].redScore
+				td=schedule[i].blueScore
+				-}
+			-}
+	h2(id='match-scouting') Match Scouting Data
+	-if(match_averages[0]){
+	h3 Averages
+	table(id="averages", class="table table-striped table-bordered dataTable")
+		thead
+			tr
+				- for(var i = 0; i < match.auto.length; i++){
+				th(data-priority=i+1)=match.auto[i]['name']
 				- }
-				- var matchesPlayed = i;
-			div(data-role="collapsible", data-collapsed="false", style="clear:both")
-		-}
-
-	div(data-role="collapsible", data-collapsed="false", style="clear:both")
-		h2 Pit Scouting Data
-		- if (pit_data == null) {
-			p No pit data is available yet for this team.
-		- } else {
-			- for(var i = 0; i < pit.length; ++i) {
-				div(data-role="collapsible", data-content-theme="d")
-					h4=pit[i]['name']
-					p=pit_data[pit[i]['field']]
+				- for(var i = 0; i < match.teleop.length; i++){
+				th(data-priority=i+1)=match.teleop[i]['name']
+				- }
+				- for(var i = 0; i < match.endgame.length; i++){
+				th(data-priority=i+1)=match.endgame[i]['name']
+				- }
+				- for(var i = 0; i < match.other.length; i++){
+				th(data-priority=i+1)=match.other[i]['name']
+				- }
+				th(data-priority=i+2) Points Contributed
+		tbody
+			tr
+				-var points = 0;
+				-for(var j = 0; j < match.auto.length; j++) {
+				- points = points + Math.round(match_averages[0][match.auto[j]['field']]*100)/100*match.auto[j]['points'];
+				-if(match.auto[j]['average']){
+				td=Math.round(match_averages[0][match.auto[j]['field']]*100)/100
+				-}else{
+				td
+				-}
+				-}
+				
+				-for(var j = 0; j < match.teleop.length; j++) {
+				- points = points + Math.round(match_averages[0][match.teleop[j]['field']]*100)/100*match.teleop[j]['points'];
+				-if(match.teleop[j]['average']){
+				td=Math.round(match_averages[0][match.teleop[j]['field']]*100)/100
+				-}else{
+				td
+				-}
+				-}
+				
+				-for(var j = 0; j < match.endgame.length; j++) {
+				- points = points + Math.round(match_averages[0][match.endgame[j]['field']]*100)/100*match.endgame[j]['points'];
+				-if(match.endgame[j]['average']){
+				td=Math.round(match_averages[0][match.endgame[j]['field']]*100)/100
+				-}else{
+				td
+				-}
+				-}
+				
+				-for(var j = 0; j < match.other.length; j++) {
+				- points = points + Math.round(match_averages[0][match.other[j]['field']]*100)/100*match.other[j]['points'];
+				-if(match.other[j]['average']){
+				td=Math.round(match_averages[0][match.other[j]['field']]*100)/100
+				-}else{
+				td
+				-}
+				-}
+				td=points
+	-}
+	
+	-if(match_stddevs[0]){
+	h3 Standard Deviations
+	table(id="stddevs", class="table table-striped table-bordered dataTable")
+		thead
+			tr
+				- for(var i = 0; i < match.auto.length; i++){
+				th(data-priority=i+1)=match.auto[i]['name']
+				- }
+				- for(var i = 0; i < match.teleop.length; i++){
+				th(data-priority=i+1)=match.teleop[i]['name']
+				- }
+				- for(var i = 0; i < match.endgame.length; i++){
+				th(data-priority=i+1)=match.endgame[i]['name']
+				- }
+				- for(var i = 0; i < match.other.length; i++){
+				th(data-priority=i+1)=match.other[i]['name']
+				- }
+				th(data-priority=i+2) Points Contributed
+		tbody
+			tr
+				-var points = 0;
+				-for(var j = 0; j < match.auto.length; j++) {
+				- points = points + Math.round(match_stddevs[0][match.auto[j]['field']]*100)/100*match.auto[j]['points'];
+				-if(match.auto[j]['stddev']){
+				td=Math.round(match_stddevs[0][match.auto[j]['field']]*100)/100
+				-}else{
+				td
+				-}
+				-}
+				
+				-for(var j = 0; j < match.teleop.length; j++) {
+				- points = points + Math.round(match_stddevs[0][match.teleop[j]['field']]*100)/100*match.teleop[j]['points'];
+				-if(match.teleop[j]['stddev']){
+				td=Math.round(match_stddevs[0][match.teleop[j]['field']]*100)/100
+				-}else{
+				td
+				-}
+				-}
+				
+				-for(var j = 0; j < match.endgame.length; j++) {
+				- points = points + Math.round(match_stddevs[0][match.endgame[j]['field']]*100)/100*match.endgame[j]['points'];
+				-if(match.endgame[j]['stddev']){
+				td=Math.round(match_stddevs[0][match.endgame[j]['field']]*100)/100
+				-}else{
+				td
+				-}
+				-}
+				
+				-for(var j = 0; j < match.other.length; j++) {
+				- points = points + Math.round(match_stddevs[0][match.other[j]['field']]*100)/100*match.other[j]['points'];
+				-if(match.other[j]['stddev']){
+				td=Math.round(match_stddevs[0][match.other[j]['field']]*100)/100
+				-}else{
+				td
+				-}
+				-}
+				td=points
+	-}
+	
+	h3 Individual Matches
+	table(id="match", class="table table-striped table-bordered dataTable")
+		thead
+			tr
+				th Match
+				- for(var i = 0; i < match.auto.length; i++){
+				th=match.auto[i]['name']
+				- }
+				- for(var i = 0; i < match.teleop.length; i++){
+				th=match.teleop[i]['name']
+				- }
+				- for(var i = 0; i < match.endgame.length; i++){
+				th=match.endgame[i]['name']
+				- }
+				- for(var i = 0; i < match.other.length; i++){
+				th=match.other[i]['name']
+				- }
+				th Points Contributed
+		tbody
+			- for(var i = 0; i < match_data.length; i++){
+			- var points = 0;
+			tr
+				td=match_data[i].match
+				- for(var j = 0; j < match.auto.length; j++){
+				td=match_data[i][match.auto[j]['field']]
+					- points = points + match_data[i][match.auto[j]['field']]*match.auto[j]['points'];
+				- }
+				- for(var j = 0; j < match.teleop.length; j++){
+				td=match_data[i][match.teleop[j]['field']]
+					- points = points + match_data[i][match.teleop[j]['field']]*match.teleop[j]['points'];
+				- }
+				- for(var j = 0; j < match.endgame.length; j++){
+				td=match_data[i][match.endgame[j]['field']]
+					- points = points + match_data[i][match.endgame[j]['field']]*match.endgame[j]['points'];
+				- }
+				- for(var j = 0; j < match.other.length; j++){
+				td=match_data[i][match.other[j]['field']]
+					- points = points + match_data[i][match.other[j]['field']]*match.other[j]['points'];
+				- }
+				td=points
 			- }
+			- var matchesPlayed = i;
+	
+	h2(id="pit-scouting") Pit Scouting Data
+	- if (pit_data == null || pit_data[0] == null) {
+		div(class="well")
+			p No pit data is available yet for this team.
+	- } else {
+		- for(var i = 0; i < pit.length; ++i) {
+		div(class="well")
+			h4=pit[i]['name']
+			p=pit_data[0][pit[i]['field']]
 		- }
+	- }

@@ -4,6 +4,9 @@ block header
 	li 
 		a(href="/") Gemini Scouting System
 		span(class="divider") /
+	li 
+		a(href="/edit") Edit
+		span(class="divider") /
 	li(class="active") Pit Entry
 
 block content
@@ -15,10 +18,10 @@ block content
 		
 		//Preamble
 		label(for="team") Team:
-		input(name="team", type="text", required="required", pattern=teamsRegex, autofocus="autofocus")
+		input(name="team", type="text", required="required", pattern=teamsRegex, autofocus="autofocus", placeholder=pit_data.team)
 		
 		- for (var i = 0; i < pit.length; ++i){
 		label(for=pit[i]['field'])=pit[i]['name']+":"
-		textarea(name=pit[i]['field'])
+		textarea(name=pit[i]['field'], placeholder=pit_data[pit[i]['field']])
 		-}
 		input(class="btn btn-primary", name="submit", type="submit", value="Submit")

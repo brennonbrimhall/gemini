@@ -1,29 +1,46 @@
 extends page
 
-block body
-	ul(data-role='listview', data-inset='true')
-		li(data-role="list-divider") General
+block header
+		li(class='active') Gemini Scouting System
+block content
+	h5 General
+	ul(class='nav nav-tabs nav-stacked')
 		li
 			a(href='/schedule') Match Schedule
-		li
+		//li
 			a(href='/rankings') Rankings
-			
-		li(data-role="list-divider") Scouting
+	h5 Data Entry
+	ul(class='nav nav-tabs nav-stacked')
 		li
 			a(href='/pit') Pit Scouting Entry
 		li
 			a(href='/match-entry') Match Scouting Entry
-		
-		li(data-role="list-divider") Strategy
+		//li
+			a(href='/video-entry') Video Scouting Entry
+	h5 Strategy
+	ul(class='nav nav-tabs nav-stacked')
 		li
 			a(href='/table') Averages Table
 		li
-			a(href='/match') Match Lookup
-		li
 			a(href='/team') Team Lookup
-		
-		li(data-role="list-divider") Administration
 		li
-			a(href='/pull') Pull Data
+			a(href='/match') Match Lookup
+	-//if(req.ip == '127.0.0.1'){
+	h5 Administration
+	ul(class='nav nav-tabs nav-stacked')
 		li
-			a(href='/manage') Manage System
+			a(href='/edit') Edit Data
+		li
+			a(href='/configuration') Configuration Settings
+		li
+			a(href='/pull') Pull from Master Server
+	-//}
+	
+	fieldset         
+		div(class="control-group")
+			label(class="control-label") Select:
+		div(class="controls")
+			select
+				option(value="1") Option 1
+				option(value="2") Option 1
+				option(value="3") Option 1

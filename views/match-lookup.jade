@@ -1,8 +1,22 @@
 extends page
 
-block body
-	ul(data-role='listview', data-inset='true', data-filter="true")
-		- for(var i = 0; i < matches.length; ++i) {
-		li
-			a(href="../match/"+matches[i]['match'])=matches[i]['match']
-		- }
+block scripts
+		script(src='/javascripts/match-lookup-table.js')
+
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li(class="active") Match Lookup
+
+block content
+	table(id="match-lookup", class="table table-striped table-bordered dataTable")
+		thead
+			tr
+				th Match Number
+		tbody
+			- for(var i = 0; i < maxMatchNumber; ++i) {
+			tr
+				td
+					a(href="../match/"+(i+1))=(i+1)
+			- }
