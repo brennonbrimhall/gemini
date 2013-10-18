@@ -159,7 +159,7 @@ block content
 		tbody
 			- for(var i = 0; i < pit_data.length; i++){
 			tr
-				td=match_data[i].team
+				td=pit_data[i].team
 				- for(var j = 0; j < pit.length; j++){
 				td=pit_data[i][pit[j]['field']]
 				- }
