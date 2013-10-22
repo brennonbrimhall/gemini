@@ -1,0 +1,29 @@
+extends page
+
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li(class="active") Image Entry
+	
+block content
+	form(id="image-form", method="post", enctype="multipart/form-data")
+		-var teamsRegex = "";
+		-for (var i = 0; i < teams.length; ++i){
+			- teamsRegex = teamsRegex+teams[i]+"|";
+		-}
+		
+		fieldset
+			label(for="team") Team:
+			input(name="team", type="text", required="required", pattern=teamsRegex, autofocus="autofocus")
+		fieldset	
+			label(for="type") Image Type:
+			select(id="type")
+				-for(var i = 0; i<image.length; i++){
+				option(value=image[i].name)=image[i].name
+				-}
+		fieldset
+			label(for="image") Image to Upload:
+			input(type="file" id="image", name="image", name="image")
+			
+		input(class="btn btn-primary", name="submit", type="submit", value="Submit")

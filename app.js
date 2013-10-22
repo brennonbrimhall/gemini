@@ -13,6 +13,7 @@ var express = require('express')
 //Routing variables
 var schedule = require('./routes/schedule')
 	, pit = require('./routes/pit')
+	, image = require('./routes/image')
 	, team = require('./routes/team')
 	, table = require('./routes/table')
 	, match_entry = require('./routes/match-entry')
@@ -68,6 +69,10 @@ app.get('/edit/pit/:id', edit.getEditPit);
 app.post('/edit/pit/:id', edit.postEditPit);
 app.get('/edit/pit/delete/:id', edit.getDeletePit);
 
+//Image entry
+app.get('/image-entry', image.get);
+app.post('/image-entry', image.post);
+
 //Pit
 app.get('/pit', pit.get);
 app.post('/pit', pit.post);
@@ -89,7 +94,7 @@ app.get('/match/:number', match.match);
 app.get('/match', match.lookup);
 
 //Manage
-app.get('/manage', administration.manage);
+//app.get('/manage', administration.manage);
 
 //Pull
 app.get('/data', pull.data);

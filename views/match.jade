@@ -54,8 +54,10 @@ block content
 			p(class="well stats") No averages have been computed for this team.  Try adding more matches.
 			- } 
 		div(class="span4")
-			h3=red2.number
-			img(src="/pictures/"+red2.number+image[0].suffix+".JPG", class="img-polaroid match-team-image")
+			a(href="/team/"+red2.number)
+				h3=red2.number
+			a(href="/team/"+red2.number)
+				img(src="/pictures/"+red2.number+image[0].suffix+".JPG", class="img-polaroid match-team-image")
 			- if(red2.averages){
 			- var autopoints = 0, teleoppoints = 0, endgamepoints = 0, otherpoints = 0;
 			- for(var i = 0; i < match.auto.length; i++){
@@ -92,8 +94,10 @@ block content
 			p(class="well stats") No averages have been computed for this team.  Try adding more matches.
 			- } 
 		div(class="span4")
-			h3=red3.number
-			img(src="/pictures/"+red3.number+image[0].suffix+".JPG", class="img-polaroid match-team-image")
+			a(href="/team/"+red3.number)
+				h3=red3.number
+			a(href="/team/"+red3.number)
+				img(src="/pictures/"+red3.number+image[0].suffix+".JPG", class="img-polaroid match-team-image")
 			- if(red3.averages){
 			- var autopoints = 0, teleoppoints = 0, endgamepoints = 0, otherpoints = 0;
 			- for(var i = 0; i < match.auto.length; i++){
@@ -132,8 +136,10 @@ block content
 	h2 Blue Alliance
 	div(class="row-fluid")
 		div(class="span4")
-			h3=blue1.number
-			img(src="/pictures/"+blue1.number+image[0].suffix+".JPG", class="img-polaroid match-team-image")
+			a(href="/team/"+blue1.number)
+				h3=blue1.number
+			a(href="/team/"+blue1.number)
+				img(src="/pictures/"+blue1.number+image[0].suffix+".JPG", class="img-polaroid match-team-image")
 			- if(blue1.averages){
 			- var autopoints = 0, teleoppoints = 0, endgamepoints = 0, otherpoints = 0;
 			- for(var i = 0; i < match.auto.length; i++){
@@ -172,6 +178,7 @@ block content
 		div(class="span4")
 			a(href="/teams/"+blue2.number)
 				h3=blue2.number
+			a(href="/team/"+blue2.number)
 				img(src="/pictures/"+blue2.number+image[0].suffix+".JPG", class="img-polaroid match-team-image")
 			- if(blue2.averages){
 			- var autopoints = 0, teleoppoints = 0, endgamepoints = 0, otherpoints = 0;
@@ -209,8 +216,10 @@ block content
 			p(class="well stats") No averages have been computed for this team.  Try adding more matches.
 			- } 
 		div(class="span4")
-			h3=blue3.number
-			img(src="/pictures/"+blue3.number+image[0].suffix+".JPG", class="img-polaroid match-team-image")
+			a(href="/team/"+blue3.number)
+				h3=blue3.number
+			a(href="/team/"+blue3.number)
+				img(src="/pictures/"+blue3.number+image[0].suffix+".JPG", class="img-polaroid match-team-image")
 			- if(blue3.averages){
 			- var autopoints = 0, teleoppoints = 0, endgamepoints = 0, otherpoints = 0;
 			- for(var i = 0; i < match.auto.length; i++){
