@@ -6,7 +6,6 @@
 //Module variables
 var express = require('express')
 	, routes = require('./routes')
-	, mysql = require('mysql')
 	, http = require('http')
 	, path = require('path');
 
