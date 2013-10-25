@@ -62,6 +62,41 @@
 		{
 			"name" : "Blocker",
 			"field" : "blocker"
+		},
+        
+        {
+			"name" : "Auto Position",
+			"field" : "auto_position"
+		},
+        
+        {
+			"name" : "Floor Pickup",
+			"field" : "floor_pickup"
+		},
+        
+        {
+			"name" : "Farthest possible shot from Feeder Station",
+			"field" : "far_shot"
+		},
+        
+        {
+			"name" : "Primary Shooting Goal",
+			"field" : "primary_goal"
+		},
+        
+        {
+			"name" : "New or Experienced Drivers for Quals",
+			"field" : "quals_drivers"
+		},
+        
+        {
+			"name" : "New or Experienced Drivers for Elims",
+			"field" : "elim_drivers"
+		},
+        
+        {
+			"name" : "Unique Features",
+			"field" : "unique_features"
 		}
 	],
 
