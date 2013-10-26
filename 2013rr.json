@@ -55,48 +55,63 @@
 		},
 		
 		{
-			"name" : "Drivetrain",
-			"field" : "drivetrain"
+			"name" : "Auto",
+			"field" : "auto"
 		},
 		
 		{
-			"name" : "Blocker",
-			"field" : "blocker"
+			"name" : "Climb",
+			"field" : "climb"
 		},
         
         {
-			"name" : "Auto Position",
-			"field" : "auto_position"
+			"name" : "Dimensions",
+			"field" : "dimensions"
 		},
         
         {
-			"name" : "Floor Pickup",
-			"field" : "floor_pickup"
+			"name" : "Defensive",
+			"field" : "defensive"
 		},
         
         {
-			"name" : "Farthest possible shot from Feeder Station",
-			"field" : "far_shot"
+			"name" : "Positions",
+			"field" : "positions"
 		},
         
         {
-			"name" : "Primary Shooting Goal",
-			"field" : "primary_goal"
+			"name" : "Wheels",
+			"field" : "wheels"
 		},
         
         {
-			"name" : "New or Experienced Drivers for Quals",
-			"field" : "quals_drivers"
+			"name" : "Feeding System",
+			"field" : "feeding_system"
 		},
         
         {
-			"name" : "New or Experienced Drivers for Elims",
-			"field" : "elim_drivers"
+			"name" : "Drivetrain",
+			"field" : "drivetrain"
 		},
         
         {
-			"name" : "Unique Features",
-			"field" : "unique_features"
+			"name" : "Feeding Capabilities",
+			"field" : "feeding_capabilities"
+		},
+        
+        {
+			"name" : "Improvements",
+			"field" : "improvements"
+		},
+        
+        {
+			"name" : "Drivers",
+			"field" : "drivers"
+		},
+        
+        {
+			"name" : "Anything Else",
+			"field" : "else"
 		}
 	],
 
