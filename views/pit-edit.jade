@@ -18,10 +18,10 @@ block content
 		
 		//Preamble
 		label(for="team") Team:
-		input(name="team", type="text", required="required", pattern=teamsRegex, autofocus="autofocus", placeholder=pit_data.team)
+		input(name="team", type="text", required="required", pattern=teamsRegex, autofocus="autofocus", value=pit_data.team)
 		
 		- for (var i = 0; i < pit.length; ++i){
 		label(for=pit[i]['field'])=pit[i]['name']+":"
-		textarea(name=pit[i]['field'], placeholder=pit_data[pit[i]['field']])
+		textarea(name=pit[i]['field'])=pit_data[pit[i]['field']]
 		-}
 		input(class="btn btn-primary", name="submit", type="submit", value="Submit")

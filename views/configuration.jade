@@ -1,0 +1,37 @@
+extends page
+
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li(class='active') Edit Configuration
+
+block content
+	div(class="well")
+		p="Currently using Gemini "+packageData.version_name+" \(Gemini v"+packageData.version+")."
+	form(id="configuration", method="post")
+		div(class="well")
+			label(for="othersPull") Allow others to download data:
+			-if(config.pull.allowOthersToPullData){
+			input(name="othersPull", type="checkbox", value="1", checked)
+			-}else{
+			input(name="othersPull", type="checkbox", value="1")
+			-}
+		div(class="well")
+			label(for="selfPull") Allow data to be uploaded:
+			-if(config.pull.allowOthersToPullData){
+			input(name="selfPull", type="checkbox", value="1", checked)
+			-}else{
+			input(name="selfPull", type="checkbox", value="1")
+			-}
+		div(class="well")
+			label(for="event") Current Event:
+			select(name="event", value=config.currentEvent)
+				-for(var i = 0; i < config.events.length; i++){
+				-if(config.events[i] == config.currentEvent){
+				option(selected="selected")=config.events[i]
+				-}else{
+				option=config.events[i]
+				-}
+				-}
+		input(class="btn btn-primary", name="submit", type="submit", value="Submit")

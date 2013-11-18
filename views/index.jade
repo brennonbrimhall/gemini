@@ -27,13 +27,19 @@ block content
 			a(href='/team') Team Lookup
 		li
 			a(href='/match') Match Lookup
+	h5 Data
+	ul(class='nav nav-tabs nav-stacked')
+		li
+			a(href='/data') Download Data Archive
 	-//if(req.ip == '127.0.0.1'){
 	h5 Administration
 	ul(class='nav nav-tabs nav-stacked')
 		li
 			a(href='/edit') Edit Data
 		li
-			a(href='/configuration') Configuration Settings
+			a(href='/data-upload') Upload Data Archive
 		li
-			a(href='/pull') Pull from Master Server
+			a(href='/new-event') Initialize New Event
+		li
+			a(href='/configure') Configure System
 	-//}

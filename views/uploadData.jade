@@ -1,0 +1,14 @@
+extends page
+
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li(class="active") Upload Data
+	
+block content
+	form(id="upload-form", method="post", enctype="multipart/form-data")
+		fieldset
+			label(for="data") Data Extract to Upload:
+			input(type="file" id="data", name="data")
+		input(class="btn btn-primary", name="submit", type="submit", value="Submit")

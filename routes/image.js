@@ -27,9 +27,6 @@ exports.post = function(req, res){
 	
 	try{
 		//Currently only accepts JPG images
-		
-		console.log(req.files);
-		
 		if(req.files.image.type !== 'image/jpeg'){
 			throw new Error('Only JPEG images are uploadable.  Sorry!');
 		}else{
@@ -60,6 +57,9 @@ exports.post = function(req, res){
 			});
 		}
 	}catch(err){
-
+		res.render('error', { 
+			title: 'Error',
+			req: req
+		});
 	}
 };

@@ -21,31 +21,31 @@ block content
 		-}
 		
 		label(for="match") Match:
-		input(name="match", type="number", step="1", required="required", min=1, max=maxMatchNumber, autofocus="autofocus", placeholder=schedule.match)
+		input(name="match", type="number", step="1", required="required", min=1, max=maxMatchNumber, autofocus="autofocus", value=schedule.match)
 		
 		label(for="red1") Red 1:
-		input(name="red1", type="text", required="required", pattern=teamsRegex, placeholder=schedule.red1)
+		input(name="red1", type="text", required="required", pattern=teamsRegex, value=schedule.red1)
 		
 		label(for="red2") Red 2:
-		input(name="red2", type="text", required="required", pattern=teamsRegex, placeholder=schedule.red2)
+		input(name="red2", type="text", required="required", pattern=teamsRegex, value=schedule.red2)
 		
 		label(for="red3") Red 3:
-		input(name="red3", type="text", required="required", pattern=teamsRegex, placeholder=schedule.red3)
+		input(name="red3", type="text", required="required", pattern=teamsRegex, value=schedule.red3)
 		
 		label(for="blue1") Blue 1:
-		input(name="blue1", type="text", required="required", pattern=teamsRegex, placeholder=schedule.blue1)
+		input(name="blue1", type="text", required="required", pattern=teamsRegex, value=schedule.blue1)
 		
 		label(for="blue2") Blue 2:
-		input(name="blue2", type="text", required="required", pattern=teamsRegex, placeholder=schedule.blue2)
+		input(name="blue2", type="text", required="required", pattern=teamsRegex, value=schedule.blue2)
 		
 		label(for="blue1") Blue 3:
-		input(name="blue3", type="text", required="required", pattern=teamsRegex, placeholder=schedule.blue3)
+		input(name="blue3", type="text", required="required", pattern=teamsRegex, value=schedule.blue3)
 		
 		label(for="redScore") Red Score:
-		input(name="redScore", type="number", step="1", min=0, max=300, placeholder=schedule.redScore)
+		input(name="redScore", type="number", step="1", min=0, max=300, value=schedule.redScore)
 		
 		label(for="blueScore") Blue Score:
-		input(name="blueScore", type="number", step="1", min=0, max=300, placeholder=schedule.blueScore)
+		input(name="blueScore", type="number", step="1", min=0, max=300, value=schedule.blueScore)
 		
 		
 		//Submit

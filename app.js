@@ -19,7 +19,9 @@ var schedule = require('./routes/schedule')
 	, match = require('./routes/match')
 	, pull = require('./routes/pull')
 	, edit = require("./routes/edit")
-	, administration = require('./routes/administration');
+	, tba = require("./routes/tba")
+	, newEvent = require("./routes/newEvent")
+	, configuration = require('./routes/configuration');
 
 //Configuration variable
 var config = require('./config');
@@ -100,10 +102,21 @@ app.get('/data', pull.data);
 app.get('/pull', pull.request);
 app.get('/pictures', pull.pictures);
 app.post('/pull', pull.request);
-app.get('/config', pull.config);
+app.get('/configure', configuration.getConfiguration);
+app.post('/configure', configuration.postConfiguration);
+app.get('/data-upload', pull.getUpload);
+app.post('/data-upload', pull.postUpload);
 
 //Averages Table
 app.get('/table', table.table);
+
+//TBA Proxy
+app.get('/tba/event/:key', tba.getEventDetails);
+
+//Event Initialization
+app.get('/new-event', newEvent.getInitialize);
+app.post('/new-event', newEvent.postInitialize);
+
 
 
 http.createServer(app).listen(app.get('port'), function(){

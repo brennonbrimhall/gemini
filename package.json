@@ -1,6 +1,7 @@
 {
   "name": "gemini",
   "version": "0.0.1",
+  "version_name": "Castor Alpha",
   "private": true,
   "scripts": {
     "start": "node app.js"

@@ -1,0 +1,17 @@
+extends page
+
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li(class="active") Initialize New Event
+	
+block content
+	form(id="upload-form", method="post", enctype="multipart/form-data")
+		fieldset
+			label(for="data") New Event Config to Upload:
+			input(type="file" id="data", name="data", required="true")
+		fieldset
+			label(for="code") Event Code:
+			input(name="code", type="text", required="true")
+		input(class="btn btn-primary", name="submit", type="submit", value="Submit")
