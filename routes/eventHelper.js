@@ -1,66 +1,66 @@
 exports.getMatchDatabase = function() {
 	var config = require('../config.json');
 	var JSONDB = require('brennonbrimhall-jsondb');
-	return new JSONDB(config.currentEvent+".match");
+	return new JSONDB("./data/"+config.currentEvent+".match");
 };
 
 exports.getMatchData = function() {
 	var config = require('../config.json');
 	var fs = require('fs');
-	return JSON.parse(fs.readFileSync(config.currentEvent+".match"));
+	return JSON.parse(fs.readFileSync("./data/"+config.currentEvent+".match"));
 };
 
 exports.getPitDatabase = function() {
 	var config = require('../config.json');
 	var JSONDB = require('brennonbrimhall-jsondb');
-	return new JSONDB(config.currentEvent+".pit");
+	return new JSONDB("./data/"+config.currentEvent+".pit");
 };
 
 exports.getPitData = function() {
 	var config = require('../config.json');
 	var fs = require('fs');
-	return JSON.parse(fs.readFileSync(config.currentEvent+".pit"));
+	return JSON.parse("./data/"+fs.readFileSync(config.currentEvent+".pit"));
 };
 
 exports.getScheduleDatabase = function() {
 	var config = require('../config.json');
 	var JSONDB = require('brennonbrimhall-jsondb');
-	return new JSONDB(config.currentEvent+".schedule");
+	return new JSONDB("./data/"+config.currentEvent+".schedule");
 };
 
 exports.getScheduleData = function() {
 	var config = require('../config.json');
 	var fs = require('fs');
-	return JSON.parse(fs.readFileSync(config.currentEvent+".schedule"));
+	return JSON.parse(fs.readFileSync("./data/"+config.currentEvent+".schedule"));
 };
 
 exports.getAveragesDatabase = function() {
 	var config = require('../config.json');
 	var JSONDB = require('brennonbrimhall-jsondb');
-	return new JSONDB(config.currentEvent+".averages");
+	return new JSONDB("./data/"+config.currentEvent+".averages");
 };
 
 exports.getAveragesData = function() {
 	var config = require('../config.json');
 	var fs = require('fs');
-	return JSON.parse(fs.readFileSync(config.currentEvent+".averages"));
+	return JSON.parse(fs.readFileSync("./data/"+config.currentEvent+".averages"));
 };
 
 exports.getStdDevDatabase = function() {
 	var config = require('../config.json');
 	var JSONDB = require('brennonbrimhall-jsondb');
-	return new JSONDB(config.currentEvent+".stddevs");
+	return new JSONDB("./data/"+config.currentEvent+".stddevs");
 };
 
 exports.getStdDevData = function() {
 	var config = require('../config.json');
 	var fs = require('fs');
-	return JSON.parse(fs.readFileSync(config.currentEvent+".stddevs"));
+	return JSON.parse(fs.readFileSync("./data/"+config.currentEvent+".stddevs"));
 };
 
 exports.getEventConfig = function() {
 	var config = require('../config.json');
-	var eventConfig = require("../"+config.currentEvent+".json");
+	var eventConfig = require("../data/"+config.currentEvent+".json");
 	return eventConfig;
 };
 
