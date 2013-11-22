@@ -1,13 +1,1 @@
-{
-	"pull" : {
-		"allowOthersToPullData" : true,
-		"allowSelfToPullData" : true
-	},
-	
-	"currentEvent" : "2013rr",
-	
-	"events" : [
-		"2013rr"	
-	]
-
-}
+{"pull":{"allowOthersToPullData":true,"allowSelfToPullData":true},"currentEvent":"2013rr","events":["2013rr","2013ctha","2013rr1","2013rr1","2013rr1","2013rr2","2013rr3"]}

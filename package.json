@@ -9,13 +9,17 @@
   "dependencies": {
     "express": "3.3.4",
     "jade": "*",
-    "async":  "0.2.9",
+    "async": "0.2.9",
     "request": "2.27.0",
     "brennonbrimhall-jsondb": "1.0.x",
-    "brennonbrimhall-stats" : "1.0.x"
+    "brennonbrimhall-stats": "1.0.x"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "http://github.com/brennonbrimhall/sik.js"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/brennonbrimhall/sik.js"
+  },
+  "subdomain": "gemini",
+  "engines": {
+    "node": "0.10.x"
   }
 }

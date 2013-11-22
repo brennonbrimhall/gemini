@@ -19,7 +19,7 @@ exports.getPitDatabase = function() {
 exports.getPitData = function() {
 	var config = require('../config.json');
 	var fs = require('fs');
-	return JSON.parse("./data/"+fs.readFileSync(config.currentEvent+".pit"));
+	return JSON.parse(fs.readFileSync("./data/"+config.currentEvent+".pit"));
 };
 
 exports.getScheduleDatabase = function() {
