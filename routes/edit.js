@@ -1,5 +1,5 @@
 exports.edit = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var scheduledb = eventHelper.getScheduleDatabase();
 	var matchdb = eventHelper.getMatchDatabase();
 	var pitdb = eventHelper.getPitDatabase();
@@ -9,7 +9,7 @@ exports.edit = function(req, res){
 		var schedule = scheduledb.selectAll();
 		var match = matchdb.selectAll();
 		var pit = pitdb.selectAll();
-		res.render('edit', {req: req, schedule: schedule, match: config.match, pit: config.pit, match_data: match, pit_data: pit, title: "Edit Database"});
+		res.render('edit', {req: req, schedule: schedule, match: config.match, pit: config.pit, match_data: match, pit_data: pit, title: 'Edit Database'});
 	}catch(err){
 		res.render('error', {
 			req: req,
@@ -20,13 +20,13 @@ exports.edit = function(req, res){
 };
 
 exports.getEditSchedule = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var db = eventHelper.getScheduleDatabase();
 	var config = eventHelper.getEventConfig();
 	
 	try{
 		var result = db.select('id', req.param('id'));
-		res.render('schedule-edit', {req: req, schedule: result[0], teams: config.teams, maxMatchNumber: config.maxMatchNumber, title: "Edit Schedule Entry"});
+		res.render('schedule-edit', {req: req, schedule: result[0], teams: config.teams, maxMatchNumber: config.maxMatchNumber, title: 'Edit Schedule Entry'});
 	}catch(err){
 		res.render('error', {
 			req: req,
@@ -37,7 +37,7 @@ exports.getEditSchedule = function(req, res){
 };
 
 exports.postEditSchedule = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var db = eventHelper.getScheduleDatabase();
 	
 	try{
@@ -64,7 +64,7 @@ exports.postEditSchedule = function(req, res){
 };
 
 exports.getDeleteSchedule = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var db = eventHelper.getScheduleDatabase();
 	
 	try{
@@ -81,11 +81,11 @@ exports.getDeleteSchedule = function(req, res){
 };
 
 exports.getAddSchedule = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var config = eventHelper.getEventConfig();
 	
 	try{
-		res.render('schedule-add', {req: req, teams: config.teams, maxMatchNumber: config.maxMatchNumber, title: "Add Schedule Entry"});
+		res.render('schedule-add', {req: req, teams: config.teams, maxMatchNumber: config.maxMatchNumber, title: 'Add Schedule Entry'});
 	}catch(err){
 		res.render('error', {
 			req: req,
@@ -96,7 +96,7 @@ exports.getAddSchedule = function(req, res){
 };
 
 exports.postAddSchedule = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var db = eventHelper.getScheduleDatabase();
 	
 	try{
@@ -123,13 +123,13 @@ exports.postAddSchedule = function(req, res){
 };
 
 exports.getEditMatchEntry = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var db = eventHelper.getMatchDatabase();
 	var config = eventHelper.getEventConfig();
 	
 	try{
 		var result = db.select('id', req.param('id'));
-		res.render('match-entry-edit', {req: req, match_data: result[0], teams: config.teams, match: config.match, maxMatchNumber: config.maxMatchNumber, title: "Edit Match Entry"});
+		res.render('match-entry-edit', {req: req, match_data: result[0], teams: config.teams, match: config.match, maxMatchNumber: config.maxMatchNumber, title: 'Edit Match Entry'});
 	}catch(err){
 		res.render('error', {
 			req: req,
@@ -140,7 +140,7 @@ exports.getEditMatchEntry = function(req, res){
 };
 
 exports.postEditMatchEntry = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var db = eventHelper.getMatchDatabase();
 	var config = eventHelper.getEventConfig();
 	var Stats = require('brennonbrimhall-stats');
@@ -265,7 +265,7 @@ exports.postEditMatchEntry = function(req, res){
 };
 
 exports.getDeleteMatchEntry = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var db = eventHelper.getMatchDatabase();
 	
 	try{
@@ -282,7 +282,7 @@ exports.getDeleteMatchEntry = function(req, res){
 };
 
 exports.getEditPit = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var db = eventHelper.getPitDatabase();
 	var config = eventHelper.getEventConfig();
 	
@@ -307,7 +307,7 @@ exports.getEditPit = function(req, res){
 };
 
 exports.postEditPit = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var db = eventHelper.getPitDatabase();
 	var config = eventHelper.getEventConfig();
 	
@@ -332,7 +332,7 @@ exports.postEditPit = function(req, res){
 };
 
 exports.getDeletePit = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var db = eventHelper.getPitDatabase();
 	
 	try{

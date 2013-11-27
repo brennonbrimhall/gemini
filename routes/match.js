@@ -4,7 +4,7 @@
  */
 
 exports.match = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var plugins = require('../helpers/process-plugin');
 	var config = eventHelper.getEventConfig();
 	var matchdb = eventHelper.getMatchDatabase();
@@ -79,7 +79,7 @@ exports.match = function(req, res){
 			res.render('match', {title: 'Match '+req.param('number'), number: req.param('number'), red1: red1, red2: red2, red3: red3, blue1: blue1, blue2: blue2, blue3: blue3, pit: config.pit, image: config.image, match: config.match, req:req})
 			
 		}else{
-			throw new Error("The match requested does not exist in the schedule.");
+			throw new Error('The match requested does not exist in the schedule.');
 		}
 		
 	}catch(err){
@@ -93,7 +93,7 @@ exports.match = function(req, res){
 };
 
 exports.lookup = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var eventConfig = eventHelper.getEventConfig();
 	
 	res.render('match-lookup', {

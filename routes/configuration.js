@@ -5,7 +5,7 @@
 
 exports.getConfiguration = function(req, res){
 	var packageData = require('../package');
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var config = eventHelper.getSystemConfig();
 	
 	res.render('configuration', { title: 'Configuration', req: req, config: config, packageData: packageData});
@@ -19,7 +19,7 @@ exports.getConfiguration = function(req, res){
 exports.postConfiguration = function(req, res){
 	var eventHelper = require('./eventHelper');
 	var config = eventHelper.getSystemConfig();
-	var fs = require("fs");
+	var fs = require('fs');
 	
 	try{
 		if(Number(req.body.othersPull) == 1){
@@ -35,7 +35,7 @@ exports.postConfiguration = function(req, res){
 		}
 		
 		config.currentEvent = req.body.event;
-		fs.writeFileSync("config.json", JSON.stringify(config));
+		fs.writeFileSync('config.json', JSON.stringify(config));
 		
 		res.redirect('/');
 		

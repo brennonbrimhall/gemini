@@ -4,7 +4,7 @@
  */
 
 exports.get = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var config = eventHelper.getEventConfig();
 	
 	try{
@@ -21,7 +21,7 @@ exports.get = function(req, res){
 };
 
 exports.post = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var config = eventHelper.getEventConfig();
 	var fs = require('fs');
 	
@@ -38,9 +38,9 @@ exports.post = function(req, res){
 			}
 			fs.readFile(req.files.image.path, function (err, data) {
 				if(suffix === null){
-					suffix = "";
+					suffix = '';
 				}
-				var newPath = "./public/pictures/"+req.body.team+suffix+'.JPG';
+				var newPath = './public/pictures/'+req.body.team+suffix+'.JPG';
 				fs.writeFile(newPath, data, function (err) {
 					if(err){
 						res.render('error', {err: err, req: req, title: 'Error'});

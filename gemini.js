@@ -23,21 +23,19 @@ var schedule = require('./routes/schedule')
 	, newEvent = require("./routes/newEvent")
 	, configuration = require('./routes/configuration');
 
-//Configuration variable
-var config = require('./config');
-
 var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
+app.use(express.compress());
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: 3600 }));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
-app.use(express.logger('dev'));
+//app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
@@ -99,9 +97,6 @@ app.get('/match', match.lookup);
 
 //Pull
 app.get('/data', pull.data);
-app.get('/pull', pull.request);
-app.get('/pictures', pull.pictures);
-app.post('/pull', pull.request);
 app.get('/configure', configuration.getConfiguration);
 app.post('/configure', configuration.postConfiguration);
 app.get('/data-upload', pull.getUpload);
@@ -109,9 +104,6 @@ app.post('/data-upload', pull.postUpload);
 
 //Averages Table
 app.get('/table', table.table);
-
-//TBA Proxy
-app.get('/tba/event/:key', tba.getEventDetails);
 
 //Event Initialization
 app.get('/new-event', newEvent.getInitialize);

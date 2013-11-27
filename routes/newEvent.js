@@ -4,7 +4,7 @@
  */
 
 exports.getInitialize = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var config = eventHelper.getSystemConfig();
 	
 	res.render('newEvent', { title: 'Initialize New Event', req: req, config: config});
@@ -16,7 +16,7 @@ exports.getInitialize = function(req, res){
  */
 
 exports.postInitialize = function(req, res){
-	var eventHelper = require("./eventHelper");
+	var eventHelper = require('../helpers/eventHelper');
 	var config = eventHelper.getSystemConfig();
 	var fs = require('fs');
 	var JSONDB = require('brennonbrimhall-jsondb');
@@ -56,7 +56,7 @@ exports.postInitialize = function(req, res){
 		
 		//Iterating over images
 		for(var i = 0; i < data.image.length; i++){
-			if(typeof data.image[i].name !== "string"){
+			if(typeof data.image[i].name !== 'string'){
 				throw new Error ('Data uploaded is invalid; it doesn\'t have a proper image attribute.  Check index '+i+'.');
 			}
 			if(typeof data.image[i].suffix !== 'string'){
@@ -257,12 +257,12 @@ exports.postInitialize = function(req, res){
 		config.events.push(code);
 		config.currentEvent = code;
 		eventHelper.saveSystemConfig(config);
-		fs.writeFileSync(code+".json", JSON.stringify(data));
-		(new JSONDB(code+".averages", fields)).save();
-		(new JSONDB(code+".match", fields)).save();
-		(new JSONDB(code+".pit", fields)).save();
-		(new JSONDB(code+".schedule", ["match","red1","red2","red3","blue1","blue2","blue3","redScore","blueScore"])).save();
-		(new JSONDB(code+".stddevs", fields)).save();
+		fs.writeFileSync(code+'.json', JSON.stringify(data));
+		(new JSONDB(code+'.averages', fields)).save();
+		(new JSONDB(code+'.match', fields)).save();
+		(new JSONDB(code+'.pit', fields)).save();
+		(new JSONDB(code+'.schedule', ['match','red1','red2','red3','blue1','blue2','blue3','redScore','blueScore'])).save();
+		(new JSONDB(code+'.stddevs', fields)).save();
 		
 		res.redirect('/');
 	}catch(err){

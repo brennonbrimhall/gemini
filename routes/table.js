@@ -4,12 +4,13 @@
  */
 
 exports.table = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var config = eventHelper.getEventConfig();
 	var db = eventHelper.getAveragesDatabase();
 	
 	try{
 		var averages_data = db.selectAll();
+		console.log(averages_data);
 		res.render('table', 
 			{
 				title: 'Averages Table',

@@ -4,7 +4,7 @@
  */
 
 exports.get = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var config = eventHelper.getEventConfig();
 
 	res.render('pit', { 
@@ -17,7 +17,7 @@ exports.get = function(req, res){
 };
 
 exports.post = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var db = eventHelper.getPitDatabase();
 	var config = eventHelper.getEventConfig();
 	

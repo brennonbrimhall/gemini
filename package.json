@@ -1,22 +1,21 @@
 {
   "name": "gemini",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "version_name": "Castor Alpha",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node gemini.js"
   },
   "dependencies": {
     "express": "3.3.4",
     "jade": "*",
-    "async": "0.2.9",
     "request": "2.27.0",
     "brennonbrimhall-jsondb": "1.0.x",
     "brennonbrimhall-stats": "1.0.x"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/brennonbrimhall/sik.js"
+    "url": "http://github.com/brennonbrimhall/gemini"
   },
   "subdomain": "gemini",
   "engines": {
