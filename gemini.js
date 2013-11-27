@@ -26,7 +26,7 @@ var schedule = require('./routes/schedule')
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 80);
 app.use(express.compress());
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 3600 }));
 app.set('views', __dirname + '/views');
