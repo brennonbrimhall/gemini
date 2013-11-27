@@ -19,7 +19,6 @@ var schedule = require('./routes/schedule')
 	, match = require('./routes/match')
 	, pull = require('./routes/pull')
 	, edit = require("./routes/edit")
-	, tba = require("./routes/tba")
 	, newEvent = require("./routes/newEvent")
 	, configuration = require('./routes/configuration');
 
