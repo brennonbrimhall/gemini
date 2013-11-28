@@ -257,12 +257,12 @@ exports.postInitialize = function(req, res){
 		config.events.push(code);
 		config.currentEvent = code;
 		eventHelper.saveSystemConfig(config);
-		fs.writeFileSync(code+'.json', JSON.stringify(data));
-		(new JSONDB(code+'.averages', fields)).save();
-		(new JSONDB(code+'.match', fields)).save();
-		(new JSONDB(code+'.pit', fields)).save();
-		(new JSONDB(code+'.schedule', ['match','red1','red2','red3','blue1','blue2','blue3','redScore','blueScore'])).save();
-		(new JSONDB(code+'.stddevs', fields)).save();
+		fs.writeFileSync('./data/'+code+'.json', JSON.stringify(data));
+		(new JSONDB('./data/'+code+'.averages', fields)).save();
+		(new JSONDB('./data/'+code+'.match', fields)).save();
+		(new JSONDB('./data/'+code+'.pit', fields)).save();
+		(new JSONDB('./data/'+code+'.schedule', ['match','red1','red2','red3','blue1','blue2','blue3','redScore','blueScore'])).save();
+		(new JSONDB('./data/'+code+'.stddevs', fields)).save();
 		
 		res.redirect('/');
 	}catch(err){
