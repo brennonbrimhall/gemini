@@ -41,8 +41,10 @@ exports.team = function(req, res){
 		match_averages = averagesdb.select('team', req.param('number'));
 		match_stddevs = stddevsdb.select('team', req.param('number'));
 		
-		for(var i = 0; i < config.match.plugins.length; i++){
-			plugins_data[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, match_data);
+		if(config.match.plugins){
+			for(var i = 0; i < config.match.plugins.length; i++){
+				plugins_data[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, match_data);
+			}
 		}
 
 		console.log(plugins_data);
