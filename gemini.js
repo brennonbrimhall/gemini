@@ -111,5 +111,10 @@ app.post('/new-event', newEvent.postInitialize);
 
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+	if(app.get('port') != '80'){
+		console.log('Gemini is up and running!  Navigate to http://localhost:' + app.get('port') + ' to access it.');	
+	}else{
+		console.log('Gemini is up and running!  Navigate to http://localhost to access it.');
+	}
+	
 });
