@@ -21,51 +21,53 @@ exports.match = function(req, res){
 			
 			//Processing plugins
 			var red1plugins = {};
-			for(var i = 0; i < config.match.plugins.length; i++){
-				if(matchdb.select('team', schedule_data.red1).length !== 0){
-					red1plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.red1));
-				}else{
-					red1plugins[config.match.plugins[i].name] = null;
+			if(config.match.plugins){
+				for(var i = 0; i < config.match.plugins.length; i++){
+					if(matchdb.select('team', schedule_data.red1).length !== 0){
+						red1plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.red1));
+					}else{
+						red1plugins[config.match.plugins[i].name] = null;
+					}
 				}
-			}
-			var red2plugins = {};
-			for(var i = 0; i < config.match.plugins.length; i++){
-				if(matchdb.select('team', schedule_data.red2).length !== 0){
-					red2plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.red2));
-				}else{
-					red2plugins[config.match.plugins[i].name] = null;
+				var red2plugins = {};
+				for(var i = 0; i < config.match.plugins.length; i++){
+					if(matchdb.select('team', schedule_data.red2).length !== 0){
+						red2plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.red2));
+					}else{
+						red2plugins[config.match.plugins[i].name] = null;
+					}
 				}
-			}
-			var red3plugins = {};
-			for(var i = 0; i < config.match.plugins.length; i++){
-				if(matchdb.select('team', schedule_data.red3).length !== 0){
-					red3plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.red3));
-				}else{
-					red3plugins[config.match.plugins[i].name] = null;
+				var red3plugins = {};
+				for(var i = 0; i < config.match.plugins.length; i++){
+					if(matchdb.select('team', schedule_data.red3).length !== 0){
+						red3plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.red3));
+					}else{
+						red3plugins[config.match.plugins[i].name] = null;
+					}
 				}
-			}
-			var blue1plugins = {};
-			for(var i = 0; i < config.match.plugins.length; i++){
-				if(matchdb.select('team', schedule_data.blue1).length !== 0){
-					blue1plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.blue1));
-				}else{
-					blue1plugins[config.match.plugins[i].name] = null;
+				var blue1plugins = {};
+				for(var i = 0; i < config.match.plugins.length; i++){
+					if(matchdb.select('team', schedule_data.blue1).length !== 0){
+						blue1plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.blue1));
+					}else{
+						blue1plugins[config.match.plugins[i].name] = null;
+					}
 				}
-			}
-			var blue2plugins = {};
-			for(var i = 0; i < config.match.plugins.length; i++){
-				if(matchdb.select('team', schedule_data.blue2).length !== 0){
-					blue2plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.blue2));
-				}else{
-					blue2plugins[config.match.plugins[i].name] = null;
+				var blue2plugins = {};
+				for(var i = 0; i < config.match.plugins.length; i++){
+					if(matchdb.select('team', schedule_data.blue2).length !== 0){
+						blue2plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.blue2));
+					}else{
+						blue2plugins[config.match.plugins[i].name] = null;
+					}
 				}
-			}
-			var blue3plugins = {};
-			for(var i = 0; i < config.match.plugins.length; i++){
-				if(matchdb.select('team', schedule_data.blue3).length !== 0){
-					blue3plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.blue3));
-				}else{
-					blue3plugins[config.match.plugins[i].name] = null;
+				var blue3plugins = {};
+				for(var i = 0; i < config.match.plugins.length; i++){
+					if(matchdb.select('team', schedule_data.blue3).length !== 0){
+						blue3plugins[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, matchdb.select('team', schedule_data.blue3));
+					}else{
+						blue3plugins[config.match.plugins[i].name] = null;
+					}
 				}
 			}
 			

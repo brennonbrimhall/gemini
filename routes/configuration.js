@@ -17,7 +17,7 @@ exports.getConfiguration = function(req, res){
  */
 
 exports.postConfiguration = function(req, res){
-	var eventHelper = require('./eventHelper');
+	var eventHelper = require('../helpers/eventHelper');
 	var config = eventHelper.getSystemConfig();
 	var fs = require('fs');
 	
