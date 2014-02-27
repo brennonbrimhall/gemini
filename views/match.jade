@@ -49,358 +49,64 @@ block content
 				img(src="/pictures/"+blue3.number+image[0].suffix+".JPG", class="img-polaroid match-team-image")
 	div(class="row-fluid")
 		div(class="span2")
-			- if(red1.averages){
-			- if(red1.plugins.length){
+			-if(red1.overviewData){
 			table(class="table table-striped table-bordered dataTable stats")
 				tbody
-					- for(var i = 0; i < match.plugins.length; i++){
+					- for(var i = 0; i < red1.overview.length; i++){
 					tr
-						td=match.plugins[i].name
-						td=red1.plugins[match.plugins[i].name]
+						th=red1.overview[i].name
+						td=red1.overviewData[red1.overview[i].field]
 					- }
 			-}
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					- var autopoints = 0, teleoppoints = 0, endgamepoints = 0, otherpoints = 0;
-					- for(var i = 0; i < match.auto.length; i++){
-						- autopoints = autopoints + Number(red1.averages[match.auto[i].field])*match.auto[i].points;
-						tr
-							td=match.auto[i].name
-							td=red1.averages[match.auto[i].field].toFixed(1)
-					- }
-					- for(var i = 0; i < match.teleop.length; i++){
-						- teleoppoints = teleoppoints + Number(red1.averages[match.teleop[i].field])*match.teleop[i].points;
-						tr
-							td=match.teleop[i].name
-							td=red1.averages[match.teleop[i].field].toFixed(1)
-					- }
-					- for(var i = 0; i < match.endgame.length; i++){
-						- endgamepoints = endgamepoints + Number(red1.averages[match.endgame[i].field])*match.endgame[i].points;
-						tr
-							td=match.endgame[i].name
-							td=red1.averages[match.endgame[i].field].toFixed(1)
-					- }
-					- for(var i = 0; i < match.other.length; i++){
-						- otherpoints = otherpoints + Number(red1.averages[match.other[i].field])*match.other[i].points;
-						tr
-							td=match.other[i].name
-							td=red1.averages[match.other[i].field].toFixed(1)
-					- }
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					tr
-						th Auto
-						td=autopoints.toFixed(1)
-					tr
-						th Teleop
-						td=teleoppoints.toFixed(1)
-					tr
-						th Endgame
-						td=endgamepoints.toFixed(1)
-					tr
-						th Other
-						td=otherpoints.toFixed(1)
-					tr
-						th Total
-						- var total = (autopoints+teleoppoints+endgamepoints+otherpoints)
-						td=total.toFixed(1)
-						- redpoints += autopoints+teleoppoints+endgamepoints+otherpoints;
-			- }else{
-			p(class="well stats") No averages have been computed for this team.  Try adding more matches.
-			- }
 		div(class="span2")
-			- if(red2.averages){
-			- if(red2.plugins.length){
+			-if(red2.overviewData){
 			table(class="table table-striped table-bordered dataTable stats")
 				tbody
-					- for(var i = 0; i < match.plugins.length; i++){
+					- for(var i = 0; i < red2.overview.length; i++){
 					tr
-						td=match.plugins[i].name
-						td=red2.plugins[match.plugins[i].name]
+						th=red2.overview[i].name
+						td=red2.overviewData[red2.overview[i].field]
 					- }
 			-}
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					- var autopoints = 0, teleoppoints = 0, endgamepoints = 0, otherpoints = 0;
-					- for(var i = 0; i < match.auto.length; i++){
-						- autopoints = autopoints + Number(red2.averages[match.auto[i].field])*match.auto[i].points;
-						tr
-							td=match.auto[i].name
-							td=red2.averages[match.auto[i].field].toFixed(1)
-					- }
-					- for(var i = 0; i < match.teleop.length; i++){
-						- teleoppoints = teleoppoints + Number(red2.averages[match.teleop[i].field])*match.teleop[i].points;
-						tr
-							td=match.teleop[i].name
-							td=red2.averages[match.teleop[i].field].toFixed(1)
-					- }
-					- for(var i = 0; i < match.endgame.length; i++){
-						- endgamepoints = endgamepoints + Number(red2.averages[match.endgame[i].field])*match.endgame[i].points;
-						tr
-							td=match.endgame[i].name
-							td=red2.averages[match.endgame[i].field].toFixed(1)
-					- }
-					- for(var i = 0; i < match.other.length; i++){
-						- otherpoints = otherpoints + Number(red2.averages[match.other[i].field])*match.other[i].points;
-						tr
-							td=match.other[i].name
-							td=red2.averages[match.other[i].field].toFixed(1)
-					- }
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					tr
-						th Auto
-						td=autopoints.toFixed(1)
-					tr
-						th Teleop
-						td=teleoppoints.toFixed(1)
-					tr
-						th Endgame
-						td=endgamepoints.toFixed(1)
-					tr
-						th Other
-						td=otherpoints.toFixed(1)
-					tr
-						th Total
-						- var total = (autopoints+teleoppoints+endgamepoints+otherpoints)
-						td=total.toFixed(1)
-						- redpoints += autopoints+teleoppoints+endgamepoints+otherpoints;
-			- }else{
-				p(class="well stats") No averages have been computed for this team.  Try adding more matches.
-			- }
 		div(class="span2")
-			- if(red3.averages){
-			- if(red3.plugins.length){
+			-if(red3.overviewData){
 			table(class="table table-striped table-bordered dataTable stats")
 				tbody
-					- for(var i = 0; i < match.plugins.length; i++){
+					- for(var i = 0; i < red3.overview.length; i++){
 					tr
-						td=match.plugins[i].name
-						td=red3.plugins[match.plugins[i].name]
-					- }
-			- }
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					- var autopoints = 0, teleoppoints = 0, endgamepoints = 0, otherpoints = 0;
-					- for(var i = 0; i < match.auto.length; i++){
-						- autopoints = autopoints + Number(red3.averages[match.auto[i].field])*match.auto[i].points;
-						tr
-							td=match.auto[i].name
-							td=Math.round(red3.averages[match.auto[i].field]*100)/100
-					- }
-					- for(var i = 0; i < match.teleop.length; i++){
-						- teleoppoints = teleoppoints + Number(red3.averages[match.teleop[i].field])*match.teleop[i].points;
-						tr
-							td=match.teleop[i].name
-							td=Math.round(red3.averages[match.teleop[i].field]*100)/100
-					- }
-					- for(var i = 0; i < match.endgame.length; i++){
-						- endgamepoints = endgamepoints + Number(red3.averages[match.endgame[i].field])*match.endgame[i].points;
-						tr
-							td=match.endgame[i].name
-							td=Math.round(red3.averages[match.endgame[i].field]*100)/100
-					- }
-					- for(var i = 0; i < match.other.length; i++){
-						- otherpoints = otherpoints + Number(red3.averages[match.other[i].field])*match.other[i].points;
-						tr
-							td=match.other[i].name
-							td=Math.round(red3.averages[match.other[i].field]*100)/100
-					- }
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					tr
-						th Auto
-						td=Math.round(autopoints*100)/100
-					tr
-						th Teleop
-						td=Math.round(teleoppoints*100)/100
-					tr
-						th Endgame
-						td=Math.round(endgamepoints)/100
-					tr
-						th Other
-						td=Math.round(otherpoints)/100
-					tr
-						th Total
-						td=Math.round((autopoints+teleoppoints+endgamepoints+otherpoints)*100)/100
-						- redpoints += autopoints+teleoppoints+endgamepoints+otherpoints;
-			- }else{
-			p(class="well stats") No averages have been computed for this team.  Try adding more matches.
-			- } 
-		div(class="span2")
-			- if(blue1.averages){
-			- if(blue1.plugins.length){
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					- for(var i = 0; i < match.plugins.length; i++){
-					tr
-						td=match.plugins[i].name
-						td=blue1.plugins[match.plugins[i].name]
+						th=red3.overview[i].name
+						td=red3.overviewData[red3.overview[i].field]
 					- }
 			-}
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					- var autopoints = 0, teleoppoints = 0, endgamepoints = 0, otherpoints = 0;
-					- for(var i = 0; i < match.auto.length; i++){
-						- autopoints = autopoints + Number(blue1.averages[match.auto[i].field])*match.auto[i].points;
-						tr
-							td=match.auto[i].name
-							td=Math.round(blue1.averages[match.auto[i].field]*100)/100
-					- }
-					- for(var i = 0; i < match.teleop.length; i++){
-						- teleoppoints = teleoppoints + Number(blue1.averages[match.teleop[i].field])*match.teleop[i].points;
-						tr
-							td=match.teleop[i].name
-							td=Math.round(blue1.averages[match.teleop[i].field]*100)/100
-					- }
-					- for(var i = 0; i < match.endgame.length; i++){
-						- endgamepoints = endgamepoints + Number(blue1.averages[match.endgame[i].field])*match.endgame[i].points;
-						tr
-							td=match.endgame[i].name
-							td=Math.round(blue1.averages[match.endgame[i].field]*100)/100
-					- }
-					- for(var i = 0; i < match.other.length; i++){
-						- otherpoints = otherpoints + Number(blue1.averages[match.other[i].field])*match.other[i].points;
-						tr
-							td=match.other[i].name
-							td=Math.round(blue1.averages[match.other[i].field]*100)/100
-					- }
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					tr
-						th Auto
-						td=Math.round(autopoints*100)/100
-					tr
-						th Teleop
-						td=Math.round(teleoppoints*100)/100
-					tr
-						th Endgame
-						td=Math.round(endgamepoints)/100
-					tr
-						th Other
-						td=Math.round(otherpoints)/100
-					tr
-						th Total
-						td=Math.round((autopoints+teleoppoints+endgamepoints+otherpoints)*100)/100
-						- redpoints += autopoints+teleoppoints+endgamepoints+otherpoints;
-			- }else{
-			p(class="well stats") No averages have been computed for this team.  Try adding more matches.
-			- }
 		div(class="span2")
-			- if(blue2.averages){
-			- if(blue2.plugins.length){
+			-if(blue1.overviewData){
 			table(class="table table-striped table-bordered dataTable stats")
 				tbody
-					- for(var i = 0; i < match.plugins.length; i++){
+					- for(var i = 0; i < blue1.overview.length; i++){
 					tr
-						td=match.plugins[i].name
-						td=blue2.plugins[match.plugins[i].name]
+						th=blue1.overview[i].name
+						td=blue1.overviewData[blue1.overview[i].field]
 					- }
 			-}
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					- var autopoints = 0, teleoppoints = 0, endgamepoints = 0, otherpoints = 0;
-					- for(var i = 0; i < match.auto.length; i++){
-						- autopoints = autopoints + Number(blue2.averages[match.auto[i].field])*match.auto[i].points;
-						tr
-							td=match.auto[i].name
-							td=Math.round(blue2.averages[match.auto[i].field]*100)/100
-					- }
-					- for(var i = 0; i < match.teleop.length; i++){
-						- teleoppoints = teleoppoints + Number(blue2.averages[match.teleop[i].field])*match.teleop[i].points;
-						tr
-							td=match.teleop[i].name
-							td=Math.round(blue2.averages[match.teleop[i].field]*100)/100
-					- }
-					- for(var i = 0; i < match.endgame.length; i++){
-						- endgamepoints = endgamepoints + Number(blue2.averages[match.endgame[i].field])*match.endgame[i].points;
-						tr
-							td=match.endgame[i].name
-							td=Math.round(blue2.averages[match.endgame[i].field]*100)/100
-					- }
-					- for(var i = 0; i < match.other.length; i++){
-						- otherpoints = otherpoints + Number(blue2.averages[match.other[i].field])*match.other[i].points;
-						tr
-							td=match.other[i].name
-							td=Math.round(blue2.averages[match.other[i].field]*100)/100
-					- }
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					tr
-						th Auto
-						td=Math.round(autopoints*100)/100
-					tr
-						th Teleop
-						td=Math.round(teleoppoints*100)/100
-					tr
-						th Endgame
-						td=Math.round(endgamepoints)/100
-					tr
-						th Other
-						td=Math.round(otherpoints)/100
-					tr
-						th Total
-						td=Math.round((autopoints+teleoppoints+endgamepoints+otherpoints)*100)/100
-						- redpoints += autopoints+teleoppoints+endgamepoints+otherpoints;
-			- }else{
-			p(class="well stats") No averages have been computed for this team.  Try adding more matches.
-			- }
 		div(class="span2")
-			- if(blue3.averages){
-			- if(blue3.plugins.length){
+		-if(blue2.overviewData){
 			table(class="table table-striped table-bordered dataTable stats")
 				tbody
-					- for(var i = 0; i < match.plugins.length; i++){
+					- for(var i = 0; i < blue2.overview.length; i++){
 					tr
-						td=match.plugins[i].name
-						td=blue3.plugins[match.plugins[i].name]
+						th=blue2.overview[i].name
+						td=blue2.overviewData[blue2.overview[i].field]
 					- }
-			- }
+		-}else{
+			p
+		-}
+		div(class="span2")
+			-if(blue3.overviewData){
 			table(class="table table-striped table-bordered dataTable stats")
 				tbody
-					- var autopoints = 0, teleoppoints = 0, endgamepoints = 0, otherpoints = 0;
-					- for(var i = 0; i < match.auto.length; i++){
-						- autopoints = autopoints + Number(blue3.averages[match.auto[i].field])*match.auto[i].points;
-						tr
-							td=match.auto[i].name
-							td=Math.round(blue3.averages[match.auto[i].field]*100)/100
+					- for(var i = 0; i < blue3.overview.length; i++){
+					tr
+						th=blue3.overview[i].name
+						td=blue3.overviewData[blue3.overview[i].field]
 					- }
-					- for(var i = 0; i < match.teleop.length; i++){
-						- teleoppoints = teleoppoints + Number(blue3.averages[match.teleop[i].field])*match.teleop[i].points;
-						tr
-							td=match.teleop[i].name
-							td=Math.round(blue3.averages[match.teleop[i].field]*100)/100
-					- }
-					- for(var i = 0; i < match.endgame.length; i++){
-						- endgamepoints = endgamepoints + Number(blue3.averages[match.endgame[i].field])*match.endgame[i].points;
-						tr
-							td=match.endgame[i].name
-							td=Math.round(blue3.averages[match.endgame[i].field]*100)/100
-					- }
-					- for(var i = 0; i < match.other.length; i++){
-						- otherpoints = otherpoints + Number(blue3.averages[match.other[i].field])*match.other[i].points;
-						tr
-							td=match.other[i].name
-							td=Math.round(blue3.averages[match.other[i].field]*100)/100
-					- }
-			table(class="table table-striped table-bordered dataTable stats")
-				tbody
-					tr
-						th Auto
-						td=autopoints.toFixed(2)
-					tr
-						th Teleop
-						td=Math.round(teleoppoints*100)/100
-					tr
-						th Endgame
-						td=endgamepoints.toFixed(2)
-					tr
-						th Other
-						td=Math.round(otherpoints)/100
-					tr
-						th Total
-						td=Math.round((autopoints+teleoppoints+endgamepoints+otherpoints)*100)/100
-						- redpoints += autopoints+teleoppoints+endgamepoints+otherpoints;
-			- }else{
-			p(class="well stats") No averages have been computed for this team.  Try adding more matches.
-			- } 
+			-}

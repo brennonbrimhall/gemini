@@ -10,6 +10,7 @@
     "express": "3.3.4",
     "jade": "*",
     "request": "2.27.0",
+    "cheerio": "0.13.x",
     "brennonbrimhall-jsondb": "1.0.x",
     "brennonbrimhall-stats": "1.0.x"
   },

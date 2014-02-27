@@ -4,23 +4,25 @@
  */
 
 //Module variables
-var express = require('express')
-	, routes = require('./routes')
-	, http = require('http')
-	, path = require('path');
+var express = require('express'),
+	routes = require('./routes'),
+	http = require('http'),
+	path = require('path');
 
 //Routing variables
-var schedule = require('./routes/schedule')
-	, pit = require('./routes/pit')
-	, image = require('./routes/image')
-	, team = require('./routes/team')
-	, table = require('./routes/table')
-	, match_entry = require('./routes/match-entry')
-	, match = require('./routes/match')
-	, pull = require('./routes/pull')
-	, edit = require("./routes/edit")
-	, newEvent = require("./routes/newEvent")
-	, configuration = require('./routes/configuration');
+var schedule = require('./routes/schedule'),
+	pit = require('./routes/pit'),
+	image = require('./routes/image'),
+	team = require('./routes/team'),
+	table = require('./routes/table'),
+	autoEntry = require('./routes/auto-entry'),
+	cycleEntry = require('./routes/cycle-entry'),
+	match = require('./routes/match'),
+	tba = require('./routes/tba'),
+	pull = require('./routes/pull'),
+	edit = require("./routes/edit"),
+	newEvent = require("./routes/newEvent"),
+	configuration = require('./routes/configuration');
 
 var app = express();
 
@@ -57,10 +59,15 @@ app.post('/edit/schedule/add', edit.postAddSchedule);
 app.get('/edit/schedule/:id', edit.getEditSchedule);
 app.post('/edit/schedule/:id', edit.postEditSchedule);
 
-//Edit match entries
-app.get('/edit/match-entry/:id', edit.getEditMatchEntry);
-app.post('/edit/match-entry/:id', edit.postEditMatchEntry);
-app.get('/edit/match-entry/delete/:id', edit.getDeleteMatchEntry);
+//Edit auto entries
+app.get('/edit/auto-entry/:id', edit.getEditAutoEntry);
+app.post('/edit/auto-entry/:id', edit.postEditAutoEntry);
+app.get('/edit/auto-entry/delete/:id', edit.getDeleteAutoEntry);
+
+//Edit cycle entries
+app.get('/edit/cycle-entry/:id', edit.getEditCycleEntry);
+app.post('/edit/cycle-entry/:id', edit.postEditCycleEntry);
+app.get('/edit/cycle-entry/delete/:id', edit.getDeleteCycleEntry);
 
 //Edit pit
 app.get('/edit/pit/:id', edit.getEditPit);
@@ -76,8 +83,12 @@ app.get('/pit', pit.get);
 app.post('/pit', pit.post);
 
 //Match Entry
-app.get('/match-entry', match_entry.get);
-app.post('/match-entry', match_entry.post);
+app.get('/auto-entry', autoEntry.get);
+app.post('/auto-entry', autoEntry.post);
+app.get('/cycle-entry', cycleEntry.get);
+app.post('/cycle-entry', cycleEntry.post);
+app.get('/cycle-entry/:team/:match/:possession', cycleEntry.getWithValues);
+app.post('/cycle-entry/:team/:match/:possession', cycleEntry.postWithValues);
 
 //Team
 app.get('/team/:number', team.team);
@@ -107,6 +118,9 @@ app.get('/table', table.table);
 //Event Initialization
 app.get('/new-event', newEvent.getInitialize);
 app.post('/new-event', newEvent.postInitialize);
+
+//TBA
+app.get('/tba/:key', tba.getEventDetails);
 
 
 

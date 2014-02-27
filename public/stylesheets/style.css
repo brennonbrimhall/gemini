@@ -20,6 +20,14 @@ input, textarea {
 	float:right;
 }
 
+#edit-auto{
+	float:right;
+}
+
+#edit-cycle{
+	float:right;
+}
+
 #username {
 	float:right;
 }

@@ -26,125 +26,126 @@ block content
 				th Edit
 				th Delete
 		tbody
-			- for (var i = 0; i < schedule.length; ++i){
+			- for (var i = 0; i < scheduleData.length; ++i){
 				tr
-					- if (schedule[i].redScore > schedule[i].blueScore){
+					- if (scheduleData[i].redScore > scheduleData[i].blueScore){
 						td
-							a(href="../match/"+schedule[i].match)=schedule[i].match
-						td(id="schedule-winner")
-							a(href="../team/"+schedule[i].red1)=schedule[i].red1
-						td(id="schedule-winner")
-							a(href="../team/"+schedule[i].red2)=schedule[i].red2
-						td(id="schedule-winner")
-							a(href="../team/"+schedule[i].red3)=schedule[i].red3
+							a(href="../match/"+scheduleData[i].match)=scheduleData[i].match
+						td(id="scheduleData-winner")
+							a(href="../team/"+scheduleData[i].red1)=scheduleData[i].red1
+						td(id="scheduleData-winner")
+							a(href="../team/"+scheduleData[i].red2)=scheduleData[i].red2
+						td(id="scheduleData-winner")
+							a(href="../team/"+scheduleData[i].red3)=scheduleData[i].red3
 						td
-							a(href="../team/"+schedule[i].blue1)=schedule[i].blue1
+							a(href="../team/"+scheduleData[i].blue1)=scheduleData[i].blue1
 						td
-							a(href="../team/"+schedule[i].blue2)=schedule[i].blue2
+							a(href="../team/"+scheduleData[i].blue2)=scheduleData[i].blue2
 						td
-							a(href="../team/"+schedule[i].blue3)=schedule[i].blue3
-						td(id="schedule-winner")=schedule[i].redScore
-						td=schedule[i].blueScore
+							a(href="../team/"+scheduleData[i].blue3)=scheduleData[i].blue3
+						td(id="scheduleData-winner")=scheduleData[i].redScore
+						td=scheduleData[i].blueScore
 						td
-							a(class="btn btn-block btn-warning", href='/edit/schedule/'+schedule[i].id) Edit
+							a(class="btn btn-block btn-warning", href='/edit/schedule/'+scheduleData[i].id) Edit
 						td
-							a(class="btn btn-block btn-danger", href='/edit/schedule/delete/'+schedule[i].id) Delete
-					-} else if (schedule[i].redScore < schedule[i].blueScore){
+							a(class="btn btn-block btn-danger", href='/edit/schedule/delete/'+scheduleData[i].id) Delete
+					-} else if (scheduleData[i].redScore < scheduleData[i].blueScore){
 						td
-							a(href="../match/"+schedule[i].match)=schedule[i].match
+							a(href="../match/"+scheduleData[i].match)=scheduleData[i].match
 						td
-							a(href="../team/"+schedule[i].red1)=schedule[i].red1
+							a(href="../team/"+scheduleData[i].red1)=scheduleData[i].red1
 						td
-							a(href="../team/"+schedule[i].red2)=schedule[i].red2
+							a(href="../team/"+scheduleData[i].red2)=scheduleData[i].red2
 						td
-							a(href="../team/"+schedule[i].red3)=schedule[i].red3
-						td(id="schedule-winner")
-							a(href="../team/"+schedule[i].blue1)(id="schedule-winner")=schedule[i].blue1
-						td(id="schedule-winner")
-							a(href="../team/"+schedule[i].blue2)=schedule[i].blue2
-						td(id="schedule-winner")
-							a(href="../team/"+schedule[i].blue3)=schedule[i].blue3
-						td=schedule[i].redScore
-						td(id="schedule-winner")=schedule[i].blueScore  
+							a(href="../team/"+scheduleData[i].red3)=scheduleData[i].red3
+						td(id="scheduleData-winner")
+							a(href="../team/"+scheduleData[i].blue1)(id="scheduleData-winner")=scheduleData[i].blue1
+						td(id="scheduleData-winner")
+							a(href="../team/"+scheduleData[i].blue2)=scheduleData[i].blue2
+						td(id="scheduleData-winner")
+							a(href="../team/"+scheduleData[i].blue3)=scheduleData[i].blue3
+						td=scheduleData[i].redScore
+						td(id="scheduleData-winner")=scheduleData[i].blueScore  
 						td
-							a(class="btn btn-block btn-warning", href='/edit/schedule/'+schedule[i].id) Edit
+							a(class="btn btn-block btn-warning", href='/edit/schedule/'+scheduleData[i].id) Edit
 						td
-							a(class="btn btn-block btn-danger", href='/edit/schedule/delete/'+schedule[i].id) Delete
+							a(class="btn btn-block btn-danger", href='/edit/schedule/delete/'+scheduleData[i].id) Delete
 					-} else {
 						td
-							a(href="../match/"+schedule[i].match)=schedule[i].match
+							a(href="../match/"+scheduleData[i].match)=scheduleData[i].match
 						td
-							a(href="../team/"+schedule[i].red1)=schedule[i].red1
+							a(href="../team/"+scheduleData[i].red1)=scheduleData[i].red1
 						td
-							a(href="../team/"+schedule[i].red2)=schedule[i].red2
+							a(href="../team/"+scheduleData[i].red2)=scheduleData[i].red2
 						td
-							a(href="../team/"+schedule[i].red3)=schedule[i].red3
+							a(href="../team/"+scheduleData[i].red3)=scheduleData[i].red3
 						td
-							a(href="../team/"+schedule[i].blue1)=schedule[i].blue1
+							a(href="../team/"+scheduleData[i].blue1)=scheduleData[i].blue1
 						td
-							a(href="../team/"+schedule[i].blue2)=schedule[i].blue2
+							a(href="../team/"+scheduleData[i].blue2)=scheduleData[i].blue2
 						td
-							a(href="../team/"+schedule[i].blue3)=schedule[i].blue3
-						td=schedule[i].redScore
-						td=schedule[i].blueScore
+							a(href="../team/"+scheduleData[i].blue3)=scheduleData[i].blue3
+						td=scheduleData[i].redScore
+						td=scheduleData[i].blueScore
 						td
-							a(class="btn btn-block btn-warning", href='/edit/schedule/'+schedule[i].id) Edit
+							a(class="btn btn-block btn-warning", href='/edit/schedule/'+scheduleData[i].id) Edit
 						td
-							a(class="btn btn-block btn-danger", href='/edit/schedule/delete/'+schedule[i].id) Delete
+							a(class="btn btn-block btn-danger", href='/edit/schedule/delete/'+scheduleData[i].id) Delete
 					-}
 			-}
 	
-	h2(id='match') Match
-	a(href='/match-entry', class="btn btn-success", id="edit-schedule") Add Match Scouting Entries
-	table(id="match-table", class="table table-striped table-bordered dataTable")
+	h2(id='auto') Auto
+	a(href='/auto-entry', class="btn btn-success", id="edit-auto") Add Auto Scouting Entries
+	table(id="auto-table", class="table table-striped table-bordered dataTable")
 		thead
 			tr
 				th Team
 				th Match
-				- for(var i = 0; i < match.auto.length; i++){
-				th=match.auto[i]['name']
+				- for(var i = 0; i < auto.length; i++){
+				th=auto[i]['name']
 				- }
-				- for(var i = 0; i < match.teleop.length; i++){
-				th=match.teleop[i]['name']
-				- }
-				- for(var i = 0; i < match.endgame.length; i++){
-				th=match.endgame[i]['name']
-				- }
-				- for(var i = 0; i < match.other.length; i++){
-				th=match.other[i]['name']
-				- }
-				th Points Contributed
 				th Edit
 				th Delete
 		tbody
-			- for(var i = 0; i < match_data.length; i++){
-			- var points = 0;
+			- for(var i = 0; i < autoData.length; i++){
 			tr
-				td=match_data[i].team
-				td=match_data[i].match
-				- for(var j = 0; j < match.auto.length; j++){
-				td=match_data[i][match.auto[j]['field']]
-					- points = points + match_data[i][match.auto[j]['field']]*match.auto[j]['points'];
+				td=autoData[i].team
+				td=autoData[i].match
+				- for(var j = 0; j < auto.length; j++){
+				td=autoData[i][auto[j]['field']]
 				- }
-				- for(var j = 0; j < match.teleop.length; j++){
-				td=match_data[i][match.teleop[j]['field']]
-					- points = points + match_data[i][match.teleop[j]['field']]*match.teleop[j]['points'];
-				- }
-				- for(var j = 0; j < match.endgame.length; j++){
-				td=match_data[i][match.endgame[j]['field']]
-					- points = points + match_data[i][match.endgame[j]['field']]*match.endgame[j]['points'];
-				- }
-				- for(var j = 0; j < match.other.length; j++){
-				td=match_data[i][match.other[j]['field']]
-					- points = points + match_data[i][match.other[j]['field']]*match.other[j]['points'];
-				- }
-				td=points
 				td
-					a(class="btn btn-block btn-warning", href='/edit/match-entry/'+match_data[i].id) Edit
+					a(class="btn btn-block btn-warning", href='/edit/auto-entry/'+autoData[i].id) Edit
 				td
-					a(class="btn btn-block btn-danger", href='/edit/match-entry/delete/'+match_data[i].id) Delete
+					a(class="btn btn-block btn-danger", href='/edit/auto-entry/delete/'+autoData[i].id) Delete
 			- }
-			- var matchesPlayed = i;
+	h2(id='cycle') Cycle
+	a(href='/cycle-entry', class="btn btn-success", id="edit-cycle") Add Cycle Scouting Entries
+	table(id="cycle-table", class="table table-striped table-bordered dataTable")
+		thead
+			tr
+				th Team
+				th Match
+				th Possession
+				- for(var i = 0; i < cycle.length; i++){
+				th=cycle[i]['name']
+				- }
+				th Edit
+				th Delete
+		tbody
+			- for(var i = 0; i < cycleData.length; i++){
+			tr
+				td=cycleData[i].team
+				td=cycleData[i].match
+				td=cycleData[i].possession
+				- for(var j = 0; j < cycle.length; j++){
+				td=cycleData[i][cycle[j]['field']]
+				- }
+				td
+					a(class="btn btn-block btn-warning", href='/edit/cycle-entry/'+cycleData[i].id) Edit
+				td
+					a(class="btn btn-block btn-danger", href='/edit/cycle-entry/delete/'+cycleData[i].id) Delete
+			- }
 	h2 Pit
 	a(href='/pit', class="btn btn-success", id="edit-schedule") Add Pit Scouting Entries
 	table(id="pit-table", class="table table-striped table-bordered dataTable")
@@ -157,15 +158,15 @@ block content
 				th Edit
 				th Delete
 		tbody
-			- for(var i = 0; i < pit_data.length; i++){
+			- for(var i = 0; i < pitData.length; i++){
 			tr
-				td=pit_data[i].team
+				td=pitData[i].team
 				- for(var j = 0; j < pit.length; j++){
-				td=pit_data[i][pit[j]['field']]
+				td=pitData[i][pit[j]['field']]
 				- }
 				td
-					a(class="btn btn-block btn-warning", href='/edit/pit/'+pit_data[i].id) Edit
+					a(class="btn btn-block btn-warning", href='/edit/pit/'+pitData[i].id) Edit
 				td
-					a(class="btn btn-block btn-danger", href='/edit/pit/delete/'+pit_data[i].id) Delete
+					a(class="btn btn-block btn-danger", href='/edit/pit/delete/'+pitData[i].id) Delete
 			- }
 			- var matchesPlayed = i;

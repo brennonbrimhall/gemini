@@ -29,7 +29,17 @@ $(document).ready(function() {
         "sPaginationType": "bootstrap"
     } );
     
-    $('#match').dataTable({
+    $('#auto-individual').dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bFilter": true,
+        "bSort": true,
+        "bInfo": false,
+        "bAutoWidth": true,
+        "sPaginationType": "bootstrap"
+    });
+    
+    $('#cycle-individual').dataTable({
         "bPaginate": false,
         "bLengthChange": false,
         "bFilter": true,

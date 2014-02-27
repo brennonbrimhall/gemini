@@ -7,27 +7,25 @@ exports.team = function(req, res){
 	var eventHelper = require('../helpers/eventHelper');
 	var config = eventHelper.getEventConfig();
 	var pitdb = eventHelper.getPitDatabase();
-	var averagesdb = eventHelper.getAveragesDatabase();
-	var stddevsdb = eventHelper.getStdDevDatabase();
-	var matchdb = eventHelper.getMatchDatabase();
+	var cycledb = eventHelper.getCycleDatabase();
+	var autodb = eventHelper.getAutoDatabase();
 	var scheduledb = eventHelper.getScheduleDatabase();
+	var overviewHelper = require('../helpers/teamOverviewHelper');
 	
 	var plugins = require('../helpers/process-plugin');
 	
-	var schedule_data = {};
-	var match_data = {};
-	var pit_data = {};
-	var plugins_data = {};
-		
-	var match_averages = [];
-	var match_stddevs = [];
-	var points_average = 0;
-	var points_stddev = 0;
+	var scheduleData = {};
+	var autoData = {};
+	var cycleData = {};
+	var pitData = {};
+	var overviewData = {};
+	var pluginsData = {};
+
 	
 	try{
-		pit_data = pitdb.select('team', req.param('number'));
-
-		match_data = matchdb.select('team', req.param('number'));
+		pitData = pitdb.select('team', req.param('number'));
+		autoData = autodb.select('team', req.param('number'));
+		cycleData = cycledb.select('team', req.param('number'));
 		
 		var red1_data = scheduledb.select('red1', req.param('number'));
 		var red2_data = scheduledb.select('red2', req.param('number'));
@@ -36,18 +34,15 @@ exports.team = function(req, res){
 		var blue2_data = scheduledb.select('blue2', req.param('number'));
 		var blue3_data = scheduledb.select('blue3', req.param('number'));
 		
-		schedule_data = red1_data.concat(red2_data, red3_data, blue1_data, blue2_data, blue3_data);
-
-		match_averages = averagesdb.select('team', req.param('number'));
-		match_stddevs = stddevsdb.select('team', req.param('number'));
+		scheduleData = red1_data.concat(red2_data, red3_data, blue1_data, blue2_data, blue3_data);
 		
-		if(config.match.plugins){
-			for(var i = 0; i < config.match.plugins.length; i++){
-				plugins_data[config.match.plugins[i].name] = plugins.process(config.match.plugins[i].plugin, match_data);
+		overviewData = overviewHelper.calculate(autoData, cycleData);
+		
+		if(config.plugins){
+			for(var i = 0; i < config.plugins.length; i++){
+				pluginsData[config.plugins[i].name] = plugins.process(config.plugins[i].plugin, {auto: autoData, cycle: cycleData});
 			}
 		}
-
-		console.log(plugins_data);
 
 		res.render('team', {
 			req: req,
@@ -57,18 +52,20 @@ exports.team = function(req, res){
 			image: config.image,
 
 			pit: config.pit,
-			pit_data: pit_data,
+			pitData: pitData,
 
-			match_data: match_data,
-			match: config.match,
-			match_averages: match_averages,
-			match_stddevs: match_stddevs,
+			auto: config.auto,
+			autoData: autoData,
+			cycle: config.cycle,
+			cycleData: cycleData,
 
-			points_average: points_average,
-			points_stddev: points_stddev,
-
-			schedule: schedule_data,
-			plugins: plugins_data
+			schedule: scheduleData,
+			
+			overview: overviewHelper.getOverview(),
+			overviewData: overviewData,
+			
+			plugins: config.plugins,
+			pluginsData: pluginsData
 		});
 	}catch(err){
 		res.render('error', {

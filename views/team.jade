@@ -17,6 +17,8 @@ block header
 block sidebar
 	ul(id="sidebar-nav", class='nav nav-tabs nav-stacked affix')
 		li
+			a(href='#overview') Overview
+		li
 			a(href='#images') Images
 		li
 			a(href='#schedule') Schedule
@@ -38,13 +40,13 @@ block content
 					p Overview
 			- for(var i = 0; i < image.length; ++i) {
 			div(class="item")
-				img(id="robot-picture", src="http://www.sik.team20.com/images/2013/thumbnails/tn_"+number+image[i]['suffix']+".JPG")
+				img(id="robot-picture", src="/pictures/"+number+image[i]['suffix']+".JPG")
 				div(class="carousel-caption")
 					p=image[i]['name']
 			-}
 		//Carousel nav
-		a(class="carousel-control left",href="#robot-pictures-carousel",data-slide="prev", onclick="pause()")&lsaquo;
-		a(class="carousel-control right",href="#robot-pictures-carousel",data-slide="next", onclick="pause()")&rsaquo;
+		a(class="carousel-control left",href="#robot-pictures-carousel",data-slide="prev", onclick="pause()") &lsaquo;
+		a(class="carousel-control right",href="#robot-pictures-carousel",data-slide="next", onclick="pause()") &rsaquo;
 	
 	h2(id="schedule") Schedule
 	table(id="schedule-table", class="table table-striped table-bordered dataTable")
@@ -115,190 +117,98 @@ block content
 				td=schedule[i].blueScore
 				-}
 			-}
-	h2(id='match-scouting') Match Scouting Data
-	-if(match_averages[0]){
-	h3 Averages
-	table(id="averages", class="table table-striped table-bordered dataTable")
-		thead
-			tr
-				- for(var i = 0; i < match.auto.length; i++){
-				th(data-priority=i+1)=match.auto[i]['name']
-				- }
-				- for(var i = 0; i < match.teleop.length; i++){
-				th(data-priority=i+1)=match.teleop[i]['name']
-				- }
-				- for(var i = 0; i < match.endgame.length; i++){
-				th(data-priority=i+1)=match.endgame[i]['name']
-				- }
-				- for(var i = 0; i < match.other.length; i++){
-				th(data-priority=i+1)=match.other[i]['name']
-				- }
-				th(data-priority=i+2) Points Contributed
-		tbody
-			tr
-				-var points = 0;
-				-for(var j = 0; j < match.auto.length; j++) {
-				- points = points + Math.round(match_averages[0][match.auto[j]['field']]*100)/100*match.auto[j]['points'];
-				-if(match.auto[j]['average']){
-				td=Math.round(match_averages[0][match.auto[j]['field']]*100)/100
-				-}else{
-				td
-				-}
-				-}
-				
-				-for(var j = 0; j < match.teleop.length; j++) {
-				- points = points + Math.round(match_averages[0][match.teleop[j]['field']]*100)/100*match.teleop[j]['points'];
-				-if(match.teleop[j]['average']){
-				td=Math.round(match_averages[0][match.teleop[j]['field']]*100)/100
-				-}else{
-				td
-				-}
-				-}
-				
-				-for(var j = 0; j < match.endgame.length; j++) {
-				- points = points + Math.round(match_averages[0][match.endgame[j]['field']]*100)/100*match.endgame[j]['points'];
-				-if(match.endgame[j]['average']){
-				td=Math.round(match_averages[0][match.endgame[j]['field']]*100)/100
-				-}else{
-				td
-				-}
-				-}
-				
-				-for(var j = 0; j < match.other.length; j++) {
-				- points = points + Math.round(match_averages[0][match.other[j]['field']]*100)/100*match.other[j]['points'];
-				-if(match.other[j]['average']){
-				td=Math.round(match_averages[0][match.other[j]['field']]*100)/100
-				-}else{
-				td
-				-}
-				-}
-				td=points
-	-}
 	
-	-if(match_stddevs[0]){
-	h3 Standard Deviations
-	table(id="stddevs", class="table table-striped table-bordered dataTable")
-		thead
-			tr
-				- for(var i = 0; i < match.auto.length; i++){
-				th(data-priority=i+1)=match.auto[i]['name']
-				- }
-				- for(var i = 0; i < match.teleop.length; i++){
-				th(data-priority=i+1)=match.teleop[i]['name']
-				- }
-				- for(var i = 0; i < match.endgame.length; i++){
-				th(data-priority=i+1)=match.endgame[i]['name']
-				- }
-				- for(var i = 0; i < match.other.length; i++){
-				th(data-priority=i+1)=match.other[i]['name']
-				- }
-				th(data-priority=i+2) Points Contributed
+	h2(id='match-scouting') Match Scouting Data
+	
+	h3(id='overview') Overview
+	table(id="overview-table", class="table table-striped table-bordered")
 		tbody
+			- for(var i = 0; i < overview.length; i++){
 			tr
-				-var points = 0;
-				-for(var j = 0; j < match.auto.length; j++) {
-				- points = points + Math.round(match_stddevs[0][match.auto[j]['field']]*100)/100*match.auto[j]['points'];
-				-if(match.auto[j]['stddev']){
-				td=Math.round(match_stddevs[0][match.auto[j]['field']]*100)/100
-				-}else{
-				td
-				-}
-				-}
-				
-				-for(var j = 0; j < match.teleop.length; j++) {
-				- points = points + Math.round(match_stddevs[0][match.teleop[j]['field']]*100)/100*match.teleop[j]['points'];
-				-if(match.teleop[j]['stddev']){
-				td=Math.round(match_stddevs[0][match.teleop[j]['field']]*100)/100
-				-}else{
-				td
-				-}
-				-}
-				
-				-for(var j = 0; j < match.endgame.length; j++) {
-				- points = points + Math.round(match_stddevs[0][match.endgame[j]['field']]*100)/100*match.endgame[j]['points'];
-				-if(match.endgame[j]['stddev']){
-				td=Math.round(match_stddevs[0][match.endgame[j]['field']]*100)/100
-				-}else{
-				td
-				-}
-				-}
-				
-				-for(var j = 0; j < match.other.length; j++) {
-				- points = points + Math.round(match_stddevs[0][match.other[j]['field']]*100)/100*match.other[j]['points'];
-				-if(match.other[j]['stddev']){
-				td=Math.round(match_stddevs[0][match.other[j]['field']]*100)/100
-				-}else{
-				td
-				-}
-				-}
-				td=points
-	-}
-	- if(match.plugins){
+				th=overview[i].name
+				td=overviewData[overview[i].field]
+			-}
+	
+	- if(plugins){
 	h3 Plugins
 	table(id="plugins", class="table table-striped table-bordered dataTable")
 		thead
 			tr
-				- for(var i = 0; i < match.plugins.length; i++){
-				th=match.plugins[i]['name']
+				- for(var i = 0; i < plugins.length; i++){
+				th=plugins[i]['name']
 				- }
 		tbody
 			tr
-				- for(var i = 0; i < match.plugins.length; i++){
-				td=plugins[match.plugins[i].name]
+				- for(var i = 0; i < plugins.length; i++){
+				td=pluginsData[plugins[i].name]
 				- }
 	-}
 		
 	h3 Individual Matches
-	table(id="match", class="table table-striped table-bordered dataTable")
+	
+	h4 Auto
+	-if(autoData[0]){
+	table(id="auto-individual", class="table table-striped table-bordered dataTable")
 		thead
 			tr
 				th Match
-				- for(var i = 0; i < match.auto.length; i++){
-				th=match.auto[i]['name']
+				- for(var i = 0; i < auto.length; i++){
+				th=auto[i]['name']
 				- }
-				- for(var i = 0; i < match.teleop.length; i++){
-				th=match.teleop[i]['name']
-				- }
-				- for(var i = 0; i < match.endgame.length; i++){
-				th=match.endgame[i]['name']
-				- }
-				- for(var i = 0; i < match.other.length; i++){
-				th=match.other[i]['name']
-				- }
-				th Points Contributed
 		tbody
-			- for(var i = 0; i < match_data.length; i++){
-			- var points = 0;
+			- for(var i = 0; i < autoData.length; i++){
 			tr
-				td=match_data[i].match
-				- for(var j = 0; j < match.auto.length; j++){
-				td=match_data[i][match.auto[j]['field']]
-					- points = points + match_data[i][match.auto[j]['field']]*match.auto[j]['points'];
+				td
+					a(href='/match/'+autoData[i].match)=autoData[i].match
+				- for(var j = 0; j < auto.length; j++){
+				td=autoData[i][auto[j]['field']]
 				- }
-				- for(var j = 0; j < match.teleop.length; j++){
-				td=match_data[i][match.teleop[j]['field']]
-					- points = points + match_data[i][match.teleop[j]['field']]*match.teleop[j]['points'];
-				- }
-				- for(var j = 0; j < match.endgame.length; j++){
-				td=match_data[i][match.endgame[j]['field']]
-					- points = points + match_data[i][match.endgame[j]['field']]*match.endgame[j]['points'];
-				- }
-				- for(var j = 0; j < match.other.length; j++){
-				td=match_data[i][match.other[j]['field']]
-					- points = points + match_data[i][match.other[j]['field']]*match.other[j]['points'];
-				- }
-				td=points
 			- }
-			- var matchesPlayed = i;
+	-}else{
+	div(class='well')
+		p There are no auto entries for this team yet.  Click 
+			a(href='/auto-entry') here to add an entry.
+	-}
+	
+	h4 Cycles
+	-if(cycleData[0]){
+	table(id="cycle-individual", class="table table-striped table-bordered table-hover dataTable")
+		thead
+			tr
+				th Match
+				th Possession
+				- for(var i = 0; i < cycle.length; i++){
+				th=cycle[i]['name']
+				- }
+		tbody
+			- for(var i = 0; i < cycleData.length; i++){
+			tr
+				td
+					a(href='/match/'+cycleData[i].match)=cycleData[i].match
+				td=cycleData[i].possession
+				- for(var j = 0; j < cycle.length; j++){
+				td=cycleData[i][cycle[j]['field']]
+				- }
+			- }
+	-}else{
+	div(class='well')
+		p There are no cycle entries for this team yet.  Check back later, or 
+			a(href='/cycle-entry') add an entry.
+	-}
 	
 	h2(id="pit-scouting") Pit Scouting Data
-	- if (pit_data == null || pit_data[0] == null) {
+	- if (pitData == null) {
 		div(class="well")
-			p No pit data is available yet for this team.
+			p No pit data is available yet for this team.  Wanna 
+				a(href='/pit') add an entry?
 	- } else {
 		- for(var i = 0; i < pit.length; ++i) {
 		div(class="well")
 			h4=pit[i]['name']
-			p=pit_data[0][pit[i]['field']]
+			-if(pitData[0][pit[i]['field']]){
+			p=pitData[0][pit[i]['field']]
+			-}else{
+			p
+			-}
 		- }
 	- }

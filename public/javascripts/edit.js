@@ -22,7 +22,17 @@ $(document).ready(function() {
         "sPaginationType": "bootstrap"
     } );
     
-    $('#match-table').dataTable({
+    $('#auto-table').dataTable({
+        "bPaginate": true,
+        "bLengthChange": true,
+        "bFilter": true,
+        "bSort": true,
+        "bInfo": false,
+        "bAutoWidth": true,
+        "sPaginationType": "bootstrap"
+    });
+    
+    $('#cycle-table').dataTable({
         "bPaginate": true,
         "bLengthChange": true,
         "bFilter": true,

@@ -1,15 +1,28 @@
 exports.edit = function(req, res){
 	var eventHelper = require('../helpers/eventHelper');
 	var scheduledb = eventHelper.getScheduleDatabase();
-	var matchdb = eventHelper.getMatchDatabase();
+	var autodb = eventHelper.getAutoDatabase();
+	var cycledb = eventHelper.getCycleDatabase();
 	var pitdb = eventHelper.getPitDatabase();
 	var config = eventHelper.getEventConfig();
 	
 	try{
-		var schedule = scheduledb.selectAll();
-		var match = matchdb.selectAll();
-		var pit = pitdb.selectAll();
-		res.render('edit', {req: req, schedule: schedule, match: config.match, pit: config.pit, match_data: match, pit_data: pit, title: 'Edit Database'});
+		var scheduleData = scheduledb.selectAll();
+		var autoData = autodb.selectAll();
+		var cycleData = cycledb.selectAll();
+		var pitData = pitdb.selectAll();
+		
+		res.render('edit', {
+			req: req, 
+			scheduleData: scheduleData, 
+			auto: config.auto,
+			autoData: autoData,
+			cycle: config.cycle,
+			cycleData: cycleData,
+			pit: config.pit, 
+			pitData: pitData, 
+			title: 'Edit Database'
+		});
 	}catch(err){
 		res.render('error', {
 			req: req,
@@ -122,14 +135,14 @@ exports.postAddSchedule = function(req, res){
 	}
 };
 
-exports.getEditMatchEntry = function(req, res){
+exports.getEditAutoEntry = function(req, res){
 	var eventHelper = require('../helpers/eventHelper');
-	var db = eventHelper.getMatchDatabase();
+	var db = eventHelper.getAutoDatabase();
 	var config = eventHelper.getEventConfig();
 	
 	try{
 		var result = db.select('id', req.param('id'));
-		res.render('match-entry-edit', {req: req, match_data: result[0], teams: config.teams, match: config.match, maxMatchNumber: config.maxMatchNumber, title: 'Edit Match Entry'});
+		res.render('auto-entry-edit', {req: req, autoData: result[0], teams: config.teams, auto: config.auto, maxMatchNumber: config.maxMatchNumber, title: 'Edit Auto Entry'});
 	}catch(err){
 		res.render('error', {
 			req: req,
@@ -139,11 +152,10 @@ exports.getEditMatchEntry = function(req, res){
 	}
 };
 
-exports.postEditMatchEntry = function(req, res){
+exports.postEditAutoEntry = function(req, res){
 	var eventHelper = require('../helpers/eventHelper');
-	var db = eventHelper.getMatchDatabase();
+	var db = eventHelper.getAutoDatabase();
 	var config = eventHelper.getEventConfig();
-	var Stats = require('brennonbrimhall-stats');
 	
 	try{
 		//Building object to save
@@ -152,108 +164,14 @@ exports.postEditMatchEntry = function(req, res){
 		object.team = req.body.team;
 		object.match = req.body.match;
 		
-		for (var i = 0; i < config.match.auto.length; ++i){
-			object[config.match.auto[i].field] = req.body[config.match.auto[i].field];
-		}
-		
-		for (var i = 0; i < config.match.teleop.length; ++i){
-			object[config.match.teleop[i].field] = req.body[config.match.teleop[i].field];
-		}
-		
-		for (var i = 0; i < config.match.endgame.length; ++i){
-			object[config.match.endgame[i].field] = req.body[config.match.endgame[i].field];
-		}
-		
-		for (var i = 0; i < config.match.other.length; ++i){
-			object[config.match.other[i].field] = req.body[config.match.other[i].field];
+		for (var i = 0; i < config.auto.length; ++i){
+			object[config.auto[i].field] = req.body[config.auto[i].field];
 		}
 	
 		db.update(object, req.param('id'));
 		db.save();
 		
-		var match_data = db.select('team', req.body.team);
-		console.log('[Match Data] '+match_data);
-		var match_averages = {};
-		var match_stddevs = {};
-
-		//Calculating averages
-		//Auto
-		for (var i = 0; i < config.match.auto.length; i++) {
-			var data = [];
-			for (var j = 0; j < match_data.length; j++) {
-				data.push(Number(match_data[j][config.match.auto[i].field]));
-			}
-			var stats = new Stats(data);
-			var average = stats.mean();
-			var stddev = stats.standardDeviation();
-			match_averages[config.match.auto[i].field] = average;
-			match_stddevs[config.match.auto[i].field] = stddev;
-		}
-		
-		//Teleop
-		for (var i = 0; i < config.match.teleop.length; i++) {
-			var data = [];
-			for (var j = 0; j < match_data.length; j++) {
-				data.push(Number(match_data[j][config.match.teleop[i].field]));
-			}
-			var stats = new Stats(data);
-			var average = stats.mean();
-			var stddev = stats.standardDeviation();
-			match_averages[config.match.teleop[i].field] = average;
-			match_stddevs[config.match.teleop[i].field] = stddev;
-		}
-		
-		//Endgame
-		for (var i = 0; i < config.match.endgame.length; i++) {
-			var data = [];
-			for (var j = 0; j < match_data.length; j++) {
-				data.push(Number(match_data[j][config.match.endgame[i].field]));
-			}
-			var stats = new Stats(data);
-			var average = stats.mean();
-			var stddev = stats.standardDeviation();
-			match_averages[config.match.endgame[i].field] = average;
-			match_stddevs[config.match.endgame[i].field] = stddev;
-		}
-		
-		//Other
-		for (var i = 0; i < config.match.other.length; i++) {
-			var data = [];
-			for (var j = 0; j < match_data.length; j++) {
-				data.push(Number(match_data[j][config.match.other[i].field]));
-			}
-			var stats = new Stats(data);
-			var average = stats.mean();
-			var stddev = stats.standardDeviation();
-			match_averages[config.match.other[i].field] = average;
-			match_stddevs[config.match.other[i].field] = stddev;
-		}
-		
-		match_averages.team = req.body.team;
-		match_stddevs.team = req.body.team;
-		
-		//updating averages entry
-		var averagesdb = eventHelper.getAveragesDatabase();
-		var id = averagesdb.selectOne('team', req.body.team);
-		if(id){
-			averagesdb.update(match_averages, id[0].id)
-		}else{
-			averagesdb.insert(match_averages);	
-		}
-		averagesdb.save();
-		
-		//Updating stddev entry
-		var stddevsdb = eventHelper.getStdDevDatabase();
-		var id = stddevsdb.selectOne('team', req.body.team);
-		if(id){
-			stddevsdb.update(match_stddevs, id[0].id);
-		}else{
-			stddevsdb.insert(match_stddevs);	
-		}
-		stddevsdb.save();
-			
-		
-		res.redirect('/edit#match');
+		res.redirect('/edit#auto');
 	
 	}catch(err){
 		res.render('error', {
@@ -264,14 +182,79 @@ exports.postEditMatchEntry = function(req, res){
 	}
 };
 
-exports.getDeleteMatchEntry = function(req, res){
+exports.getDeleteAutoEntry = function(req, res){
 	var eventHelper = require('../helpers/eventHelper');
-	var db = eventHelper.getMatchDatabase();
+	var db = eventHelper.getAutoDatabase();
 	
 	try{
 		db.delete(req.param('id'));
 		db.save();
-		res.redirect('/edit#match');
+		res.redirect('/edit#auto');
+	}catch(err){
+		res.render('error', {
+			req: req,
+            err: err,
+            title: 'Error'
+        });
+	}
+};
+
+exports.getEditCycleEntry = function(req, res){
+	var eventHelper = require('../helpers/eventHelper');
+	var db = eventHelper.getCycleDatabase();
+	var config = eventHelper.getEventConfig();
+	
+	try{
+		var result = db.select('id', req.param('id'));
+		res.render('cycle-entry-edit', {req: req, cycleData: result[0], teams: config.teams, cycle: config.cycle, maxMatchNumber: config.maxMatchNumber, title: 'Edit Cycle Entry'});
+	}catch(err){
+		res.render('error', {
+			req: req,
+            err: err,
+            title: 'Error'
+        });
+	}
+};
+
+exports.postEditCycleEntry = function(req, res){
+	var eventHelper = require('../helpers/eventHelper');
+	var db = eventHelper.getCycleDatabase();
+	var config = eventHelper.getEventConfig();
+	
+	try{
+		//Building object to save
+		var object = {};
+		
+		object.team = req.body.team;
+		object.match = req.body.match;
+		object.possession = req.body.possession;
+		
+		for (var i = 0; i < config.cycle.length; ++i){
+			object[config.cycle[i].field] = req.body[config.cycle[i].field];
+		}
+	
+		db.update(object, req.param('id'));
+		db.save();
+		
+		res.redirect('/edit#cycle');
+	
+	}catch(err){
+		res.render('error', {
+			req: req,
+            err: err,
+            title: 'Error'
+        });
+	}
+};
+
+exports.getDeleteCycleEntry = function(req, res){
+	var eventHelper = require('../helpers/eventHelper');
+	var db = eventHelper.getCycleDatabase();
+	
+	try{
+		db.delete(req.param('id'));
+		db.save();
+		res.redirect('/edit#cycle');
 	}catch(err){
 		res.render('error', {
 			req: req,

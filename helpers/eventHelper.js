@@ -1,13 +1,25 @@
-exports.getMatchDatabase = function() {
+exports.getAutoDatabase = function() {
 	var config = require('../config.json');
 	var JSONDB = require('brennonbrimhall-jsondb');
-	return new JSONDB("./data/"+config.currentEvent+".match");
+	return new JSONDB("./data/"+config.currentEvent+".auto");
 };
 
-exports.getMatchData = function() {
+exports.getAutoData = function() {
 	var config = require('../config.json');
 	var fs = require('fs');
-	return JSON.parse(fs.readFileSync("./data/"+config.currentEvent+".match"));
+	return JSON.parse(fs.readFileSync("./data/"+config.currentEvent+".auto"));
+};
+
+exports.getCycleDatabase = function() {
+	var config = require('../config.json');
+	var JSONDB = require('brennonbrimhall-jsondb');
+	return new JSONDB("./data/"+config.currentEvent+".cycle");
+};
+
+exports.getCycleData = function() {
+	var config = require('../config.json');
+	var fs = require('fs');
+	return JSON.parse(fs.readFileSync("./data/"+config.currentEvent+".cycle"));
 };
 
 exports.getPitDatabase = function() {
@@ -38,24 +50,6 @@ exports.getAveragesDatabase = function() {
 	var config = require('../config.json');
 	var JSONDB = require('brennonbrimhall-jsondb');
 	return new JSONDB("./data/"+config.currentEvent+".averages");
-};
-
-exports.getAveragesData = function() {
-	var config = require('../config.json');
-	var fs = require('fs');
-	return JSON.parse(fs.readFileSync("./data/"+config.currentEvent+".averages"));
-};
-
-exports.getStdDevDatabase = function() {
-	var config = require('../config.json');
-	var JSONDB = require('brennonbrimhall-jsondb');
-	return new JSONDB("./data/"+config.currentEvent+".stddevs");
-};
-
-exports.getStdDevData = function() {
-	var config = require('../config.json');
-	var fs = require('fs');
-	return JSON.parse(fs.readFileSync("./data/"+config.currentEvent+".stddevs"));
 };
 
 exports.getEventConfig = function() {
