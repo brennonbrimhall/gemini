@@ -18,7 +18,7 @@ var schedule = require('./routes/schedule'),
 	autoEntry = require('./routes/auto-entry'),
 	cycleEntry = require('./routes/cycle-entry'),
 	match = require('./routes/match'),
-	tba = require('./routes/tba'),
+	//tba = require('./routes/tba'),
 	pull = require('./routes/pull'),
 	edit = require("./routes/edit"),
 	newEvent = require("./routes/newEvent"),
@@ -120,7 +120,7 @@ app.get('/new-event', newEvent.getInitialize);
 app.post('/new-event', newEvent.postInitialize);
 
 //TBA
-app.get('/tba/:key', tba.getEventDetails);
+//app.get('/tba/:key', tba.getEventDetails);
 
 
 
