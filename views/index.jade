@@ -9,6 +9,7 @@ block content
 			a(href='/schedule') Match Schedule
 		//li
 			a(href='/rankings') Rankings
+	- if(config.editData){
 	h5 Data Entry
 	ul(class='nav nav-tabs nav-stacked')
 		li
@@ -21,10 +22,11 @@ block content
 			a(href='/cycle-entry') Cycle Scouting Entry
 		//li
 			a(href='/video-entry') Video Scouting Entry
+	-}
 	h5 Strategy
 	ul(class='nav nav-tabs nav-stacked')
 		li
-			a(href='/table') Averages Table
+			a(href='/table') Summary Table
 		li
 			a(href='/team') Team Lookup
 		li
@@ -36,12 +38,14 @@ block content
 	-//if(req.ip == '127.0.0.1'){
 	h5 Administration
 	ul(class='nav nav-tabs nav-stacked')
+		- if(config.editData){
 		li
 			a(href='/edit') Edit Data
 		li
 			a(href='/data-upload') Upload Data Archive
 		li
 			a(href='/new-event') Initialize New Event
+		-}
 		li
 			a(href='/configure') Configure System
 	-//}

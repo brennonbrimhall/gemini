@@ -8,16 +8,14 @@ block header
 
 block content
 	- console.log(err);
+	- if(err){
 	- console.log(err.stack);
+	- }
 	h1(style="text-align:center") An Error Occured!
 	- if(data_inputed){
 	h2(style="text-align:center") Your entry was not added to the database.
 	- }
 
-
 	pre(style="text-align:center")=err
-	- if(err.code == "ECONNREFUSED") {
-	p(style="text-align:center") Is the database up and running? Double check that you've started MySQL.
-	- }
 	
 	p(style="text-align:center") To resume work, navigate to the previous page (click on your back button in your browser).

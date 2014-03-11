@@ -1,0 +1,42 @@
+extends page
+
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li(class="active") Auto Entry
+
+block content
+	form(id="match", method="post")
+		-var teamsRegex = "";
+		-for (var i = 0; i < teams.length; ++i){
+			- teamsRegex = teamsRegex+teams[i]+"|";
+		-}
+		
+		//Preamble
+		label(for="team") Team:
+		input(name="team", type="text", required="required", pattern=teamsRegex, autofocus="autofocus")
+		
+		label(for="match") Match:
+		input(name="match", type="number", step="1", required="required", min=1, max=maxMatchNumber)
+		
+		//Autonomous
+		- for (var i = 0; i < auto.length; ++i){
+		label(for=auto[i]['field'])=auto[i]['name']+":"
+		- if (auto[i].values){
+			- var regexp = "";
+			- for (var j = 0; j < auto[i].values.length; ++j){
+				- if(j == 0){
+					- regexp = regexp + match[i].values[j];
+				-}else{
+					- regexp = regexp + "|" + match[i].values[j];
+				-}
+			-}
+			input(name=auto[i]['field'], type="text", required="required", pattern=regexp)
+		- }else{
+			input(name=auto[i]['field'], type="number", step="1", required="required", min=auto[i]['min'], max=auto[i]['max'])
+		-}
+		-}
+		
+		//Submit
+		input(class="btn btn-primary", name="submit", type="submit", value="Submit")

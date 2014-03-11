@@ -89,7 +89,7 @@ block content
 					- }
 			-}
 		div(class="span2")
-		-if(blue2.overviewData){
+			-if(blue2.overviewData){
 			table(class="table table-striped table-bordered dataTable stats")
 				tbody
 					- for(var i = 0; i < blue2.overview.length; i++){
@@ -97,9 +97,7 @@ block content
 						th=blue2.overview[i].name
 						td=blue2.overviewData[blue2.overview[i].field]
 					- }
-		-}else{
-			p
-		-}
+			-}
 		div(class="span2")
 			-if(blue3.overviewData){
 			table(class="table table-striped table-bordered dataTable stats")

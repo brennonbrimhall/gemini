@@ -34,6 +34,12 @@ exports.postConfiguration = function(req, res){
 			config.pull.allowSelfToPullData = false;
 		}
 		
+		if(Number(req.body.editData) == 1){
+			config.editData = true;
+		}else{
+			config.editData = false;
+		}
+		
 		config.currentEvent = req.body.event;
 		fs.writeFileSync('config.json', JSON.stringify(config));
 		

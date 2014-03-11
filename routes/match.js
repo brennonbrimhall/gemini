@@ -19,12 +19,12 @@ exports.match = function(req, res){
 		if(scheduleData && scheduleData[0]){
 			scheduleData = scheduleData[0];
 			
-			var red1 = {number: scheduleData.red1, pit: pitdb.select('team', scheduleData.red1), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.red1))};
-			var red2 = {number: scheduleData.red2, pit: pitdb.select('team', scheduleData.red2), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.red2))};
-			var red3 = {number: scheduleData.red3, pit: pitdb.select('team', scheduleData.red3), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.red3))};
-			var blue1 = {number: scheduleData.blue1, pit: pitdb.select('team', scheduleData.blue1), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.blue1))};
-			var blue2 = {number: scheduleData.blue2, pit: pitdb.select('team', scheduleData.blue2), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.blue2))};
-			var blue3 = {number: scheduleData.blue3, pit: pitdb.select('team', scheduleData.blue3), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.blue3))};
+			var red1 = {number: scheduleData.red1, pit: pitdb.select('team', scheduleData.red1), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.red1), cycledb.select('team', scheduleData.red1))};
+			var red2 = {number: scheduleData.red2, pit: pitdb.select('team', scheduleData.red2), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.red2), cycledb.select('team', scheduleData.red2))};
+			var red3 = {number: scheduleData.red3, pit: pitdb.select('team', scheduleData.red3), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.red3), cycledb.select('team', scheduleData.red3))};
+			var blue1 = {number: scheduleData.blue1, pit: pitdb.select('team', scheduleData.blue1), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.blue1), cycledb.select('team', scheduleData.blue1))};
+			var blue2 = {number: scheduleData.blue2, pit: pitdb.select('team', scheduleData.blue2), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.blue2), cycledb.select('team', scheduleData.blue2))};
+			var blue3 = {number: scheduleData.blue3, pit: pitdb.select('team', scheduleData.blue3), overview: overviewHelper.getOverview(), overviewData: overviewHelper.calculate(autodb.select('team', scheduleData.blue3), cycledb.select('team', scheduleData.blue3))};
 			
 			res.render('match', {
 				title: 'Match '+req.param('number'), 

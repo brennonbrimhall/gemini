@@ -1,0 +1,1 @@
+All data stored by Gemini goes into this folder.  Unless you're well versed on how the system works, please don't modify any files in here.

@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('#averages-table').dataTable({
         "bPaginate": true,
         "bLengthChange": true,
-        "bFilter": false,
+        "bFilter": true,
         "aoColumnDefs": [
 			{ "sType": "numeric-html", "aTargets": [ 0 ] }
 		],

@@ -7,66 +7,21 @@ block header
 	li 
 		a(href="/") Gemini Scouting System
 		span(class="divider") /
-	li(class="active") Averages Table
+	li(class="active") Summary Table
 
 block content
 	table(id="averages-table", class="table table-striped table-bordered dataTable")
 		thead
 			tr
 				th Team
-				- for(var i = 0; i < match.auto.length; i++){
-				th=match.auto[i]['name']
+				- for(var i = 0; i < overview.length; i++){
+				th=overview[i]['name']
 				- }
-				- for(var i = 0; i < match.teleop.length; i++){
-				th=match.teleop[i]['name']
-				- }
-				- for(var i = 0; i < match.endgame.length; i++){
-				th=match.endgame[i]['name']
-				- }
-				- for(var i = 0; i < match.other.length; i++){
-				th=match.other[i]['name']
-				- }
-				th Points Contributed
 		tbody
-			- for(var i = 0; i < averages_data.length; ++i){
-			- var points = 0;
+			- for(var i = 0; i < teams.length; ++i){
 			tr
-				td
-					a(href="/team/"+averages_data[i].team)=averages_data[i].team
-				- for(var j = 0; j < match.auto.length; ++j) {
-				- points = points + averages_data[i][match.auto[j]['field']]*match.auto[j]['points'];
-				-if(match.auto[j]['average']){
-				td=Math.round(averages_data[i][match.auto[j]['field']]*100)/100
-				-}else{
-				td
+				td=teams[i]
+				-for(var j = 0; j < overview.length; j++){
+				td=summaryData[teams[i]][overview[j].field]
 				-}
-				-}
-				
-				- for(var j = 0; j < match.teleop.length; ++j) {
-				- points = points + averages_data[i][match.teleop[j]['field']]*match.teleop[j]['points'];
-				-if(match.teleop[j]['average']){
-				td=Math.round(averages_data[i][match.teleop[j]['field']]*100)/100
-				-}else{
-				td
-				-}
-				-}
-				
-				- for(var j = 0; j < match.endgame.length; ++j) {
-				- points = points + averages_data[i][match.endgame[j]['field']]*match.endgame[j]['points'];
-				-if(match.endgame[j]['average']){
-				td=Math.round(averages_data[i][match.endgame[j]['field']]*100)/100
-				-}else{
-				td
-				-}
-				-}
-				
-				- for(var j = 0; j < match.other.length; ++j) {
-				- points = points + averages_data[i][match.other[j]['field']]*match.other[j]['points'];
-				-if(match.other[j]['average']){
-				td=Math.round(averages_data[i][match.other[j]['field']]*100)/100
-				-}else{
-				td
-				-}
-				-}
-				td=Math.round(points*100)/100
 			-}

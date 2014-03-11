@@ -55,6 +55,7 @@ exports.postEditSchedule = function(req, res){
 	
 	try{
 		var object = {};
+		
 		object.match = req.body.match;
 		object.red1 = req.body.red1;
 		object.red2 = req.body.red2;
@@ -113,7 +114,30 @@ exports.postAddSchedule = function(req, res){
 	var db = eventHelper.getScheduleDatabase();
 	
 	try{
+		if(db.select('match', req.body.match).length > 0){
+			throw new Error("Match already exists in schedule.\nPlease edit it instead of adding a new one.");
+		}
+		if(req.body.red1 == req.body.red2 || req.body.red1 == req.body.red3 || req.body.red1 == req.body.blue1 || req.body.red1 == req.body.blue2 || req.body.red1 == req.body.blue3){
+			throw new Error("A team cannot be in the same match twice.");
+		}
+		if(req.body.red2 == req.body.red1 || req.body.red2 == req.body.red3 || req.body.red2 == req.body.blue1 || req.body.red2 == req.body.blue2 || req.body.red2 == req.body.blue3){
+			throw new Error("A team cannot be in the same match twice.");
+		}
+		if(req.body.red3 == req.body.red1 || req.body.red3 == req.body.red2 || req.body.red3 == req.body.blue1 || req.body.red3 == req.body.blue2 || req.body.red3 == req.body.blue3){
+			throw new Error("A team cannot be in the same match twice.");
+		}
+		if(req.body.blue1 == req.body.red1 || req.body.blue1 == req.body.red2 || req.body.blue1 == req.body.red3 || req.body.blue1 == req.body.blue2 || req.body.blue1 == req.body.blue3){
+			throw new Error("A team cannot be in the same match twice.");
+		}
+		if(req.body.blue2 == req.body.red1 || req.body.blue2 == req.body.red2 || req.body.blue2 == req.body.red3 || req.body.blue2 == req.body.blue1 || req.body.blue2 == req.body.blue3){
+			throw new Error("A team cannot be in the same match twice.");
+		}
+		if(req.body.blue3 == req.body.red1 || req.body.blue3 == req.body.red2 || req.body.blue3 == req.body.red3 || req.body.blue3 == req.body.blue1 || req.body.blue3 == req.body.blue2){
+			throw new Error("A team cannot be in the same match twice.");
+		}
+		
 		var object = {};
+		
 		object.match = req.body.match;
 		object.red1 = req.body.red1;
 		object.red2 = req.body.red2;

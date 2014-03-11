@@ -4,5 +4,7 @@
  */
 
 exports.index = function(req, res){
-	res.render('index', { title: 'Gemini Scouting System', req:req });
+	var config = require('../config');
+	
+	res.render('index', { title: 'Gemini Scouting System', req:req, config:config });
 };

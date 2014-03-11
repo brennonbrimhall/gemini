@@ -83,165 +83,86 @@ exports.postInitialize = function(req, res){
 		
 		var fields = [];
 		
-		//Checking match auto config
-		if(!(data.match.auto instanceof Array)){
-			throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.auto attribute.');
+		//Checking auto config
+		if(!(data.auto instanceof Array)){
+			throw new Error('Data uploaded is invalid; it doesn\'t have a proper auto attribute.');
 		}
 		
 		//Auto
-		for(var i=0; i<data.match.auto.length; i++){
+		for(var i=0; i<data.auto.length; i++){
 			//Name field
-			if(typeof data.match.auto[i].name !== 'string'){
+			if(typeof data.auto[i].name !== 'string'){
 				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.auto attribute.  Check index '+i+'.');
 			}
 			
 			//Field field
-			if(typeof data.match.auto[i].field !== 'string'){
+			if(typeof data.auto[i].field !== 'string'){
 				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.auto attribute.  Check index '+i+'.');
 			}
-			fields.push(data.match.auto[i].field);
+			fields.push(data.auto[i].field);
 			
 			//Points field
-			if(typeof data.match.auto[i].points !== 'number'){
+			if(typeof data.auto[i].points !== 'number'){
 				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.auto attribute.  Check index '+i+'.');
 			}
 			
 			//Max field
-			if(typeof data.match.auto[i].max !== 'number'){
+			if(typeof data.auto[i].max !== 'number'){
 				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.auto attribute.  Check index '+i+'.');
 			}
 			
 			//Min field
-			if(typeof data.match.auto[i].min !== 'number'){
+			if(typeof data.auto[i].min !== 'number'){
 				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.auto attribute.  Check index '+i+'.');
 			}
 			
 			//Average field
-			if(typeof data.match.auto[i].average !== 'boolean'){
+			if(typeof data.auto[i].average !== 'boolean'){
 				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.auto attribute.  Check index '+i+'.');
 			}
 			
 			//StdDev field
-			if(typeof data.match.auto[i].stddev !== 'boolean'){
+			if(typeof data.auto[i].stddev !== 'boolean'){
 				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.auto attribute.  Check index '+i+'.');
 			}
 		}
 		
 		//Teleop
-		for(var i=0; i<data.match.teleop.length; i++){
+		for(var i=0; i<data.cycle.length; i++){
 			//Name field
-			if(typeof data.match.teleop[i].name !== 'string'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.teleop attribute.  Check index '+i+'.');
+			if(typeof data.cycle[i].name !== 'string'){
+				throw new Error('Data uploaded is invalid; it doesn\'t have a proper cycle attribute.  Check index '+i+'.');
 			}
 			
 			//Field field
-			if(typeof data.match.teleop[i].field !== 'string'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.teleop attribute.  Check index '+i+'.');
+			if(typeof data.cycle[i].field !== 'string'){
+				throw new Error('Data uploaded is invalid; it doesn\'t have a proper cycle attribute.  Check index '+i+'.');
 			}
-			fields.push(data.match.teleop[i].field);
+			fields.push(data.cycle[i].field);
 			
 			//Points field
-			if(typeof data.match.teleop[i].points !== 'number'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.teleop attribute.  Check index '+i+'.');
+			if(typeof data.cycle[i].points !== 'number'){
+				throw new Error('Data uploaded is invalid; it doesn\'t have a proper cycle attribute.  Check index '+i+'.');
 			}
 			
 			//Max field
-			if(typeof data.match.teleop[i].max !== 'number'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.teleop attribute.  Check index '+i+'.');
+			if(typeof data.cycle[i].max !== 'number'){
+				throw new Error('Data uploaded is invalid; it doesn\'t have a proper cycle attribute.  Check index '+i+'.');
 			}
 			
 			//Min field
-			if(typeof data.match.teleop[i].min !== 'number'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.teleop attribute.  Check index '+i+'.');
+			if(typeof data.cycle[i].min !== 'number'){
+				throw new Error('Data uploaded is invalid; it doesn\'t have a proper cycle attribute.  Check index '+i+'.');
 			}
 			
 			//Average field
-			if(typeof data.match.teleop[i].average !== 'boolean'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.teleop attribute.  Check index '+i+'.');
+			if(typeof data.cycle[i].average !== 'boolean'){
+				throw new Error('Data uploaded is invalid; it doesn\'t have a proper cycle attribute.  Check index '+i+'.');
 			}
 			
 			//StdDev field
-			if(typeof data.match.teleop[i].stddev !== 'boolean'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.teleop attribute.  Check index '+i+'.');
-			}
-		}
-		
-		//Endgame
-		for(var i=0; i<data.match.endgame.length; i++){
-			//Name field
-			if(typeof data.match.endgame[i].name !== 'string'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.endgame attribute.  Check index '+i+'.');
-			}
-			
-			//Field field
-			if(typeof data.match.endgame[i].field !== 'string'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.endgame attribute.  Check index '+i+'.');
-			}
-			fields.push(data.match.endgame[i].field);
-			
-			//Points field
-			if(typeof data.match.endgame[i].points !== 'number'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.endgame attribute.  Check index '+i+'.');
-			}
-			
-			//Max field
-			if(typeof data.match.endgame[i].max !== 'number'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.endgame attribute.  Check index '+i+'.');
-			}
-			
-			//Min field
-			if(typeof data.match.endgame[i].min !== 'number'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.endgame attribute.  Check index '+i+'.');
-			}
-			
-			//Average field
-			if(typeof data.match.endgame[i].average !== 'boolean'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.endgame attribute.  Check index '+i+'.');
-			}
-			
-			//StdDev field
-			if(typeof data.match.endgame[i].stddev !== 'boolean'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.endgame attribute.  Check index '+i+'.');
-			}
-		}
-		
-		//Other
-		for(var i=0; i<data.match.other.length; i++){
-			//Name field
-			if(typeof data.match.other[i].name !== 'string'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.other attribute.  Check index '+i+'.');
-			}
-			
-			//Field field
-			if(typeof data.match.other[i].field !== 'string'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.other attribute.  Check index '+i+'.');
-			}
-			
-			fields.push(data.match.other[i].field);
-			
-			//Points field
-			if(typeof data.match.other[i].points !== 'number'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.other attribute.  Check index '+i+'.');
-			}
-			
-			//Max field
-			if(typeof data.match.other[i].max !== 'number'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.other attribute.  Check index '+i+'.');
-			}
-			
-			//Min field
-			if(typeof data.match.other[i].min !== 'number'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.other attribute.  Check index '+i+'.');
-			}
-			
-			//Average field
-			if(typeof data.match.other[i].average !== 'boolean'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.other attribute.  Check index '+i+'.');
-			}
-			
-			//StdDev field
-			if(typeof data.match.other[i].stddev !== 'boolean'){
-				throw new Error('Data uploaded is invalid; it doesn\'t have a proper match.other attribute.  Check index '+i+'.');
+			if(typeof data.cycle[i].stddev !== 'boolean'){
+				throw new Error('Data uploaded is invalid; it doesn\'t have a proper cycle attribute.  Check index '+i+'.');
 			}
 		}
 		
@@ -258,11 +179,10 @@ exports.postInitialize = function(req, res){
 		config.currentEvent = code;
 		eventHelper.saveSystemConfig(config);
 		fs.writeFileSync('./data/'+code+'.json', JSON.stringify(data));
-		(new JSONDB('./data/'+code+'.averages', fields)).save();
-		(new JSONDB('./data/'+code+'.match', fields)).save();
+		(new JSONDB('./data/'+code+'.auto', fields)).save();
 		(new JSONDB('./data/'+code+'.pit', fields)).save();
 		(new JSONDB('./data/'+code+'.schedule', ['match','red1','red2','red3','blue1','blue2','blue3','redScore','blueScore'])).save();
-		(new JSONDB('./data/'+code+'.stddevs', fields)).save();
+		(new JSONDB('./data/'+code+'.cycle', fields)).save();
 		
 		res.redirect('/');
 	}catch(err){

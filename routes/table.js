@@ -6,16 +6,20 @@
 exports.table = function(req, res){
 	var eventHelper = require('../helpers/eventHelper');
 	var config = eventHelper.getEventConfig();
-	var db = eventHelper.getAveragesDatabase();
+	var overviewHelper = require('../helpers/teamOverviewHelper');
+	
+	var summaryData = {};
 	
 	try{
-		var averages_data = db.selectAll();
-		console.log(averages_data);
+		for(var i = 0; i < config.teams.length; i++){
+			summaryData[config.teams[i].toString()] = overviewHelper.tableCaclulateForTeam(config.teams[i]);
+		}
 		res.render('table', 
 			{
-				title: 'Averages Table',
-				averages_data : averages_data,
-				match: config.match,
+				title: 'Summary Table',
+				teams : config.teams,
+				overview: overviewHelper.getTableOverview(),
+				summaryData: summaryData,
 				req: req
 			}
 		);

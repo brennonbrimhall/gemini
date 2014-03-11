@@ -12,10 +12,9 @@ exports.data = function(req, res){
 		try {
 			var data = {};
 			data.config = eventHelper.getEventConfig();
-			data.match = eventHelper.getMatchData();
+			data.auto = eventHelper.getAutoData();
+			data.cycle = eventHelper.getCycleData();
 			data.pit = eventHelper.getPitData();
-			data.averages = eventHelper.getAveragesData();
-			data.stddevs = eventHelper.getStdDevData();
 			data.schedule = eventHelper.getScheduleData();
 			res.set('Content-Type', 'application/json');
 			res.set('Content-Disposition', 'attachment; filename=\"'+config.currentEvent+'-data-'+(new Date()).toUTCString()+'.json\"');
@@ -76,26 +75,22 @@ exports.postUpload = function(req, res){
 				if(typeof data.config === 'undefined'){
 					throw new Error('Data uploaded is invalid; it doesn\'t have a proper config attribute.');
 				}
-				if(typeof data.match === 'undefined'){
-					throw new Error('Data uploaded is invalid; it doesn\'t have a proper match attribute.');
+				if(typeof data.auto === 'undefined'){
+					throw new Error('Data uploaded is invalid; it doesn\'t have a proper auto attribute.');
+				}
+				if(typeof data.cycle === 'undefined'){
+					throw new Error('Data uploaded is invalid; it doesn\'t have a proper cycle attribute.');
 				}
 				if(typeof data.pit === 'undefined'){
 					throw new Error('Data uploaded is invalid; it doesn\'t have a proper pit attribute.');
 				}
-				if(typeof data.averages === 'undefined'){
-					throw new Error('Data uploaded is invalid; it doesn\'t have a proper averages attribute.');
-				}
-				if(typeof data.stddevs === 'undefined'){
-					throw new Error('Data uploaded is invalid; it doesn\'t have a proper stddevs attribute.');
-				}
 				if(typeof data.schedule === 'undefined'){
 					throw new Error('Data uploaded is invalid; it doesn\'t have a proper schedule attribute.');
 				}
-				fs.writeFileSync(eventHelper.getCurrentEvent()+'.config', JSON.stringify(data.data));
-				fs.writeFileSync(eventHelper.getCurrentEvent()+'.match', JSON.stringify(data.match));
+				fs.writeFileSync(eventHelper.getCurrentEvent()+'.json', JSON.stringify(data.config));
+				fs.writeFileSync(eventHelper.getCurrentEvent()+'.auto', JSON.stringify(data.auto));
+				fs.writeFileSync(eventHelper.getCurrentEvent()+'.cycle', JSON.stringify(data.cycle));
 				fs.writeFileSync(eventHelper.getCurrentEvent()+'.pit', JSON.stringify(data.pit));
-				fs.writeFileSync(eventHelper.getCurrentEvent()+'.averages', JSON.stringify(data.averages));
-				fs.writeFileSync(eventHelper.getCurrentEvent()+'.stddevs', JSON.stringify(data.stddevs));
 				fs.writeFileSync(eventHelper.getCurrentEvent()+'.schedule', JSON.stringify(data.schedule));
 				res.redirect('/');
 			}
