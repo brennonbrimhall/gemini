@@ -3,22 +3,22 @@ project(Gemini)
 
 #Setting up Javascript files to install
 
-install(FILES gemini.js DESTINATION Gemini)
-install(FILES config.json DESTINATION Gemini)
-install(FILES package.json DESTINATION Gemini)
-install(FILES README.md DESTINATION Gemini)
+install(FILES gemini.js DESTINATION .)
+install(FILES config.json DESTINATION .)
+install(FILES package.json DESTINATION .)
+install(FILES README.md DESTINATION .)
 
-install(DIRECTORY data DESTINATION Gemini)
-install(DIRECTORY helpers DESTINATION Gemini)
-install(DIRECTORY plugins DESTINATION Gemini)
-install(DIRECTORY public DESTINATION Gemini)
-install(DIRECTORY routes DESTINATION Gemini)
-install(DIRECTORY views DESTINATION Gemini)
-install(DIRECTORY node_modules DESTINATION Gemini)
+install(DIRECTORY data DESTINATION .)
+install(DIRECTORY helpers DESTINATION .)
+install(DIRECTORY plugins DESTINATION .)
+install(DIRECTORY public DESTINATION .)
+install(DIRECTORY routes DESTINATION .)
+install(DIRECTORY views DESTINATION .)
+install(DIRECTORY node_modules DESTINATION .)
 
 #Adding executable to glue node and a start menu shortcut together
 add_executable(Gemini gemini.cpp)
-install(TARGETS Gemini RUNTIME DESTINATION Gemini)
+install(TARGETS Gemini RUNTIME DESTINATION .)
 
 #CPack variables
 set(CPACK_PACKAGE_EXECUTABLES Gemini ${CMAKE_SOURCE_DIR}/icon.ico)
