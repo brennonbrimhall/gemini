@@ -589,8 +589,11 @@ function averageHotShots(autoData){
 			shotsMade += Number(autoData[i].lowScored);
 		}
 	}
-	
-	return hotGoals/chancesForHot;
+	if(chancesForHot > 0){
+		return (hotGoals/chancesForHot).toFixed(2);
+	}else{
+		return '';
+	}
 }
 
 function hotShotsPercentage(autoData){
@@ -641,7 +644,7 @@ function averageAutoBlockedShots(autoData){
 	}
 	
 	if(chancesForBlocking > 0){
-		return shotsBlocked/chancesForBlocking++;
+		return (shotsBlocked/chancesForBlocking).toFixed(2);
 	}else{
 		return '';
 	}

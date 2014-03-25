@@ -25,6 +25,8 @@ block sidebar
 		li
 			a(href='#match-scouting') Match Scouting Data
 		li
+			a(href='#videos') Videos
+		li
 			a(href='#pit-scouting') Pit Scouting Data
 
 block content
@@ -201,6 +203,15 @@ block content
 		p There are no cycle entries for this team yet.  Check back later, or 
 			a(href='/cycle-entry') add an entry.
 	-}
+	
+	h2(id='videos') Videos
+	- for(var i = 0; i < schedule.length; i++){
+	h3
+		a(href="/match/"+schedule[i].match)="Match "+schedule[i].match
+	video(class="match-video" controls)
+		source(src="/videos/"+schedule[i].match+".mp4" type="video/mp4")
+	- }
+
 	
 	h2(id="pit-scouting") Pit Scouting Data
 	- if (pitData == null || pitData[0] == null) {

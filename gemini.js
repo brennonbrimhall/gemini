@@ -13,6 +13,7 @@ var express = require('express'),
 var schedule = require('./routes/schedule'),
 	pit = require('./routes/pit'),
 	image = require('./routes/image'),
+	video = require('./routes/video'),
 	team = require('./routes/team'),
 	table = require('./routes/table'),
 	autoEntry = require('./routes/auto-entry'),
@@ -77,6 +78,10 @@ app.get('/edit/pit/delete/:id', edit.getDeletePit);
 //Image entry
 app.get('/image-entry', image.get);
 app.post('/image-entry', image.post);
+
+//Video entry
+app.get('/video-entry', video.get);
+app.post('/video-entry', video.post);
 
 //Pit
 app.get('/pit', pit.get);

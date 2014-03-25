@@ -91,3 +91,7 @@ h3 {
 .finish {
 	float: right;
 }
+
+.match-video {
+	width: 50%;
+}

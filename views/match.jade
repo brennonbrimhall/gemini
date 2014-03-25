@@ -5,12 +5,11 @@ block header
 		a(href="/") Gemini Scouting System
 		span(class="divider") /
 	li 
-		a(href="/match") Team
+		a(href="/match") Match
 		span(class="divider") /
 	li(class="active")=number
 
 block content
-	- var redpoints = 0; bluepoints = 0;
 	div(class="row-fluid")
 		div(class="span6")
 			h2 Red Alliance
@@ -108,3 +107,7 @@ block content
 						td=blue3.overviewData[blue3.overview[i].field]
 					- }
 			-}
+	div(class="row-fluid")
+		h2 Video
+		video(class="match-video" controls)
+			source(src="/videos/"+number+".mp4" type="video/mp4")

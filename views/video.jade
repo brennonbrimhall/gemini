@@ -1,0 +1,18 @@
+extends page
+
+block header
+	li 
+		a(href="/") Gemini Scouting System
+		span(class="divider") /
+	li(class="active") Image Entry
+	
+block content
+	form(id="video-form", method="post", enctype="multipart/form-data")
+		fieldset
+			label(for="match") Match:
+			input(name="match", type="number", step="1", max=maxMatchNumber, min="1", required="required", autofocus="autofocus")
+		fieldset
+			label(for="image") Video to Upload:
+			input(type="file" id="video", name="video")
+			
+		input(class="btn btn-primary", name="submit", type="submit", value="Submit")
